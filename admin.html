@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | JR Digital Studio</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #0F1724; min-height: 100vh; }
+    /* Login Screen */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #0A1628, #162040);
+    }
+    .login-box {
+      background: #162040;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 48px;
+      width: 100%; max-width: 420px;
+      text-align: center;
+    }
+    .login-logo {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 24px; color: white;
+      margin: 0 auto 24px;
+      box-shadow: 0 8px 32px rgba(0,87,255,0.4);
+    }
+    .login-title { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: white; margin-bottom: 6px; }
+    .login-sub { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 32px; }
+    .login-input {
+      width: 100%; padding: 13px 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; color: white;
+      font-family: inherit; font-size: 14px;
+      outline: none; margin-bottom: 14px;
+      transition: var(--transition);
+    }
+    .login-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,87,255,0.15); }
+    .login-btn {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white; border: none; border-radius: 12px;
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: var(--transition);
+      box-shadow: 0 6px 24px rgba(0,87,255,0.35);
+    }
+    .login-btn:hover { transform: translateY(-2px); }
+
+    /* App Layout */
+    #adminApp {
+      display: none;
+      min-height: 100vh;
+    }
+    @media (max-width: 1024px) {
+      .admin-sidebar { transform: translateX(-100%); }
+      .admin-sidebar.open { transform: translateX(0); }
+      .admin-main { margin-left: 0 !important; }
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">JR</div>
+    <div class="login-title">Admin Panel</div>
+    <div class="login-sub">JR Digital Studio — Restricted Access</div>
+    <input type="text" id="adminUser" class="login-input" placeholder="Username" autocomplete="username">
+    <input type="password" id="adminPass" class="login-input" placeholder="Password" autocomplete="current-password">
+    <button class="login-btn" onclick="login()">🔐 Login to Admin</button>
+    <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,0.3)">Default: jradmin / jrdigital2025</p>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="adminApp" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-logo">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-icon" style="width:36px;height:36px;font-size:14px">JR</div>
+        <div><div class="logo-text" style="color:white;font-size:16px">JR Digital</div><div class="logo-sub">Admin Panel</div></div>
+      </a>
+    </div>
+    <nav class="admin-nav">
+      <a href="#" data-section="dashboard" class="active" onclick="showSection('dashboard');return false">
+        <span>📊</span> Dashboard
+      </a>
+      <a href="#" data-section="works" onclick="showSection('works');loadWorksTable();return false">
+        <span>🖼️</span> Our Work
+      </a>
+      <a href="#" data-section="packages" onclick="showSection('packages');loadPackagesTable();return false">
+        <span>📦</span> Packages
+      </a>
+      <a href="#" data-section="settings" onclick="showSection('settings');return false">
+        <span>⚙️</span> Settings
+      </a>
+      <a href="index.html" style="margin-top:8px">
+        <span>🌐</span> View Website
+      </a>
+      <a href="#" onclick="logout();return false" style="margin-top:auto;color:#FF6B6B">
+        <span>🚪</span> Logout
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main">
+    <div class="admin-header">
+      <div>
+        <div id="pageTitle" class="admin-title">Dashboard</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px">Welcome back, Admin 👋</div>
+      </div>
+      <div style="display:flex;gap:12px">
+        <a href="index.html" target="_blank" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);padding:9px 18px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:600">🌐 Preview Site</a>
+        <button onclick="logout()" style="background:rgba(255,61,87,0.15);color:#FF6B6B;border:none;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">🚪 Logout</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD SECTION -->
+    <div id="dashboard" class="admin-section active">
+      <div class="admin-stats">
+        <div class="admin-stat">
+          <div class="admin-stat-num" id="totalWorks">0</div>
+          <div class="admin-stat-label">Total Works</div>
+        </div>
+        <div class="admin-stat">
+          <div class="admin-stat-num" id="totalPackages">0</div>
+          <div class="admin-stat-label">Packages</div>
+        </div>
+        <div class="admin-stat">
+          <div class="admin-stat-num" id="totalWeb">0</div>
+          <div class="admin-stat-label">Web Projects</div>
+        </div>
+        <div class="admin-stat">
+          <div class="admin-stat-num" id="totalBranding">0</div>
+          <div class="admin-stat-label">Branding Projects</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="admin-card" style="margin-bottom:24px">
+        <div class="admin-card-title">⚡ Quick Actions</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="admin-btn admin-btn-primary" onclick="showSection('works');loadWorksTable();openAddWorkModal()">➕ Add New Work</button>
+          <button class="admin-btn admin-btn-success" onclick="showSection('packages');loadPackagesTable();openAddPackageModal()">➕ Add Package</button>
+          <a href="our-work.html" target="_blank" class="admin-btn admin-btn-primary" style="text-decoration:none">👁️ View Portfolio</a>
+        </div>
+      </div>
+
+      <!-- Recent Works Table -->
+      <div class="admin-card">
+        <div class="admin-card-title">
+          🕐 Recent Work
+          <button class="admin-btn admin-btn-primary" onclick="showSection('works');loadWorksTable()">View All</button>
+        </div>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="recentWorksTable">
+            <tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- WORKS SECTION -->
+    <div id="works" class="admin-section">
+      <div class="admin-card">
+        <div class="admin-card-title">
+          🖼️ All Portfolio Work
+          <button class="admin-btn admin-btn-primary" onclick="openAddWorkModal()">➕ Add New Work</button>
+        </div>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Icon</th>
+              <th>Title / Description</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="worksTableBody">
+            <tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PACKAGES SECTION -->
+    <div id="packages" class="admin-section">
+      <div class="admin-card">
+        <div class="admin-card-title">
+          📦 All Packages
+          <button class="admin-btn admin-btn-primary" onclick="openAddPackageModal()">➕ Add Package</button>
+        </div>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Duration</th>
+              <th>Features</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="packagesTableBody">
+            <tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SETTINGS SECTION -->
+    <div id="settings" class="admin-section">
+      <div class="admin-card">
+        <div class="admin-card-title">⚙️ Studio Information</div>
+        <div class="admin-form">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label>Studio Name</label>
+              <input type="text" value="JR Digital Studio">
+            </div>
+            <div class="form-group">
+              <label>Primary Phone</label>
+              <input type="text" value="8320146648">
+            </div>
+            <div class="form-group">
+              <label>Secondary Phone</label>
+              <input type="text" value="8799170861">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" value="jrdigitalstudio8@gmail.com">
+            </div>
+          </div>
+          <button class="admin-btn admin-btn-primary" onclick="saveSettings()" style="padding:11px 28px;margin-top:8px">💾 Save Settings</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-title" style="color:#FF6B6B">⚠️ Danger Zone</div>
+        <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:16px">Reset all portfolio and package data to factory defaults. This cannot be undone.</p>
+        <button class="admin-btn admin-btn-danger" onclick="resetData()" style="padding:10px 24px">🔄 Reset All Data to Defaults</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- WORK MODAL -->
+<div class="modal-overlay" id="workModal">
+  <div class="modal">
+    <div class="modal-title" id="workModalTitle">Add New Work</div>
+    <div class="admin-form">
+      <input type="hidden" id="workId">
+      <div class="form-group">
+        <label>Project Title *</label>
+        <input type="text" id="workTitle" placeholder="e.g. Restaurant Brand Identity">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="workCategory">
+            <option value="">Select...</option>
+            <option value="web">Web Design</option>
+            <option value="branding">Branding</option>
+            <option value="social">Social Media</option>
+            <option value="print">Print Design</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Emoji Icon</label>
+          <input type="text" id="workEmoji" placeholder="🎨" maxlength="4">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" id="workDesc" placeholder="Brief project description">
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="workDate">
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:-8px">
+        💡 To add images, upload them to your hosting and add image URL via direct code edit.
+      </p>
+    </div>
+    <div class="modal-actions">
+      <button class="admin-btn" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7)" onclick="closeModal('workModal')">Cancel</button>
+      <button class="admin-btn admin-btn-primary" onclick="saveWork()">💾 Save Work</button>
+    </div>
+  </div>
+</div>
+
+<!-- PACKAGE MODAL -->
+<div class="modal-overlay" id="pkgModal">
+  <div class="modal">
+    <div class="modal-title" id="pkgModalTitle">Add New Package</div>
+    <div class="admin-form">
+      <input type="hidden" id="pkgId">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="form-group">
+          <label>Package Name *</label>
+          <input type="text" id="pkgName" placeholder="e.g. Professional">
+        </div>
+        <div class="form-group">
+          <label>Price (₹) *</label>
+          <input type="text" id="pkgPrice" placeholder="e.g. 9,999">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end">
+        <div class="form-group">
+          <label>Duration</label>
+          <input type="text" id="pkgDuration" placeholder="per month" value="per month">
+        </div>
+        <div class="form-group" style="display:flex;align-items:center;gap:10px;padding-bottom:18px">
+          <input type="checkbox" id="pkgFeatured" style="width:18px;height:18px;cursor:pointer">
+          <label for="pkgFeatured" style="cursor:pointer">⭐ Mark as Featured</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Features (one per line) *</label>
+        <textarea id="pkgFeaturesInput" style="min-height:140px" placeholder="15 Social Media Posts&#10;Complete Brand Identity&#10;Full SEO Optimization&#10;Website Design (5 Pages)"></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="admin-btn" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7)" onclick="closeModal('pkgModal')">Cancel</button>
+      <button class="admin-btn admin-btn-primary" onclick="savePackage()">💾 Save Package</button>
+    </div>
+  </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

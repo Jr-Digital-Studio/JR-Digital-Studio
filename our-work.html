@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Work & Portfolio | JR Digital Studio</title>
+  <meta name="description" content="Browse JR Digital Studio's portfolio of web design, branding, social media and graphic design projects. See our work across industries.">
+  <meta name="keywords" content="JR Digital Studio portfolio, web design work, branding projects, social media samples, graphic design portfolio">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">JR</div>
+      <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="packages.html">Packages</a></li>
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Quote</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> <span>Our Work</span></div>
+  <div class="section-tag">Portfolio</div>
+  <h1>Our <span style="background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Creative Work</span></h1>
+  <p>A showcase of projects we're proud of — each one a story of transformation.</p>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="section">
+  <div class="section-inner">
+    <!-- FILTER BUTTONS -->
+    <div class="work-filters">
+      <button class="filter-btn active" data-filter="all">All Work</button>
+      <button class="filter-btn" data-filter="web">Web Design</button>
+      <button class="filter-btn" data-filter="branding">Branding</button>
+      <button class="filter-btn" data-filter="social">Social Media</button>
+      <button class="filter-btn" data-filter="print">Print Design</button>
+    </div>
+
+    <!-- WORK GRID -->
+    <div class="work-grid" id="portfolioGrid">
+      <!-- Loaded by script.js from localStorage / works-data.json -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" style="display:none;text-align:center;padding:60px 0">
+      <div style="font-size:64px;margin-bottom:16px">🎨</div>
+      <h3 style="font-family:'Syne',sans-serif;color:var(--dark);margin-bottom:8px">No work in this category yet</h3>
+      <p style="color:var(--text-light)">Check back soon or view all our work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" style="background:var(--off-white)">
+  <div class="section-inner text-center">
+    <h2 class="section-title">Want <span>Results Like These?</span></h2>
+    <p class="section-sub" style="margin:0 auto 32px">Let's collaborate and create something amazing for your brand.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="contact.html" class="btn-primary">🚀 Start Your Project</a>
+      <a href="https://wa.me/918320146648?text=Hi!%20I%20saw%20your%20portfolio%20and%20want%20to%20discuss%20a%20project" target="_blank" class="btn-secondary">💬 WhatsApp Us</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:16px;display:inline-flex">
+          <div class="logo-icon">JR</div>
+          <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
+        </a>
+        <p>Your creative digital partner.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="packages.html">Packages</a>
+        <a href="our-work.html">Our Work</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <a href="services.html">Web Design</a>
+        <a href="services.html">Logo Design</a>
+        <a href="services.html">Social Media</a>
+        <a href="services.html">SEO Services</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:+918320146648">📞 8320146648</a>
+        <a href="tel:+918799170861">📞 8799170861</a>
+        <a href="mailto:jrdigitalstudio8@gmail.com">✉️ Gmail</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 JR Digital Studio. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/918320146648?text=Hi!%20I%20want%20to%20discuss%20a%20project" 
+   class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
+
+<script src="script.js"></script>
+</body>
+</html>

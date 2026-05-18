@@ -1,0 +1,112 @@
+{
+  "works": [
+    {
+      "id": 1,
+      "title": "Restaurant Brand Identity",
+      "category": "branding",
+      "categoryLabel": "Branding",
+      "description": "Complete brand identity design for a premium restaurant chain",
+      "image": "",
+      "emoji": "🍽️",
+      "date": "2024-12-01"
+    },
+    {
+      "id": 2,
+      "title": "E-Commerce Website",
+      "category": "web",
+      "categoryLabel": "Web Design",
+      "description": "Full e-commerce website with custom UI/UX",
+      "image": "",
+      "emoji": "🛒",
+      "date": "2024-11-15"
+    },
+    {
+      "id": 3,
+      "title": "Social Media Campaign",
+      "category": "social",
+      "categoryLabel": "Social Media",
+      "description": "30-day social media campaign for fashion brand",
+      "image": "",
+      "emoji": "📱",
+      "date": "2024-11-01"
+    },
+    {
+      "id": 4,
+      "title": "Corporate Logo Design",
+      "category": "branding",
+      "categoryLabel": "Branding",
+      "description": "Minimalist logo design for tech startup",
+      "image": "",
+      "emoji": "✏️",
+      "date": "2024-10-20"
+    },
+    {
+      "id": 5,
+      "title": "YouTube Channel Art",
+      "category": "social",
+      "categoryLabel": "Social Media",
+      "description": "YouTube banner, thumbnails, and branding kit",
+      "image": "",
+      "emoji": "🎬",
+      "date": "2024-10-10"
+    },
+    {
+      "id": 6,
+      "title": "Real Estate Website",
+      "category": "web",
+      "categoryLabel": "Web Design",
+      "description": "Modern real estate listing website with SEO",
+      "image": "",
+      "emoji": "🏠",
+      "date": "2024-09-25"
+    }
+  ],
+  "packages": [
+    {
+      "id": 1,
+      "name": "Starter",
+      "price": "4,999",
+      "duration": "per month",
+      "featured": false,
+      "features": [
+        "5 Social Media Posts",
+        "1 Logo Design",
+        "Basic SEO Setup",
+        "WhatsApp Support",
+        "1 Revision Round"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Professional",
+      "price": "9,999",
+      "duration": "per month",
+      "featured": true,
+      "features": [
+        "15 Social Media Posts",
+        "Complete Brand Identity",
+        "Full SEO Optimization",
+        "Website Design (5 Pages)",
+        "Priority Support 24/7",
+        "3 Revision Rounds",
+        "Monthly Report"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Enterprise",
+      "price": "19,999",
+      "duration": "per month",
+      "featured": false,
+      "features": [
+        "Unlimited Social Posts",
+        "Full Branding Suite",
+        "Advanced SEO + Ads",
+        "Custom Website",
+        "Dedicated Manager",
+        "Unlimited Revisions",
+        "Weekly Reports"
+      ]
+    }
+  ]
+}
