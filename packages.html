@@ -14,7 +14,7 @@
 <nav class="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <div class="logo-icon">JR</div>
+      <img src="jr.png" alt="JR Digital Studio Logo" class="logo-img">
       <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
     </a>
     <ul class="nav-links">
@@ -48,74 +48,15 @@
   </div>
 </section>
 
-<!-- COMPARISON TABLE -->
+<!-- COMPARISON TABLE - Dynamic from localStorage -->
 <section class="section">
   <div class="section-inner">
     <div class="section-header text-center">
       <span class="section-tag">Compare Plans</span>
       <h2 class="section-title">What's <span>Included</span></h2>
     </div>
-    <div style="overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;background:white;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)">
-        <thead>
-          <tr style="background:var(--primary)">
-            <th style="padding:18px 24px;text-align:left;color:white;font-family:'Syne',sans-serif;font-size:14px">Features</th>
-            <th style="padding:18px 24px;text-align:center;color:white;font-family:'Syne',sans-serif;font-size:14px">Starter</th>
-            <th style="padding:18px 24px;text-align:center;color:white;font-family:'Syne',sans-serif;font-size:14px;background:var(--primary-dark)">Professional ⭐</th>
-            <th style="padding:18px 24px;text-align:center;color:white;font-family:'Syne',sans-serif;font-size:14px">Enterprise</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid var(--light-gray)">
-            <td style="padding:16px 24px;font-weight:600;color:var(--dark)">Social Media Posts</td>
-            <td style="padding:16px 24px;text-align:center;color:var(--text-light)">5 Posts</td>
-            <td style="padding:16px 24px;text-align:center;background:rgba(0,87,255,0.03);font-weight:700;color:var(--primary)">15 Posts</td>
-            <td style="padding:16px 24px;text-align:center;color:var(--text-light)">Unlimited</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--light-gray)">
-            <td style="padding:16px 24px;font-weight:600;color:var(--dark)">Logo Design</td>
-            <td style="padding:16px 24px;text-align:center">✅</td>
-            <td style="padding:16px 24px;text-align:center;background:rgba(0,87,255,0.03)">✅</td>
-            <td style="padding:16px 24px;text-align:center">✅</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--light-gray)">
-            <td style="padding:16px 24px;font-weight:600;color:var(--dark)">Website Design</td>
-            <td style="padding:16px 24px;text-align:center;color:var(--text-light)">—</td>
-            <td style="padding:16px 24px;text-align:center;background:rgba(0,87,255,0.03)">5 Pages</td>
-            <td style="padding:16px 24px;text-align:center">Custom</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--light-gray)">
-            <td style="padding:16px 24px;font-weight:600;color:var(--dark)">SEO Optimization</td>
-            <td style="padding:16px 24px;text-align:center;color:var(--text-light)">Basic</td>
-            <td style="padding:16px 24px;text-align:center;background:rgba(0,87,255,0.03)">Full SEO</td>
-            <td style="padding:16px 24px;text-align:center">Advanced + Ads</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--light-gray)">
-            <td style="padding:16px 24px;font-weight:600;color:var(--dark)">Support</td>
-            <td style="padding:16px 24px;text-align:center;color:var(--text-light)">WhatsApp</td>
-            <td style="padding:16px 24px;text-align:center;background:rgba(0,87,255,0.03)">Priority 24/7</td>
-            <td style="padding:16px 24px;text-align:center">Dedicated Manager</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--light-gray)">
-            <td style="padding:16px 24px;font-weight:600;color:var(--dark)">Revisions</td>
-            <td style="padding:16px 24px;text-align:center;color:var(--text-light)">1 Round</td>
-            <td style="padding:16px 24px;text-align:center;background:rgba(0,87,255,0.03)">3 Rounds</td>
-            <td style="padding:16px 24px;text-align:center">Unlimited</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--light-gray)">
-            <td style="padding:16px 24px;font-weight:600;color:var(--dark)">Monthly Report</td>
-            <td style="padding:16px 24px;text-align:center;color:var(--text-light)">—</td>
-            <td style="padding:16px 24px;text-align:center;background:rgba(0,87,255,0.03)">✅</td>
-            <td style="padding:16px 24px;text-align:center">Weekly Reports</td>
-          </tr>
-          <tr>
-            <td style="padding:20px 24px;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--dark)">Price</td>
-            <td style="padding:20px 24px;text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--primary)">₹4,999/mo</td>
-            <td style="padding:20px 24px;text-align:center;background:rgba(0,87,255,0.03);font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--primary)">₹9,999/mo</td>
-            <td style="padding:20px 24px;text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--primary)">₹19,999/mo</td>
-          </tr>
-        </tbody>
-      </table>
+    <div style="overflow-x:auto" id="compareTableWrap">
+      <!-- JS se load hogi -->
     </div>
   </div>
 </section>
@@ -165,7 +106,7 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a href="index.html" class="nav-logo" style="margin-bottom:16px;display:inline-flex">
-          <div class="logo-icon">JR</div>
+          <img src="jr.png" alt="JR Digital Studio Logo" class="logo-img">
           <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
         </a>
         <p>Your creative digital partner for all business needs.</p>

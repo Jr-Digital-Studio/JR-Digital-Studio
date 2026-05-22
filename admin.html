@@ -8,126 +8,137 @@
   <link rel="stylesheet" href="style.css">
   <style>
     body { background: #0F1724; min-height: 100vh; }
-    /* Login Screen */
     #loginScreen {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, #0A1628, #162040);
     }
     .login-box {
-      background: #162040;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 24px;
-      padding: 48px;
-      width: 100%; max-width: 420px;
-      text-align: center;
+      background: #162040; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px; padding: 44px; width: 100%; max-width: 400px; text-align: center;
     }
     .login-logo {
-      width: 64px; height: 64px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 24px; color: white;
-      margin: 0 auto 24px;
-      box-shadow: 0 8px 32px rgba(0,87,255,0.4);
+      width: 80px; height: 80px; margin: 0 auto 20px; border-radius: 20px;
+      overflow: hidden; border: 2px solid rgba(0,87,255,0.3);
+      box-shadow: 0 8px 28px rgba(0,87,255,0.35);
+      background: #1E2D4A; display: flex; align-items: center; justify-content: center;
     }
-    .login-title { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: white; margin-bottom: 6px; }
-    .login-sub { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 32px; }
+    .login-logo img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+    .login-title { font-family: 'Raleway', sans-serif; font-size: 22px; font-weight: 900; color: white; margin-bottom: 5px; }
+    .login-sub { color: rgba(255,255,255,0.35); font-size: 12px; margin-bottom: 28px; letter-spacing: 1px; }
     .login-input {
-      width: 100%; padding: 13px 18px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px; color: white;
-      font-family: inherit; font-size: 14px;
-      outline: none; margin-bottom: 14px;
-      transition: var(--transition);
+      width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09); border-radius: 11px; color: white;
+      font-family: 'Nunito', sans-serif; font-size: 14px; outline: none; margin-bottom: 12px; transition: all 0.3s;
     }
-    .login-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,87,255,0.15); }
+    .login-input:focus { border-color: #0057FF; box-shadow: 0 0 0 3px rgba(0,87,255,0.13); }
     .login-btn {
-      width: 100%; padding: 14px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white; border: none; border-radius: 12px;
-      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
-      cursor: pointer; transition: var(--transition);
-      box-shadow: 0 6px 24px rgba(0,87,255,0.35);
+      width: 100%; padding: 13px; background: linear-gradient(135deg, #0057FF, #4D8EFF);
+      color: white; border: none; border-radius: 12px; font-family: 'Raleway', sans-serif;
+      font-size: 15px; font-weight: 900; cursor: pointer; transition: all 0.3s;
+      box-shadow: 0 5px 20px rgba(0,87,255,0.32);
     }
     .login-btn:hover { transform: translateY(-2px); }
-
-    /* App Layout */
-    #adminApp {
-      display: none;
-      min-height: 100vh;
+    #adminApp { display: none; min-height: 100vh; }
+    .admin-mobile-header {
+      display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: #162040; padding: 14px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      align-items: center; justify-content: space-between;
     }
+    .admin-hamburger { background: none; border: none; cursor: pointer; padding: 6px; }
+    .admin-hamburger span { display: block; width: 22px; height: 2px; background: white; margin: 4px 0; border-radius: 2px; }
     @media (max-width: 1024px) {
-      .admin-sidebar { transform: translateX(-100%); }
-      .admin-sidebar.open { transform: translateX(0); }
-      .admin-main { margin-left: 0 !important; }
+      .admin-mobile-header { display: flex; }
+      .admin-main { padding-top: 70px !important; }
+    }
+    @media (max-width: 600px) {
+      .login-box { padding: 28px 20px; margin: 16px; }
+      .admin-main { padding: 70px 14px 20px !important; }
+      .admin-header { flex-direction: column; align-items: flex-start; }
+      .modal { padding: 20px; }
+      .modal .admin-form [style*="grid-template-columns:1fr 1fr"] { display: block; }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="admin-body">
 
 <!-- LOGIN -->
 <div id="loginScreen">
   <div class="login-box">
-    <div class="login-logo">JR</div>
+    <div class="login-logo">
+      <img src="jr.png" alt="JR Digital Studio" onerror="this.outerHTML='<span style=\'font-family:Raleway;font-weight:900;font-size:22px;color:white\'>JR</span>'">
+    </div>
     <div class="login-title">Admin Panel</div>
-    <div class="login-sub">JR Digital Studio — Restricted Access</div>
+    <div class="login-sub">JR DIGITAL STUDIO · RESTRICTED</div>
     <input type="text" id="adminUser" class="login-input" placeholder="Username" autocomplete="username">
     <input type="password" id="adminPass" class="login-input" placeholder="Password" autocomplete="current-password">
-    <button class="login-btn" onclick="login()">🔐 Login to Admin</button>
-    <p style="margin-top:20px;font-size:12px;color:rgba(255,255,255,0.3)">Default: jradmin / jrdigital2025</p>
+    <button class="login-btn" onclick="login()">🔐 Login</button>
   </div>
 </div>
 
 <!-- ADMIN APP -->
-<div id="adminApp" style="display:none">
+<div id="adminApp">
+
+  <!-- Mobile Header -->
+  <div class="admin-mobile-header">
+    <button class="admin-hamburger" onclick="document.getElementById('adminSidebar').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <span style="font-family:Raleway;font-weight:900;color:white;font-size:15px">JR Admin</span>
+    <button onclick="logout()" style="background:rgba(255,61,87,0.15);color:#FF6B6B;border:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito">Logout</button>
+  </div>
 
   <!-- SIDEBAR -->
   <aside class="admin-sidebar" id="adminSidebar">
     <div class="admin-logo">
-      <a href="index.html" class="nav-logo">
-        <div class="logo-icon" style="width:36px;height:36px;font-size:14px">JR</div>
-        <div><div class="logo-text" style="color:white;font-size:16px">JR Digital</div><div class="logo-sub">Admin Panel</div></div>
-      </a>
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="jr.png" alt="Logo" style="height:36px;width:auto;object-fit:contain" onerror="this.style.display='none'">
+        <div>
+          <div style="font-family:Raleway;font-weight:900;color:white;font-size:15px;line-height:1">JR Digital</div>
+          <div style="font-size:10px;color:#00C2FF;letter-spacing:2px;text-transform:uppercase;font-weight:700">Studio</div>
+        </div>
+      </div>
     </div>
     <nav class="admin-nav">
-      <a href="#" data-section="dashboard" class="active" onclick="showSection('dashboard');return false">
+      <a href="#" data-section="dashboard" class="active" onclick="showSection('dashboard');closeSidebar();return false">
         <span>📊</span> Dashboard
       </a>
-      <a href="#" data-section="works" onclick="showSection('works');loadWorksTable();return false">
-        <span>🖼️</span> Our Work
+      <a href="#" data-section="works" onclick="showSection('works');loadWorksTable();closeSidebar();return false">
+        <span>🖼️</span> Our Work (Portfolio)
       </a>
-      <a href="#" data-section="packages" onclick="showSection('packages');loadPackagesTable();return false">
-        <span>📦</span> Packages
+      <a href="#" data-section="packages" onclick="showSection('packages');loadPackagesTable();closeSidebar();return false">
+        <span>📦</span> Packages & Pricing
       </a>
-      <a href="#" data-section="settings" onclick="showSection('settings');return false">
+      <a href="#" data-section="seo" onclick="showSection('seo');loadSeoSettings();closeSidebar();return false">
+        <span>🔍</span> SEO Settings
+      </a>
+      <a href="#" data-section="settings" onclick="showSection('settings');closeSidebar();return false">
         <span>⚙️</span> Settings
       </a>
-      <a href="index.html" style="margin-top:8px">
-        <span>🌐</span> View Website
+      <a href="index.html" target="_blank" style="margin-top:16px">
+        <span>🌐</span> Website Dekho
       </a>
-      <a href="#" onclick="logout();return false" style="margin-top:auto;color:#FF6B6B">
+      <a href="#" onclick="logout();return false" style="color:#FF6B6B;">
         <span>🚪</span> Logout
       </a>
     </nav>
   </aside>
 
-  <!-- MAIN -->
+  <!-- MAIN CONTENT -->
   <main class="admin-main">
     <div class="admin-header">
       <div>
         <div id="pageTitle" class="admin-title">Dashboard</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px">Welcome back, Admin 👋</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:3px">Welcome back, Jamil bhai 👋</div>
       </div>
-      <div style="display:flex;gap:12px">
-        <a href="index.html" target="_blank" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);padding:9px 18px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:600">🌐 Preview Site</a>
-        <button onclick="logout()" style="background:rgba(255,61,87,0.15);color:#FF6B6B;border:none;padding:9px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">🚪 Logout</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="index.html" target="_blank" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);padding:8px 16px;border-radius:9px;text-decoration:none;font-size:12px;font-weight:700">🌐 Website</a>
+        <button onclick="logout()" style="background:rgba(255,61,87,0.14);color:#FF6B6B;border:none;padding:8px 16px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito">🚪 Logout</button>
       </div>
     </div>
 
-    <!-- DASHBOARD SECTION -->
+    <!-- ===== DASHBOARD ===== -->
     <div id="dashboard" class="admin-section active">
       <div class="admin-stats">
         <div class="admin-stat">
@@ -144,132 +155,155 @@
         </div>
         <div class="admin-stat">
           <div class="admin-stat-num" id="totalBranding">0</div>
-          <div class="admin-stat-label">Branding Projects</div>
+          <div class="admin-stat-label">Branding</div>
         </div>
       </div>
-
-      <!-- Quick Actions -->
-      <div class="admin-card" style="margin-bottom:24px">
+      <div class="admin-card" style="margin-bottom:20px">
         <div class="admin-card-title">⚡ Quick Actions</div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <button class="admin-btn admin-btn-primary" onclick="showSection('works');loadWorksTable();openAddWorkModal()">➕ Add New Work</button>
-          <button class="admin-btn admin-btn-success" onclick="showSection('packages');loadPackagesTable();openAddPackageModal()">➕ Add Package</button>
-          <a href="our-work.html" target="_blank" class="admin-btn admin-btn-primary" style="text-decoration:none">👁️ View Portfolio</a>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="admin-btn admin-btn-primary" onclick="showSection('works');loadWorksTable();openAddWorkModal()">➕ Naya Work Add Karo</button>
+          <button class="admin-btn admin-btn-success" onclick="showSection('packages');loadPackagesTable();openAddPackageModal()">➕ Package Add Karo</button>
+          <a href="our-work.html" target="_blank" class="admin-btn admin-btn-primary" style="text-decoration:none">👁️ Portfolio Dekho</a>
         </div>
       </div>
-
-      <!-- Recent Works Table -->
       <div class="admin-card">
         <div class="admin-card-title">
           🕐 Recent Work
-          <button class="admin-btn admin-btn-primary" onclick="showSection('works');loadWorksTable()">View All</button>
+          <button class="admin-btn admin-btn-primary" onclick="showSection('works');loadWorksTable()">Sab Dekho</button>
         </div>
+        <div style="overflow-x:auto">
         <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="recentWorksTable">
-            <tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px">Loading...</td></tr>
-          </tbody>
+          <thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="recentWorksTable"><tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">Loading...</td></tr></tbody>
         </table>
+        </div>
       </div>
     </div>
 
-    <!-- WORKS SECTION -->
+    <!-- ===== OUR WORK ===== -->
     <div id="works" class="admin-section">
       <div class="admin-card">
         <div class="admin-card-title">
-          🖼️ All Portfolio Work
-          <button class="admin-btn admin-btn-primary" onclick="openAddWorkModal()">➕ Add New Work</button>
+          🖼️ Portfolio Works
+          <button class="admin-btn admin-btn-primary" onclick="openAddWorkModal()">➕ Naya Work</button>
         </div>
+        <div style="overflow-x:auto">
         <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Icon</th>
-              <th>Title / Description</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="worksTableBody">
-            <tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px">Loading...</td></tr>
-          </tbody>
+          <thead><tr><th>Icon</th><th>Title / Caption / Keywords</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="worksTableBody"><tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">Loading...</td></tr></tbody>
         </table>
+        </div>
       </div>
     </div>
 
-    <!-- PACKAGES SECTION -->
+    <!-- ===== PACKAGES ===== -->
     <div id="packages" class="admin-section">
       <div class="admin-card">
         <div class="admin-card-title">
-          📦 All Packages
-          <button class="admin-btn admin-btn-primary" onclick="openAddPackageModal()">➕ Add Package</button>
+          📦 Packages & Pricing
+          <button class="admin-btn admin-btn-primary" onclick="openAddPackageModal()">➕ Naya Package</button>
         </div>
+        <div style="overflow-x:auto">
         <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Duration</th>
-              <th>Features</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="packagesTableBody">
-            <tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:24px">Loading...</td></tr>
-          </tbody>
+          <thead><tr><th>Name</th><th>Price</th><th>Duration</th><th>Features</th><th>Actions</th></tr></thead>
+          <tbody id="packagesTableBody"><tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">Loading...</td></tr></tbody>
         </table>
+        </div>
       </div>
     </div>
 
-    <!-- SETTINGS SECTION -->
+    <!-- ===== SEO SETTINGS ===== -->
+    <div id="seo" class="admin-section">
+      <div class="admin-card">
+        <div class="admin-card-title">🔍 Website SEO Settings</div>
+        <p style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:20px">Yahan changes karo, phir HTML files mein update karo ya developer ko do.</p>
+        <div class="admin-form">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label>Website / Studio Name</label>
+              <input type="text" id="seoSiteName" value="JR Digital Studio">
+            </div>
+            <div class="form-group">
+              <label>Author Name</label>
+              <input type="text" id="seoAuthor" value="JR Digital Studio">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Home Page SEO Title (50-60 characters)</label>
+            <input type="text" id="seoHomeTitle" placeholder="JR Digital Studio | Creative Digital Agency">
+            <div id="titleCount" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px">0 characters</div>
+          </div>
+          <div class="form-group">
+            <label>Home Page Meta Description (150-160 characters)</label>
+            <textarea id="seoHomeDesc" style="min-height:80px" placeholder="JR Digital Studio provides web design, branding, social media & SEO services..."></textarea>
+            <div id="descCount" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px">0 characters</div>
+          </div>
+          <div class="form-group">
+            <label>Main Keywords (comma separated)</label>
+            <textarea id="seoKeywords" style="min-height:70px" placeholder="digital agency, web design, logo design, social media, SEO, Gujarat, Visnagar"></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div class="form-group">
+              <label>Instagram Page URL</label>
+              <input type="url" id="seoInstaPage" placeholder="https://instagram.com/yourpage">
+            </div>
+            <div class="form-group">
+              <label>Facebook Page URL</label>
+              <input type="url" id="seoFbPage" placeholder="https://facebook.com/yourpage">
+            </div>
+          </div>
+          <!-- SEO Tips -->
+          <div style="background:#1E2D4A;border-radius:12px;padding:18px;margin-bottom:18px">
+            <div style="font-family:Raleway;font-size:13px;font-weight:800;color:#00C2FF;margin-bottom:10px">💡 SEO Tips</div>
+            <ul style="color:rgba(255,255,255,0.55);font-size:12px;list-style:none;display:flex;flex-direction:column;gap:6px">
+              <li>✓ Title 50-60 characters rakho - Google zyada dikhata hai</li>
+              <li>✓ Description 150-160 characters - click badhta hai</li>
+              <li>✓ Keywords mein local area naam bhi dalo (e.g. Visnagar, Mehsana, Gujarat)</li>
+              <li>✓ Har work post ke liye alag keywords use karo</li>
+              <li>✓ Images ke alt text zaroori hain SEO ke liye</li>
+              <li>✓ Instagram aur Facebook links footer mein daalo</li>
+            </ul>
+          </div>
+          <button class="admin-btn admin-btn-primary" onclick="saveSeoForm()" style="padding:11px 28px">💾 SEO Settings Save Karo</button>
+        </div>
+      </div>
+      <!-- Generated Meta Tags -->
+      <div class="admin-card">
+        <div class="admin-card-title">📋 Generated Meta Tags (Copy Karo)</div>
+        <p style="color:rgba(255,255,255,0.4);font-size:12px;margin-bottom:14px">Yeh tags apni HTML files ke &lt;head&gt; mein paste karo:</p>
+        <button class="admin-btn admin-btn-success" onclick="generateMeta()" style="margin-bottom:16px">⚙️ Meta Tags Generate Karo</button>
+        <textarea id="generatedMeta" style="width:100%;background:#0F1724;border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#4D8EFF;padding:14px;font-size:12px;font-family:monospace;min-height:180px;outline:none" readonly placeholder="Upar 'Generate' button click karo..."></textarea>
+      </div>
+    </div>
+
+    <!-- ===== SETTINGS ===== -->
     <div id="settings" class="admin-section">
       <div class="admin-card">
         <div class="admin-card-title">⚙️ Studio Information</div>
         <div class="admin-form">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div class="form-group">
-              <label>Studio Name</label>
-              <input type="text" value="JR Digital Studio">
-            </div>
-            <div class="form-group">
-              <label>Primary Phone</label>
-              <input type="text" value="8320146648">
-            </div>
-            <div class="form-group">
-              <label>Secondary Phone</label>
-              <input type="text" value="8799170861">
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" value="jrdigitalstudio8@gmail.com">
-            </div>
+            <div class="form-group"><label>Studio Name</label><input type="text" value="JR Digital Studio"></div>
+            <div class="form-group"><label>Primary Phone</label><input type="text" value="8320146648"></div>
+            <div class="form-group"><label>Secondary Phone</label><input type="text" value="8799170861"></div>
+            <div class="form-group"><label>Email</label><input type="email" value="jrdigitalstudio8@gmail.com"></div>
           </div>
-          <button class="admin-btn admin-btn-primary" onclick="saveSettings()" style="padding:11px 28px;margin-top:8px">💾 Save Settings</button>
+          <button class="admin-btn admin-btn-primary" onclick="saveSettings()" style="padding:11px 28px;margin-top:6px">💾 Save Karo</button>
         </div>
       </div>
-
       <div class="admin-card">
         <div class="admin-card-title" style="color:#FF6B6B">⚠️ Danger Zone</div>
-        <p style="color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:16px">Reset all portfolio and package data to factory defaults. This cannot be undone.</p>
-        <button class="admin-btn admin-btn-danger" onclick="resetData()" style="padding:10px 24px">🔄 Reset All Data to Defaults</button>
+        <p style="color:rgba(255,255,255,0.45);font-size:13px;margin-bottom:14px">Sabhi portfolio aur package data default par reset ho jayega.</p>
+        <button class="admin-btn admin-btn-danger" onclick="resetData()" style="padding:10px 22px">🔄 Sab Reset Karo</button>
       </div>
     </div>
-
   </main>
 </div>
 
-<!-- WORK MODAL -->
+<!-- ===== WORK MODAL ===== -->
 <div class="modal-overlay" id="workModal">
   <div class="modal">
-    <div class="modal-title" id="workModalTitle">Add New Work</div>
-    <div class="admin-form">
+    <div class="modal-title" id="workModalTitle">➕ Naya Work</div>
+    <div class="admin-form" id="workForm">
       <input type="hidden" id="workId">
       <div class="form-group">
         <label>Project Title *</label>
@@ -293,62 +327,148 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Description</label>
-        <input type="text" id="workDesc" placeholder="Brief project description">
+        <label>Short Description</label>
+        <input type="text" id="workDesc" placeholder="2-3 word brief description">
       </div>
       <div class="form-group">
-        <label>Date</label>
-        <input type="date" id="workDate">
+        <label>Caption (Instagram jaisi - detail mein likho)</label>
+        <textarea id="workCaption" style="min-height:90px" placeholder="Is project ke baare mein detail mein likho. Kya kiya, kaise kiya, client ko kya mila..."></textarea>
       </div>
-      <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:-8px">
-        💡 To add images, upload them to your hosting and add image URL via direct code edit.
-      </p>
+      <div class="form-group">
+        <label>Keywords (comma se alag karo, # mat likho)</label>
+        <input type="text" id="workKeywordsInput" placeholder="branding, logo, restaurant, identity, design">
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px">Portfolio mein hashtags ban jayenge aur SEO mein kaam aayenge</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="form-group">
+          <label>SEO Title (50-60 chars)</label>
+          <input type="text" id="workSeoTitle" placeholder="Project Name - JR Digital Studio">
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="workDate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>SEO Meta Description (150-160 chars)</label>
+        <input type="text" id="workSeoDesc" placeholder="Brief description for Google search result...">
+      </div>
+      <div style="background:#1E2D4A;border-radius:10px;padding:12px;font-size:11px;color:rgba(255,255,255,0.35)">
+        📷 Image upload ke liye: apni hosting par image upload karo, phir script.js mein image URL add karo. Ya future update mein image upload feature add hoga.
+      </div>
     </div>
     <div class="modal-actions">
-      <button class="admin-btn" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7)" onclick="closeModal('workModal')">Cancel</button>
-      <button class="admin-btn admin-btn-primary" onclick="saveWork()">💾 Save Work</button>
+      <button class="admin-btn" style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)" onclick="closeModal('workModal')">Cancel</button>
+      <button class="admin-btn admin-btn-primary" onclick="saveWork()">💾 Save Karo</button>
     </div>
   </div>
 </div>
 
-<!-- PACKAGE MODAL -->
+<!-- ===== PACKAGE MODAL ===== -->
 <div class="modal-overlay" id="pkgModal">
   <div class="modal">
-    <div class="modal-title" id="pkgModalTitle">Add New Package</div>
-    <div class="admin-form">
+    <div class="modal-title" id="pkgModalTitle">➕ Naya Package</div>
+    <div class="admin-form" id="pkgForm">
       <input type="hidden" id="pkgId">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-        <div class="form-group">
-          <label>Package Name *</label>
-          <input type="text" id="pkgName" placeholder="e.g. Professional">
-        </div>
-        <div class="form-group">
-          <label>Price (₹) *</label>
-          <input type="text" id="pkgPrice" placeholder="e.g. 9,999">
-        </div>
+        <div class="form-group"><label>Package Name *</label><input type="text" id="pkgName" placeholder="e.g. Professional"></div>
+        <div class="form-group"><label>Price (₹) *</label><input type="text" id="pkgPrice" placeholder="e.g. 9,999"></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end">
-        <div class="form-group">
-          <label>Duration</label>
-          <input type="text" id="pkgDuration" placeholder="per month" value="per month">
-        </div>
-        <div class="form-group" style="display:flex;align-items:center;gap:10px;padding-bottom:18px">
-          <input type="checkbox" id="pkgFeatured" style="width:18px;height:18px;cursor:pointer">
-          <label for="pkgFeatured" style="cursor:pointer">⭐ Mark as Featured</label>
+        <div class="form-group"><label>Duration</label><input type="text" id="pkgDuration" placeholder="per month" value="per month"></div>
+        <div class="form-group" style="display:flex;align-items:center;gap:8px;padding-bottom:16px">
+          <input type="checkbox" id="pkgFeatured" style="width:16px;height:16px;cursor:pointer">
+          <label for="pkgFeatured" style="cursor:pointer">⭐ Featured</label>
         </div>
       </div>
       <div class="form-group">
-        <label>Features (one per line) *</label>
-        <textarea id="pkgFeaturesInput" style="min-height:140px" placeholder="15 Social Media Posts&#10;Complete Brand Identity&#10;Full SEO Optimization&#10;Website Design (5 Pages)"></textarea>
+        <label>Features (ek line mein ek feature) *</label>
+        <textarea id="pkgFeaturesInput" style="min-height:130px" placeholder="15 Social Media Posts&#10;Complete Brand Identity&#10;Full SEO Optimization&#10;Website Design (5 Pages)&#10;Priority Support 24/7"></textarea>
       </div>
     </div>
     <div class="modal-actions">
-      <button class="admin-btn" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7)" onclick="closeModal('pkgModal')">Cancel</button>
-      <button class="admin-btn admin-btn-primary" onclick="savePackage()">💾 Save Package</button>
+      <button class="admin-btn" style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)" onclick="closeModal('pkgModal')">Cancel</button>
+      <button class="admin-btn admin-btn-primary" onclick="savePackage()">💾 Save Karo</button>
     </div>
   </div>
 </div>
 
 <script src="admin.js"></script>
+<script>
+function closeSidebar() {
+  if (window.innerWidth <= 1024) {
+    document.getElementById('adminSidebar').classList.remove('open');
+  }
+}
+
+// Character counter for SEO fields
+document.addEventListener('DOMContentLoaded', () => {
+  const titleEl = document.getElementById('seoHomeTitle');
+  const descEl = document.getElementById('seoHomeDesc');
+  if (titleEl) {
+    titleEl.addEventListener('input', () => {
+      const n = titleEl.value.length;
+      const el = document.getElementById('titleCount');
+      el.textContent = n + ' characters';
+      el.style.color = n > 60 ? '#FF3D57' : n > 50 ? '#00C853' : 'rgba(255,255,255,0.35)';
+    });
+  }
+  if (descEl) {
+    descEl.addEventListener('input', () => {
+      const n = descEl.value.length;
+      const el = document.getElementById('descCount');
+      el.textContent = n + ' characters';
+      el.style.color = n > 160 ? '#FF3D57' : n > 140 ? '#00C853' : 'rgba(255,255,255,0.35)';
+    });
+  }
+});
+
+function generateMeta() {
+  const title = document.getElementById('seoHomeTitle').value || 'JR Digital Studio | Creative Digital Agency';
+  const desc = document.getElementById('seoHomeDesc').value || 'JR Digital Studio - Web Design, Branding & SEO';
+  const kw = document.getElementById('seoKeywords').value || 'digital agency, web design, logo design';
+  const author = document.getElementById('seoAuthor').value || 'JR Digital Studio';
+  const fb = document.getElementById('seoFbPage').value || '';
+  const insta = document.getElementById('seoInstaPage').value || '';
+
+  const meta = `<!-- SEO Meta Tags - JR Digital Studio -->
+<title>${title}</title>
+<meta name="description" content="${desc}">
+<meta name="keywords" content="${kw}">
+<meta name="author" content="${author}">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (Facebook/WhatsApp preview) -->
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="jr.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${desc}">
+
+<!-- Social Links -->
+${fb ? `<!-- Facebook: ${fb} -->` : ''}
+${insta ? `<!-- Instagram: ${insta} -->` : ''}
+
+<!-- Schema (Google Business) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "JR Digital Studio",
+  "description": "${desc}",
+  "telephone": "+918320146648",
+  "email": "jrdigitalstudio8@gmail.com",
+  "sameAs": ["${fb}","${insta}"]
+}
+<\/script>`;
+
+  document.getElementById('generatedMeta').value = meta;
+  showAdminToast('✅ Meta tags ready! Copy karo aur HTML mein paste karo.');
+}
+</script>
 </body>
 </html>

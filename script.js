@@ -115,19 +115,22 @@ function renderWorks(works, grid) {
     const card = document.createElement('div');
     card.className = 'work-card reveal';
     card.dataset.category = w.category;
+    const kwords = (w.keywords||[]).slice(0,4).map(k=>`<span class="work-keyword">#${k}</span>`).join('');
     card.innerHTML = `
       <div class="work-img">
-        ${w.image ? `<img src="${w.image}" alt="${w.title}" loading="lazy">` : `<span style="font-size:56px">${w.emoji || '🎨'}</span>`}
+        ${w.image ? `<img src="${w.image}" alt="${w.title}" loading="lazy">` : `<span style="font-size:52px">${w.emoji || '🎨'}</span>`}
         <div class="work-overlay">
           <div class="work-overlay-text">
-            <div style="font-size:15px;font-weight:700">${w.title}</div>
-            <span>${w.description || ''}</span>
+            <div style="font-size:14px;font-weight:800">${w.title}</div>
+            <span style="font-size:12px;opacity:0.8">${(w.caption||w.description||'').substring(0,80)}${(w.caption||w.description||'').length>80?'...':''}</span>
           </div>
         </div>
       </div>
       <div class="work-info">
         <span class="work-tag">${w.categoryLabel}</span>
         <h4>${w.title}</h4>
+        ${w.caption ? `<p class="work-caption">${w.caption.substring(0,90)}${w.caption.length>90?'...':''}</p>` : ''}
+        ${kwords ? `<div class="work-keywords">${kwords}</div>` : ''}
       </div>
     `;
     grid.appendChild(card);
@@ -158,7 +161,6 @@ function initFilters(works) {
 // Load Packages from JSON/localStorage
 async function loadPackages() {
   const grid = document.querySelector('.packages-grid');
-  if (!grid) return;
 
   try {
     const stored = localStorage.getItem('jr_packages');
@@ -170,9 +172,10 @@ async function loadPackages() {
       const data = await res.json();
       packages = data.packages;
     }
-    renderPackages(packages, grid);
+    if (grid) renderPackages(packages, grid);
+    renderCompareTable(packages);
   } catch (e) {
-    // CSS fallback already in HTML
+    // fallback
   }
 }
 
@@ -196,6 +199,83 @@ function renderPackages(packages, grid) {
     `;
     grid.appendChild(card);
   });
+}
+
+// Build comparison table dynamically from packages data
+function renderCompareTable(packages) {
+  const wrap = document.getElementById('compareTableWrap');
+  if (!wrap || !packages || packages.length === 0) return;
+
+  // Collect all unique features across all packages
+  const allFeatures = [];
+  packages.forEach(pkg => {
+    (pkg.features || []).forEach(f => {
+      if (!allFeatures.includes(f)) allFeatures.push(f);
+    });
+  });
+
+  // Build header
+  let headCols = packages.map((pkg, i) => {
+    const isFeatured = pkg.featured;
+    return `<th style="padding:16px 20px;text-align:center;color:white;font-family:'Raleway',sans-serif;font-size:14px;font-weight:900;${isFeatured ? 'background:var(--primary-dark)' : ''}">
+      ${pkg.name}${isFeatured ? ' ⭐' : ''}
+    </th>`;
+  }).join('');
+
+  // Build feature rows
+  let featureRows = allFeatures.map(feature => {
+    let cols = packages.map((pkg, i) => {
+      const has = (pkg.features || []).includes(feature);
+      const isFeatured = pkg.featured;
+      return `<td style="padding:14px 20px;text-align:center;${isFeatured ? 'background:rgba(0,87,255,0.03);' : ''}${has ? 'color:var(--primary);font-weight:700' : 'color:var(--text-light)'}">
+        ${has ? '✅' : '—'}
+      </td>`;
+    }).join('');
+    return `<tr style="border-bottom:1px solid var(--light-gray)">
+      <td style="padding:14px 20px;font-weight:700;color:var(--dark);font-size:13px">${feature}</td>
+      ${cols}
+    </tr>`;
+  }).join('');
+
+  // Price row
+  let priceRow = packages.map((pkg, i) => {
+    return `<td style="padding:18px 20px;text-align:center;font-family:'Raleway',sans-serif;font-weight:900;font-size:20px;color:var(--primary);${pkg.featured ? 'background:rgba(0,87,255,0.03)' : ''}">
+      ₹${pkg.price}<span style="font-size:12px;font-weight:600;color:var(--text-light)">/${pkg.duration.replace('per ','')}</span>
+    </td>`;
+  }).join('');
+
+  // Get Started row
+  let btnRow = packages.map(pkg => {
+    return `<td style="padding:14px 20px;text-align:center;${pkg.featured ? 'background:rgba(0,87,255,0.03)' : ''}">
+      <a href="https://wa.me/918320146648?text=Hi!%20I'm%20interested%20in%20the%20${encodeURIComponent(pkg.name)}%20Package"
+         target="_blank"
+         style="display:inline-block;background:${pkg.featured ? 'var(--primary)' : 'var(--off-white)'};color:${pkg.featured ? 'white' : 'var(--primary)'};padding:9px 20px;border-radius:9px;text-decoration:none;font-weight:800;font-size:13px;font-family:'Raleway',sans-serif">
+        Get Started →
+      </a>
+    </td>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <table style="width:100%;border-collapse:collapse;background:white;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);min-width:480px">
+      <thead>
+        <tr style="background:var(--primary)">
+          <th style="padding:16px 20px;text-align:left;color:white;font-family:'Raleway',sans-serif;font-size:14px;font-weight:900">Features</th>
+          ${headCols}
+        </tr>
+      </thead>
+      <tbody>
+        ${featureRows}
+        <tr style="border-bottom:1px solid var(--light-gray)">
+          <td style="padding:18px 20px;font-family:'Raleway',sans-serif;font-weight:900;font-size:15px;color:var(--dark)">💰 Price</td>
+          ${priceRow}
+        </tr>
+        <tr>
+          <td style="padding:14px 20px;font-weight:700;color:var(--dark);font-size:13px">Get Started</td>
+          ${btnRow}
+        </tr>
+      </tbody>
+    </table>
+  `;
 }
 
 // Contact Form
