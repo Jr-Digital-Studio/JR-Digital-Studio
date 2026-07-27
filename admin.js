@@ -348,3 +348,24 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('adminPass')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
   document.getElementById('adminUser')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
 });
+// Data Export Function for GitHub Pages Update
+function exportLiveJson() {
+    const works = getWorks();
+    const packages = getPackages();
+    
+    const fullData = {
+        works: works,
+        packages: packages
+    };
+
+    // JSON file create karna
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullData, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "works-data.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+
+    showAdminToast("✅ JSON File Download ho gayi! Ise GitHub par upload kar dein.");
+}
