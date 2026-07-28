@@ -1,7 +1,12 @@
 // ===== JR Digital Studio - Admin Panel Script =====
 
-const ADMIN_USER = 'Jamil@88109';
-const ADMIN_PASS = 'Jiya@10988';
+const ADMIN_USER = '8128075345';
+const ADMIN_PASS = 'Jiya@2026';
+
+// GitHub Configuration (Aapki details set hain)
+const GH_USER = "Jr-Digital-Studio"; 
+const GH_REPO = "JR-Digital-Studio"; 
+const GH_TOKEN = "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";
 
 // ===== AUTH =====
 function checkAuth() { return sessionStorage.getItem('jr_admin_auth') === 'true'; }
@@ -110,7 +115,7 @@ function loadWorksTable() {
         <strong>${w.title}</strong><br>
         <small style="color:rgba(255,255,255,0.38)">${w.caption ? w.caption.substring(0,50)+'...' : w.description||''}</small><br>
         <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
-          ${(w.keywords||[]).map(k=>`<span style="background:rgba(0,87,255,0.2);color:#4D8EFF;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700">#${k}</span>`).join('')}
+           ${(w.keywords||[]).map(k=>`<span style="background:rgba(0,87,255,0.2);color:#4D8EFF;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700">#${k}</span>`).join('')}
         </div>
       </td>
       <td><span class="badge badge-blue">${w.categoryLabel}</span></td>
@@ -160,42 +165,114 @@ function editWork(id) {
   openModal('workModal');
 }
 
-function saveWork() {
+// ===== UPDATED SAVE WORK WITH GITHUB API AUTO-PUSH & PHOTO UPLOAD =====
+async function saveWork() {
   const title = document.getElementById('workTitle').value.trim();
   const category = document.getElementById('workCategory').value;
   if (!title || !category) { showAdminToast('❌ Title aur category zaroori hain', 'error'); return; }
 
-  const catLabels = { web:'Web Design', branding:'Branding', social:'Social Media', print:'Print Design', video:'Video' };
-  const works = getWorks();
-  const kwRaw = document.getElementById('workKeywordsInput').value;
-  const keywords = kwRaw.split(',').map(k=>k.trim().replace(/^#/,'')).filter(Boolean);
+  showAdminToast("⏳ GitHub par sync ho raha hai...", "success");
 
-  const workData = {
-    title, category,
-    categoryLabel: catLabels[category]||category,
-    emoji: document.getElementById('workEmoji').value||'🎨',
-    description: document.getElementById('workDesc').value.trim(),
-    caption: document.getElementById('workCaption').value.trim(),
-    keywords,
-    seoTitle: document.getElementById('workSeoTitle').value.trim(),
-    seoDesc: document.getElementById('workSeoDesc').value.trim(),
-    date: document.getElementById('workDate').value || new Date().toISOString().split('T')[0],
-    image: ''
-  };
+  try {
+    const catLabels = { web:'Web Design', branding:'Branding', social:'Social Media', print:'Print Design', video:'Video' };
+    const works = getWorks();
+    const kwRaw = document.getElementById('workKeywordsInput').value;
+    const keywords = kwRaw.split(',').map(k=>k.trim().replace(/^#/,'')).filter(Boolean);
 
-  if (editingWorkId) {
-    const idx = works.findIndex(w => w.id === editingWorkId);
-    if (idx !== -1) works[idx] = { ...works[idx], ...workData };
-  } else {
-    workData.id = Date.now();
-    works.push(workData);
+    let imagePath = "";
+    const imageFileElem = document.getElementById('workImageFile');
+    if (imageFileElem && imageFileElem.files && imageFileElem.files[0]) {
+      const imageFile = imageFileElem.files[0];
+      const fileName = `images/work-${Date.now()}-${imageFile.name.replace(/\s+/g, '-')}`;
+      const base64Image = await toBase64(imageFile);
+      const base64Content = base64Image.split(',')[1];
+
+      await githubApiRequest(`contents/${fileName}`, 'PUT', {
+        message: `Upload new project image: ${fileName}`,
+        content: base64Content,
+        branch: 'main'
+      });
+      imagePath = fileName;
+    } else if (editingWorkId) {
+      const existingWork = works.find(w => w.id === editingWorkId);
+      if (existingWork) imagePath = existingWork.image || "";
+    }
+
+    const workData = {
+      title, category,
+      categoryLabel: catLabels[category]||category,
+      emoji: document.getElementById('workEmoji').value||'🎨',
+      description: document.getElementById('workDesc').value.trim(),
+      caption: document.getElementById('workCaption').value.trim(),
+      keywords,
+      seoTitle: document.getElementById('workSeoTitle').value.trim(),
+      seoDesc: document.getElementById('workSeoDesc').value.trim(),
+      date: document.getElementById('workDate').value || new Date().toISOString().split('T')[0],
+      image: imagePath
+    };
+
+    if (editingWorkId) {
+      const idx = works.findIndex(w => w.id === editingWorkId);
+      if (idx !== -1) works[idx] = { ...works[idx], ...workData };
+    } else {
+      workData.id = Date.now();
+      works.push(workData);
+    }
+
+    saveWorks(works);
+
+    // Update works-data.json directly on GitHub
+    const packages = getPackages();
+    const fullJsonData = JSON.stringify({ works, packages }, null, 2);
+    
+    const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
+    const fileSha = fileInfo.sha;
+
+    await githubApiRequest('contents/works-data.json', 'PUT', {
+      message: 'Update works-data.json via Admin Panel',
+      content: btoa(unescape(encodeURIComponent(fullJsonData))),
+      sha: fileSha,
+      branch: 'main'
+    });
+
+    closeModal('workModal');
+    loadWorksTable();
+    loadDashboard();
+    showAdminToast('✅ Sab kuch successfully live ho gaya!');
+
+  } catch (error) {
+    console.error(error);
+    showAdminToast("❌ Error: " + error.message, "error");
   }
+}
 
-  saveWorks(works);
-  closeModal('workModal');
-  loadWorksTable();
-  loadDashboard();
-  showAdminToast('✅ Work successfully save ho gaya!');
+// Helper: File to Base64
+const toBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = error => reject(error);
+});
+
+// Helper: GitHub API Request
+async function githubApiRequest(endpoint, method, bodyData = null) {
+  const url = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/${endpoint}`;
+  const options = {
+    method: method,
+    headers: {
+      'Authorization': `token ${GH_TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    }
+  };
+  if (bodyData) options.body = JSON.stringify(bodyData);
+
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    const errRes = await response.json();
+    throw new Error(errRes.message || 'GitHub API Error');
+  }
+  return response.json();
 }
 
 function deleteWork(id) {
@@ -229,7 +306,6 @@ function openAddPackageModal() {
   editingPkgId = null;
   document.getElementById('pkgModalTitle').textContent = '➕ Naya Package Add Karo';
   
-  // Fields ko manually clear karna
   document.getElementById('pkgId').value = '';
   document.getElementById('pkgName').value = '';
   document.getElementById('pkgPrice').value = '';
@@ -362,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('adminUser')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
 });
 
-// Data Export Function for GitHub Pages Update
+// Data Export Function Backup
 function exportLiveJson() {
     const works = getWorks();
     const packages = getPackages();
@@ -372,7 +448,6 @@ function exportLiveJson() {
         packages: packages
     };
 
-    // JSON file create karna
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullData, null, 2));
     const downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
@@ -381,5 +456,5 @@ function exportLiveJson() {
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
 
-    showAdminToast("✅ JSON File Download ho gayi! Ise GitHub par upload kar dein.");
+    showAdminToast("✅ JSON File Download ho gayi!");
 }
