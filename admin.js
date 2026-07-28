@@ -5,9 +5,6 @@ const ADMIN_PASS = 'Jiya@2026';
 
 // GitHub Configuration (Aapki details set hain)
 // GitHub Configuration
-const GH_USER = "Jr-Digital-Studio"; 
-const GH_REPO = "JR-Digital-Studio"; 
-const GH_TOKEN = "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";
 
 // ===== AUTH =====
 function checkAuth() { return sessionStorage.getItem('jr_admin_auth') === 'true'; }
