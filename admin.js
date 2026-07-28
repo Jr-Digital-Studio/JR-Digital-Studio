@@ -126,12 +126,19 @@ function loadWorksTable() {
 function openAddWorkModal() {
   editingWorkId = null;
   document.getElementById('workModalTitle').textContent = '➕ Naya Work Add Karo';
-  document.getElementById('workForm').reset();
+  
+  // Fields ko manually clear karna
   document.getElementById('workId').value = '';
-  document.getElementById('workKeywordsInput').value = '';
+  document.getElementById('workTitle').value = '';
+  document.getElementById('workCategory').value = '';
+  document.getElementById('workEmoji').value = '';
+  document.getElementById('workDesc').value = '';
   document.getElementById('workCaption').value = '';
+  document.getElementById('workKeywordsInput').value = '';
   document.getElementById('workSeoTitle').value = '';
   document.getElementById('workSeoDesc').value = '';
+  document.getElementById('workDate').value = '';
+  
   openModal('workModal');
 }
 
@@ -221,9 +228,15 @@ function loadPackagesTable() {
 function openAddPackageModal() {
   editingPkgId = null;
   document.getElementById('pkgModalTitle').textContent = '➕ Naya Package Add Karo';
-  document.getElementById('pkgForm').reset();
+  
+  // Fields ko manually clear karna
   document.getElementById('pkgId').value = '';
+  document.getElementById('pkgName').value = '';
+  document.getElementById('pkgPrice').value = '';
+  document.getElementById('pkgDuration').value = 'per month';
+  document.getElementById('pkgFeatured').checked = false;
   document.getElementById('pkgFeaturesInput').value = '';
+  
   openModal('pkgModal');
 }
 
@@ -348,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('adminPass')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
   document.getElementById('adminUser')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
 });
+
 // Data Export Function for GitHub Pages Update
 function exportLiveJson() {
     const works = getWorks();
