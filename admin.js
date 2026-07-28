@@ -4,9 +4,10 @@ const ADMIN_USER = '8128075345';
 const ADMIN_PASS = 'Jiya@2026';
 
 // GitHub Configuration (Aapki details set hain)
+// GitHub Configuration
 const GH_USER = "Jr-Digital-Studio"; 
 const GH_REPO = "JR-Digital-Studio"; 
-const GH_TOKEN = "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";
+const GH_TOKEN = "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";
 
 // ===== AUTH =====
 function checkAuth() { return sessionStorage.getItem('jr_admin_auth') === 'true'; }
