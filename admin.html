@@ -278,6 +278,20 @@
 
     <!-- ===== SETTINGS ===== -->
     <div id="settings" class="admin-section">
+
+      <!-- GITHUB TOKEN SETUP UI (Step 3 ADDED HERE) -->
+      <div class="admin-card" style="border: 1px solid rgba(0,194,255,0.3); margin-bottom: 20px;">
+        <div class="admin-card-title" style="color:#00C2FF">⚙️ GitHub Token Setup (Multi-Device)</div>
+        <p style="color:rgba(255,255,255,0.45);font-size:13px;margin-bottom:14px">Agar aap kisi naye device (Mobile/PC) se login kar rahe hain, toh apna GitHub Token yahan save karein taaki data aur photos automatic upload ho saken.</p>
+        
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <input type="password" id="ghTokenInputUI" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex: 1; padding: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); border-radius: 8px; min-width: 250px; font-family: monospace; color: white; outline: none;">
+          <button onclick="saveTokenFromUI()" class="admin-btn admin-btn-primary" style="padding: 12px 24px; font-weight: bold;">💾 Save Token</button>
+        </div>
+        <p id="tokenStatusMsg" style="margin-top: 12px; font-size: 13px; font-weight: bold;"></p>
+      </div>
+      <!-- END OF GITHUB TOKEN SETUP UI -->
+
       <div class="admin-card">
         <div class="admin-card-title">⚙️ Studio Information</div>
         <div class="admin-form">
@@ -481,6 +495,44 @@ ${insta ? `<!-- Instagram: ${insta} -->` : ''}
 
   document.getElementById('generatedMeta').value = meta;
   showAdminToast('✅ Meta tags ready! Copy karo aur HTML mein paste karo.');
+}
+
+// ===== GITHUB TOKEN SETUP SCRIPT (NEW) =====
+document.addEventListener('DOMContentLoaded', () => {
+  const statusMsg = document.getElementById('tokenStatusMsg');
+  if(statusMsg) {
+    if(localStorage.getItem('jr_gh_token')) {
+      statusMsg.textContent = '✅ Token is active and saved securely on this device.';
+      statusMsg.style.color = '#00C853';
+    } else {
+      statusMsg.textContent = '❌ Token missing! Kripya yahan apna GitHub token save karein.';
+      statusMsg.style.color = '#FF3D57';
+    }
+  }
+});
+
+function saveTokenFromUI() {
+  const token = document.getElementById('ghTokenInputUI').value.trim();
+  if(token.startsWith('ghp_') || token.startsWith('github_pat_')) {
+    localStorage.setItem('jr_gh_token', token);
+    
+    const statusMsg = document.getElementById('tokenStatusMsg');
+    statusMsg.textContent = '✅ Token successfully saved! Ab aap upload kar sakte hain.';
+    statusMsg.style.color = '#00C853';
+    document.getElementById('ghTokenInputUI').value = ''; // Security ke liye input clear kar diya
+    
+    if (typeof showAdminToast === 'function') {
+      showAdminToast('✅ Token saved successfully!');
+    } else {
+      alert('Token saved successfully in this browser!');
+    }
+  } else {
+    if (typeof showAdminToast === 'function') {
+      showAdminToast('❌ Galat Token! Kripya sahi GitHub token dalein.', 'error');
+    } else {
+      alert('Galat Token! Kripya sahi GitHub token dalein jo ghp_ se shuru hota ho.');
+    }
+  }
 }
 </script>
 </body>
