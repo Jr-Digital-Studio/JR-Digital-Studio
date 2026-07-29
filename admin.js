@@ -3,8 +3,14 @@
 const ADMIN_USER = '8128075345';
 const ADMIN_PASS = 'Jiya@2026';
 
-// GitHub Configuration (Aapki details set hain)
-// GitHub Configuration
+// ===== GITHUB CONFIGURATION (Secure LocalStorage Method) =====
+const GH_USER = "Jr-Digital-Studio"; 
+const GH_REPO = "JR-Digital-Studio"; 
+
+// Yeh function aapke browser ke LocalStorage se token uthayega taaki GitHub kabhi block na kare
+function getGhToken() {
+  return localStorage.getItem('jr_gh_token') || "";
+}
 
 // ===== AUTH =====
 function checkAuth() { return sessionStorage.getItem('jr_admin_auth') === 'true'; }
@@ -252,13 +258,17 @@ const toBase64 = file => new Promise((resolve, reject) => {
   reader.onerror = error => reject(error);
 });
 
-// Helper: GitHub API Request
+// Helper: GitHub API Request (Isme token ab secure method se aayega)
 async function githubApiRequest(endpoint, method, bodyData = null) {
+  const token = getGhToken();
+  if (!token) {
+    throw new Error('GitHub Token set nahi hai! Pehle browser console mein token save karein.');
+  }
   const url = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/${endpoint}`;
   const options = {
     method: method,
     headers: {
-      'Authorization': `token ${GH_TOKEN}`,
+      'Authorization': `token ${token}`,
       'Accept': 'application/vnd.github.v3+json',
       'Content-Type': 'application/json',
     }
