@@ -136,7 +136,6 @@ function openAddWorkModal() {
   editingWorkId = null;
   document.getElementById('workModalTitle').textContent = '➕ Naya Work Add Karo';
   
-  // Fields ko manually clear karna
   document.getElementById('workId').value = '';
   document.getElementById('workTitle').value = '';
   document.getElementById('workCategory').value = '';
@@ -169,7 +168,7 @@ function editWork(id) {
   openModal('workModal');
 }
 
-// ===== UPDATED SAVE WORK WITH GITHUB API AUTO-PUSH & PHOTO UPLOAD =====
+// ===== UPDATED SAVE WORK WITH AUTOMATIC SEO & GITHUB SYNC =====
 async function saveWork() {
   const title = document.getElementById('workTitle').value.trim();
   const category = document.getElementById('workCategory').value;
@@ -180,8 +179,21 @@ async function saveWork() {
   try {
     const catLabels = { web:'Web Design', branding:'Branding', social:'Social Media', print:'Print Design', video:'Video' };
     const works = getWorks();
-    const kwRaw = document.getElementById('workKeywordsInput').value;
-    const keywords = kwRaw.split(',').map(k=>k.trim().replace(/^#/,'')).filter(Boolean);
+    
+    // Keywords parsing
+    let kwRaw = document.getElementById('workKeywordsInput').value.trim();
+    let keywords = kwRaw ? kwRaw.split(',').map(k=>k.trim().replace(/^#/,'')).filter(Boolean) : [category, 'digital agency', 'mehsana', 'gujarat'];
+
+    // 🚀 AUTOMATIC SEO GENERATOR (Agar user ne khali choda toh system khud bana lega)
+    let seoTitle = document.getElementById('workSeoTitle').value.trim();
+    if (!seoTitle) {
+      seoTitle = `${title} - ${catLabels[category] || 'Digital Service'} | JR Digital Studio`;
+    }
+
+    let seoDesc = document.getElementById('workSeoDesc').value.trim();
+    if (!seoDesc) {
+      seoDesc = `Explore ${title}, a professional ${catLabels[category] || 'digital'} project by JR Digital Studio in Mehsana & Gujarat. Get custom solutions.`;
+    }
 
     let imagePath = "";
     const imageFileElem = document.getElementById('workImageFile');
@@ -206,11 +218,11 @@ async function saveWork() {
       title, category,
       categoryLabel: catLabels[category]||category,
       emoji: document.getElementById('workEmoji').value||'🎨',
-      description: document.getElementById('workDesc').value.trim(),
-      caption: document.getElementById('workCaption').value.trim(),
+      description: document.getElementById('workDesc').value.trim() || title,
+      caption: document.getElementById('workCaption').value.trim() || title,
       keywords,
-      seoTitle: document.getElementById('workSeoTitle').value.trim(),
-      seoDesc: document.getElementById('workSeoDesc').value.trim(),
+      seoTitle,
+      seoDesc,
       date: document.getElementById('workDate').value || new Date().toISOString().split('T')[0],
       image: imagePath
     };
@@ -233,7 +245,7 @@ async function saveWork() {
     const fileSha = fileInfo.sha;
 
     await githubApiRequest('contents/works-data.json', 'PUT', {
-      message: 'Update works-data.json via Admin Panel',
+      message: 'Update works-data.json with Auto-SEO via Admin Panel',
       content: btoa(unescape(encodeURIComponent(fullJsonData))),
       sha: fileSha,
       branch: 'main'
@@ -242,7 +254,7 @@ async function saveWork() {
     closeModal('workModal');
     loadWorksTable();
     loadDashboard();
-    showAdminToast('✅ Sab kuch successfully live ho gaya!');
+    showAdminToast('✅ Sab kuch aur Auto-SEO successfully live ho gaya!');
 
   } catch (error) {
     console.error(error);
@@ -258,11 +270,11 @@ const toBase64 = file => new Promise((resolve, reject) => {
   reader.onerror = error => reject(error);
 });
 
-// Helper: GitHub API Request (Isme token ab secure method se aayega)
+// Helper: GitHub API Request
 async function githubApiRequest(endpoint, method, bodyData = null) {
   const token = getGhToken();
   if (!token) {
-    throw new Error('GitHub Token set nahi hai! Pehle browser console mein token save karein.');
+    throw new Error('GitHub Token set nahi hai! Pehle settings mein token save karein.');
   }
   const url = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/${endpoint}`;
   const options = {
@@ -399,7 +411,7 @@ function saveSeoForm() {
     instaPage: document.getElementById('seoInstaPage').value,
   };
   saveSeoSettings(seo);
-  showAdminToast('✅ SEO settings save ho gayi! HTML files me manually update karo.');
+  showAdminToast('✅ SEO settings save ho gayi!');
 }
 
 // ===== MODAL =====
