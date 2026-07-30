@@ -72,26 +72,30 @@ function initNavbarScroll() {
   });
 }
 
-// Work Portfolio - Load from JSON
+// Work Portfolio - Load from JSON (LIVE GITHUB SERVER SE)
 async function loadWorks() {
   const grid = document.querySelector('.work-grid');
   if (!grid) return;
 
   try {
+    // Cache buster add kiya hai taaki hamesha naya data load ho, purana nahi
+    const cacheBuster = new Date().getTime();
+    const res = await fetch(`works-data.json?v=${cacheBuster}`);
+    const data = await res.json();
+    const works = data.works || [];
+    
+    renderWorks(works, grid);
+    initFilters(works);
+  } catch (e) {
+    console.error("Live fetch failed:", e);
+    // Fallback: Agar live server fail ho jaye toh local memory ya sample works dikhayega
     const stored = localStorage.getItem('jr_works');
     let works;
     if (stored) {
       works = JSON.parse(stored);
     } else {
-      const res = await fetch('works-data.json');
-      const data = await res.json();
-      works = data.works;
+      works = getSampleWorks();
     }
-    renderWorks(works, grid);
-    initFilters(works);
-  } catch (e) {
-    // Fallback sample works
-    const works = getSampleWorks();
     renderWorks(works, grid);
     initFilters(works);
   }
@@ -108,6 +112,7 @@ function getSampleWorks() {
   ];
 }
 
+// Render Works (IMAGES BINA KATE DIKHANE KE LIYE OBJECT-FIT CONTAIN ADD KIYA)
 function renderWorks(works, grid) {
   if (!grid) return;
   grid.innerHTML = '';
@@ -116,9 +121,10 @@ function renderWorks(works, grid) {
     card.className = 'work-card reveal';
     card.dataset.category = w.category;
     const kwords = (w.keywords||[]).slice(0,4).map(k=>`<span class="work-keyword">#${k}</span>`).join('');
+    
     card.innerHTML = `
-      <div class="work-img">
-        ${w.image ? `<img src="${w.image}" alt="${w.title}" loading="lazy">` : `<span style="font-size:52px">${w.emoji || '🎨'}</span>`}
+      <div class="work-img" style="background-color: #F8F9FA;">
+        ${w.image ? `<img src="${w.image}" alt="${w.title}" loading="lazy" style="width:100%; height:100%; object-fit:contain;">` : `<span style="font-size:52px; display:flex; align-items:center; justify-content:center; width:100%; height:100%;">${w.emoji || '🎨'}</span>`}
         <div class="work-overlay">
           <div class="work-overlay-text">
             <div style="font-size:14px;font-weight:800">${w.title}</div>
@@ -158,24 +164,26 @@ function initFilters(works) {
   });
 }
 
-// Load Packages from JSON/localStorage
+// Load Packages from JSON (LIVE GITHUB SERVER SE)
 async function loadPackages() {
   const grid = document.querySelector('.packages-grid');
 
   try {
-    const stored = localStorage.getItem('jr_packages');
-    let packages;
-    if (stored) {
-      packages = JSON.parse(stored);
-    } else {
-      const res = await fetch('works-data.json');
-      const data = await res.json();
-      packages = data.packages;
-    }
+    const cacheBuster = new Date().getTime();
+    const res = await fetch(`works-data.json?v=${cacheBuster}`);
+    const data = await res.json();
+    const packages = data.packages || [];
+    
     if (grid) renderPackages(packages, grid);
     renderCompareTable(packages);
   } catch (e) {
     // fallback
+    const stored = localStorage.getItem('jr_packages');
+    if (stored) {
+      const packages = JSON.parse(stored);
+      if (grid) renderPackages(packages, grid);
+      renderCompareTable(packages);
+    }
   }
 }
 
