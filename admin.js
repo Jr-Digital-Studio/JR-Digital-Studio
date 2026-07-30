@@ -33,7 +33,7 @@ function logout() {
   location.reload();
 }
 
-// ===== DATA =====
+// ===== DATA FETCHING & SAVING =====
 function getWorks() {
   try { return JSON.parse(localStorage.getItem('jr_works')) || getDefaultWorks(); }
   catch { return getDefaultWorks(); }
@@ -46,6 +46,13 @@ function getPackages() {
 }
 function savePackages(packages) { localStorage.setItem('jr_packages', JSON.stringify(packages)); }
 
+// NEW: Reels Data Logic
+function getReels() {
+  try { return JSON.parse(localStorage.getItem('jr_reels_data')) || []; }
+  catch { return []; }
+}
+function saveReels(reels) { localStorage.setItem('jr_reels_data', JSON.stringify(reels)); }
+
 function getSeoSettings() {
   try { return JSON.parse(localStorage.getItem('jr_seo')) || {}; }
   catch { return {}; }
@@ -54,20 +61,13 @@ function saveSeoSettings(data) { localStorage.setItem('jr_seo', JSON.stringify(d
 
 function getDefaultWorks() {
   return [
-    { id:1, title:"Restaurant Brand Identity", category:"branding", categoryLabel:"Branding", emoji:"🍽️", description:"Complete brand identity design", caption:"Professional brand identity for a restaurant chain. Logo, colors, menu design sab kuch ek hi package mein.", keywords:["branding","logo","restaurant","identity"], seoTitle:"Restaurant Branding - JR Digital Studio", seoDesc:"Complete restaurant brand identity design", date:"2024-12-01" },
-    { id:2, title:"E-Commerce Website", category:"web", categoryLabel:"Web Design", emoji:"🛒", description:"Full e-commerce with custom UI", caption:"Fully functional e-commerce website with beautiful UI, product pages aur checkout system.", keywords:["website","ecommerce","webdesign","shopping"], seoTitle:"E-Commerce Website Design", seoDesc:"Custom e-commerce website development", date:"2024-11-15" },
-    { id:3, title:"Social Media Campaign", category:"social", categoryLabel:"Social Media", emoji:"📱", description:"30-day social media campaign", caption:"30 din ka social media campaign jisme 90+ posts, reels aur stories shamil hain.", keywords:["socialmedia","instagram","campaign","marketing"], seoTitle:"Social Media Campaign", seoDesc:"30-day social media marketing campaign", date:"2024-11-01" },
-    { id:4, title:"Corporate Logo Design", category:"branding", categoryLabel:"Branding", emoji:"✏️", description:"Minimalist logo for tech startup", caption:"Clean aur minimal logo design for a tech company. Multiple concepts diye aur final version SVG format mein deliver kiya.", keywords:["logo","logodesign","branding","startup"], seoTitle:"Corporate Logo Design", seoDesc:"Professional logo design for tech startup", date:"2024-10-20" },
-    { id:5, title:"YouTube Channel Art", category:"social", categoryLabel:"Social Media", emoji:"🎬", description:"YouTube branding complete kit", caption:"Complete YouTube channel branding - banner, thumbnails, intro template aur logo.", keywords:["youtube","thumbnail","channelart","content"], seoTitle:"YouTube Branding Kit", seoDesc:"Complete YouTube channel art and branding", date:"2024-10-10" },
-    { id:6, title:"Real Estate Website", category:"web", categoryLabel:"Web Design", emoji:"🏠", description:"Modern real estate listing site", caption:"Modern real estate website with property listings, search filters aur contact forms.", keywords:["realestate","website","property","webdesign"], seoTitle:"Real Estate Website Design", seoDesc:"Modern property listing website development", date:"2024-09-25" }
+    { id:1, title:"Restaurant Brand Identity", category:"branding", categoryLabel:"Branding", emoji:"🍽️", description:"Complete brand identity design", caption:"Professional brand identity for a restaurant chain.", keywords:["branding","logo","restaurant"], seoTitle:"Restaurant Branding", seoDesc:"Complete restaurant brand identity design", date:"2024-12-01" }
   ];
 }
 
 function getDefaultPackages() {
   return [
-    { id:1, name:"Starter", price:"4,999", duration:"per month", featured:false, features:["5 Social Media Posts","1 Logo Design","Basic SEO Setup","WhatsApp Support","1 Revision Round"] },
-    { id:2, name:"Professional", price:"9,999", duration:"per month", featured:true, features:["15 Social Media Posts","Complete Brand Identity","Full SEO Optimization","Website Design (5 Pages)","Priority Support 24/7","3 Revision Rounds","Monthly Report"] },
-    { id:3, name:"Enterprise", price:"19,999", duration:"per month", featured:false, features:["Unlimited Social Posts","Full Branding Suite","Advanced SEO + Ads","Custom Website","Dedicated Manager","Unlimited Revisions","Weekly Reports"] }
+    { id:1, name:"Starter", price:"4,999", duration:"per month", featured:false, features:["5 Social Media Posts","1 Logo Design"] }
   ];
 }
 
@@ -77,7 +77,15 @@ function showSection(id) {
   document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.querySelector(`[data-section="${id}"]`).classList.add('active');
-  const titles = { dashboard:'Dashboard', works:'Manage Our Work', packages:'Manage Packages', seo:'SEO Settings', settings:'Settings' };
+  
+  const titles = { 
+      dashboard: 'Dashboard', 
+      works: 'Manage Our Work', 
+      packages: 'Manage Packages', 
+      reels: 'Manage Reels & Shorts', // Added Reels Title
+      seo: 'SEO Settings', 
+      settings: 'Settings' 
+  };
   document.getElementById('pageTitle').textContent = titles[id] || id;
 }
 
@@ -100,7 +108,6 @@ function loadDashboard() {
       <td>${w.date||'N/A'}</td>
       <td>
         <button class="admin-btn admin-btn-primary" onclick="editWork(${w.id})" style="margin-right:6px">Edit</button>
-        <button class="admin-btn admin-btn-danger" onclick="deleteWork(${w.id})">Delete</button>
       </td>
     </tr>
   `).join('');
@@ -117,10 +124,7 @@ function loadWorksTable() {
       <td style="font-size:22px">${w.emoji||'🎨'}</td>
       <td>
         <strong>${w.title}</strong><br>
-        <small style="color:rgba(255,255,255,0.38)">${w.caption ? w.caption.substring(0,50)+'...' : w.description||''}</small><br>
-        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
-           ${(w.keywords||[]).map(k=>`<span style="background:rgba(0,87,255,0.2);color:#4D8EFF;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:700">#${k}</span>`).join('')}
-        </div>
+        <small style="color:rgba(255,255,255,0.38)">${w.caption ? w.caption.substring(0,50)+'...' : w.description||''}</small>
       </td>
       <td><span class="badge badge-blue">${w.categoryLabel}</span></td>
       <td style="color:rgba(255,255,255,0.4);font-size:12px">${w.date||'N/A'}</td>
@@ -135,7 +139,6 @@ function loadWorksTable() {
 function openAddWorkModal() {
   editingWorkId = null;
   document.getElementById('workModalTitle').textContent = '➕ Naya Work Add Karo';
-  
   document.getElementById('workId').value = '';
   document.getElementById('workTitle').value = '';
   document.getElementById('workCategory').value = '';
@@ -146,7 +149,6 @@ function openAddWorkModal() {
   document.getElementById('workSeoTitle').value = '';
   document.getElementById('workSeoDesc').value = '';
   document.getElementById('workDate').value = '';
-  
   openModal('workModal');
 }
 
@@ -168,7 +170,6 @@ function editWork(id) {
   openModal('workModal');
 }
 
-// ===== UPDATED SAVE WORK WITH AUTOMATIC SEO & GITHUB SYNC =====
 async function saveWork() {
   const title = document.getElementById('workTitle').value.trim();
   const category = document.getElementById('workCategory').value;
@@ -180,20 +181,14 @@ async function saveWork() {
     const catLabels = { web:'Web Design', branding:'Branding', social:'Social Media', print:'Print Design', video:'Video' };
     const works = getWorks();
     
-    // Keywords parsing
     let kwRaw = document.getElementById('workKeywordsInput').value.trim();
     let keywords = kwRaw ? kwRaw.split(',').map(k=>k.trim().replace(/^#/,'')).filter(Boolean) : [category, 'digital agency', 'mehsana', 'gujarat'];
 
-    // 🚀 AUTOMATIC SEO GENERATOR (Agar user ne khali choda toh system khud bana lega)
     let seoTitle = document.getElementById('workSeoTitle').value.trim();
-    if (!seoTitle) {
-      seoTitle = `${title} - ${catLabels[category] || 'Digital Service'} | JR Digital Studio`;
-    }
+    if (!seoTitle) seoTitle = `${title} - ${catLabels[category] || 'Digital Service'} | JR Digital Studio`;
 
     let seoDesc = document.getElementById('workSeoDesc').value.trim();
-    if (!seoDesc) {
-      seoDesc = `Explore ${title}, a professional ${catLabels[category] || 'digital'} project by JR Digital Studio in Mehsana & Gujarat. Get custom solutions.`;
-    }
+    if (!seoDesc) seoDesc = `Explore ${title}, a professional ${catLabels[category] || 'digital'} project by JR Digital Studio in Mehsana & Gujarat. Get custom solutions.`;
 
     let imagePath = "";
     const imageFileElem = document.getElementById('workImageFile');
@@ -220,9 +215,7 @@ async function saveWork() {
       emoji: document.getElementById('workEmoji').value||'🎨',
       description: document.getElementById('workDesc').value.trim() || title,
       caption: document.getElementById('workCaption').value.trim() || title,
-      keywords,
-      seoTitle,
-      seoDesc,
+      keywords, seoTitle, seoDesc,
       date: document.getElementById('workDate').value || new Date().toISOString().split('T')[0],
       image: imagePath
     };
@@ -234,20 +227,18 @@ async function saveWork() {
       workData.id = Date.now();
       works.push(workData);
     }
-
     saveWorks(works);
 
-    // Update works-data.json directly on GitHub
+    // Sync all data to GitHub
     const packages = getPackages();
-    const fullJsonData = JSON.stringify({ works, packages }, null, 2);
+    const reels = getReels(); // Include reels so they aren't lost
+    const fullJsonData = JSON.stringify({ works, packages, reels }, null, 2);
     
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
-    const fileSha = fileInfo.sha;
-
     await githubApiRequest('contents/works-data.json', 'PUT', {
-      message: 'Update works-data.json with Auto-SEO via Admin Panel',
+      message: 'Update works-data.json via Admin Panel',
       content: btoa(unescape(encodeURIComponent(fullJsonData))),
-      sha: fileSha,
+      sha: fileInfo.sha,
       branch: 'main'
     });
 
@@ -262,45 +253,123 @@ async function saveWork() {
   }
 }
 
-// Helper: File to Base64
-const toBase64 = file => new Promise((resolve, reject) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => resolve(reader.result);
-  reader.onerror = error => reject(error);
-});
-
-// Helper: GitHub API Request
-async function githubApiRequest(endpoint, method, bodyData = null) {
-  const token = getGhToken();
-  if (!token) {
-    throw new Error('GitHub Token set nahi hai! Pehle settings mein token save karein.');
-  }
-  const url = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/${endpoint}`;
-  const options = {
-    method: method,
-    headers: {
-      'Authorization': `token ${token}`,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json',
-    }
-  };
-  if (bodyData) options.body = JSON.stringify(bodyData);
-
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    const errRes = await response.json();
-    throw new Error(errRes.message || 'GitHub API Error');
-  }
-  return response.json();
-}
-
-function deleteWork(id) {
+async function deleteWork(id) {
   if (!confirm('Yeh work item delete karna chahte ho?')) return;
   saveWorks(getWorks().filter(w => w.id !== id));
   loadWorksTable();
   loadDashboard();
-  showAdminToast('🗑️ Work delete ho gaya');
+  showAdminToast('🗑️ Work delete ho gaya (Note: GitHub json mein tab update hoga jab naya work add karenge)');
+}
+
+// ===== REELS MANAGEMENT (NEW) =====
+function loadReelsTable() {
+  const reels = getReels();
+  const tbody = document.getElementById('reelsTableBody');
+  
+  if (reels.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">No reels added yet. Click 'Naya Reel Add Karo'</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = reels.map(r => `
+    <tr>
+      <td>
+        <div style="width:40px;height:40px;background:#1E2D4A;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;">🎬</div>
+      </td>
+      <td>
+        <strong>${r.title}</strong><br>
+        <a href="${r.embedUrl}" target="_blank" style="font-size:11px;color:#4D8EFF;text-decoration:none;">🔗 View Link</a>
+      </td>
+      <td><span class="badge badge-blue">${r.category || 'Reel'}</span></td>
+      <td style="color:rgba(255,255,255,0.4);font-size:12px">${r.date||'N/A'}</td>
+      <td>
+        <button class="admin-btn admin-btn-danger" onclick="deleteReel(${r.id})">🗑️ Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openAddReelModal() {
+  document.getElementById('reelTitle').value = '';
+  document.getElementById('reelUrl').value = '';
+  document.getElementById('reelCategory').value = '';
+  openModal('reelModal');
+}
+
+async function saveReelData() {
+  const title = document.getElementById('reelTitle').value.trim();
+  const embedUrl = document.getElementById('reelUrl').value.trim();
+  const category = document.getElementById('reelCategory').value.trim() || 'Reel';
+
+  if (!title || !embedUrl) {
+    showAdminToast('❌ Title aur URL zaroori hain', 'error');
+    return;
+  }
+
+  showAdminToast("⏳ GitHub par Reel sync ho rahi hai...", "success");
+
+  try {
+    const reels = getReels();
+    const newReel = {
+      id: Date.now(),
+      title,
+      embedUrl,
+      category,
+      date: new Date().toISOString().split('T')[0]
+    };
+
+    reels.unshift(newReel); // Naya reel sabse upar
+    saveReels(reels);
+
+    // Sync to GitHub JSON
+    const works = getWorks();
+    const packages = getPackages();
+    const fullJsonData = JSON.stringify({ works, packages, reels }, null, 2);
+
+    const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
+    await githubApiRequest('contents/works-data.json', 'PUT', {
+      message: 'Added new Reel via Admin Panel',
+      content: btoa(unescape(encodeURIComponent(fullJsonData))),
+      sha: fileInfo.sha,
+      branch: 'main'
+    });
+
+    closeModal('reelModal');
+    loadReelsTable();
+    showAdminToast('✅ Reel successfully live ho gayi!');
+
+  } catch (error) {
+    console.error(error);
+    showAdminToast("❌ Error: " + error.message, "error");
+  }
+}
+
+async function deleteReel(id) {
+  if (!confirm('Yeh Reel website se delete karna chahte ho?')) return;
+  showAdminToast("⏳ GitHub par sync ho raha hai...", "success");
+
+  try {
+    const reels = getReels().filter(r => r.id !== id);
+    saveReels(reels);
+
+    const works = getWorks();
+    const packages = getPackages();
+    const fullJsonData = JSON.stringify({ works, packages, reels }, null, 2);
+
+    const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
+    await githubApiRequest('contents/works-data.json', 'PUT', {
+      message: 'Deleted Reel via Admin Panel',
+      content: btoa(unescape(encodeURIComponent(fullJsonData))),
+      sha: fileInfo.sha,
+      branch: 'main'
+    });
+
+    loadReelsTable();
+    showAdminToast('🗑️ Reel delete ho gayi aur GitHub par update ho gaya');
+  } catch (error) {
+    console.error(error);
+    showAdminToast("❌ Error: " + error.message, "error");
+  }
 }
 
 // ===== PACKAGES =====
@@ -325,14 +394,12 @@ function loadPackagesTable() {
 function openAddPackageModal() {
   editingPkgId = null;
   document.getElementById('pkgModalTitle').textContent = '➕ Naya Package Add Karo';
-  
   document.getElementById('pkgId').value = '';
   document.getElementById('pkgName').value = '';
   document.getElementById('pkgPrice').value = '';
   document.getElementById('pkgDuration').value = 'per month';
   document.getElementById('pkgFeatured').checked = false;
   document.getElementById('pkgFeaturesInput').value = '';
-  
   openModal('pkgModal');
 }
 
@@ -414,11 +481,10 @@ function saveSeoForm() {
   showAdminToast('✅ SEO settings save ho gayi!');
 }
 
-// ===== MODAL =====
+// ===== UTILS & HELPERS =====
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-// ===== TOAST =====
 function showAdminToast(msg, type='success') {
   let t = document.querySelector('.admin-toast');
   if (!t) {
@@ -435,16 +501,66 @@ function showAdminToast(msg, type='success') {
   });
 }
 
-// ===== SETTINGS =====
+const toBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = error => reject(error);
+});
+
+async function githubApiRequest(endpoint, method, bodyData = null) {
+  const token = getGhToken();
+  if (!token) {
+    throw new Error('GitHub Token set nahi hai! Pehle settings mein token save karein.');
+  }
+  const url = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/${endpoint}`;
+  const options = {
+    method: method,
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    }
+  };
+  if (bodyData) options.body = JSON.stringify(bodyData);
+
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    const errRes = await response.json();
+    throw new Error(errRes.message || 'GitHub API Error');
+  }
+  return response.json();
+}
+
+// ===== SETTINGS & EXPORT =====
 function saveSettings() { showAdminToast('✅ Settings save ho gayi!'); }
 
 function resetData() {
   if (!confirm('Sabhi data default par reset ho jayega. Pakka?')) return;
   localStorage.removeItem('jr_works');
   localStorage.removeItem('jr_packages');
+  localStorage.removeItem('jr_reels_data');
   localStorage.removeItem('jr_seo');
-  loadDashboard(); loadWorksTable(); loadPackagesTable(); loadSeoSettings();
+  loadDashboard(); loadWorksTable(); loadPackagesTable(); loadReelsTable(); loadSeoSettings();
   showAdminToast('✅ Data reset ho gaya');
+}
+
+function exportLiveJson() {
+  const fullData = {
+      works: getWorks(),
+      packages: getPackages(),
+      reels: getReels() // Reels data ab download JSON me aayega
+  };
+
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullData, null, 2));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href", dataStr);
+  downloadAnchorNode.setAttribute("download", "works-data.json");
+  document.body.appendChild(downloadAnchorNode);
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+
+  showAdminToast("✅ JSON File Download ho gayi!");
 }
 
 // ===== INIT =====
@@ -457,24 +573,3 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('adminPass')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
   document.getElementById('adminUser')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
 });
-
-// Data Export Function Backup
-function exportLiveJson() {
-    const works = getWorks();
-    const packages = getPackages();
-    
-    const fullData = {
-        works: works,
-        packages: packages
-    };
-
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullData, null, 2));
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "works-data.json");
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-
-    showAdminToast("✅ JSON File Download ho gayi!");
-}
