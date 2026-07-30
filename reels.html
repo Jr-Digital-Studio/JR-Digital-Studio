@@ -1,111 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Reels & Video Portfolio | JR Digital Studio</title>
-    <meta name="description" content="Watch the latest Instagram reels, promotional video edits, and creative short-form content by JR Digital Studio, Mehsana, Gujarat.">
-    
-    <!-- Open Graph SEO -->
-    <meta property="og:title" content="Our Reels & Video Portfolio | JR Digital Studio">
-    <meta property="og:description" content="Explore professional video content, reels, and digital marketing creatives by JR Digital Studio.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jrdigitalstudios.com/reels.html">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .reel-container {
-            position: relative;
-            width: 100%;
-            padding-top: 177.78%; /* 9:16 Aspect Ratio */
-            background: #000;
-            border-radius: 1rem;
-            overflow: hidden;
-        }
-        .reel-container iframe, 
-        .reel-container video,
-        .reel-container div {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Reels | JR Digital Studio</title>
+  <meta name="description" content="Watch our latest Instagram Reels and Shorts.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Reels Card specific styling to match a 9:16 vertical video ratio */
+    .reel-iframe-container {
+      aspect-ratio: 9/16;
+      width: 100%;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+    }
+    .reel-iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
 </head>
-<body class="bg-slate-950 text-white min-h-screen font-sans">
+<body>
 
-    <!-- Header Navigation -->
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-xl font-bold tracking-wider text-blue-500">JR DIGITAL STUDIO</a>
-            <nav class="space-x-6 text-sm font-medium">
-                <a href="index.html" class="hover:text-blue-400 transition">Home</a>
-                <a href="work.html" class="hover:text-blue-400 transition">Portfolio</a>
-                <a href="reels.html" class="text-blue-400 border-b-2 border-blue-500 pb-1">Our Reels</a>
-            </nav>
-        </div>
-    </header>
+<!-- Navbar (Same as your main website but added REELS tab) -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="jr.png" alt="JR Digital Studio Logo" class="logo-img">
+      <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="packages.html">Packages</a></li>
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="reels.html" class="active">Reels</a></li> <!-- NEW REELS LINK ADDED -->
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Quote</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-12">
-        <div class="text-center max-w-2xl mx-auto mb-12">
-            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">Our Creative Reels & Shorts</h1>
-            <p class="text-slate-400">Catch up with our latest short-form video edits, promotional reels, and brand highlights.</p>
-        </div>
+<!-- Page Header -->
+<section class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> <span>Our Reels</span></div>
+  <div class="section-tag">Video Portfolio</div>
+  <h1>Our <span style="background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Reels & Shorts</span></h1>
+  <p>Check out our latest video content, edits, and client promotions.</p>
+</section>
 
-        <!-- Reels Grid Container -->
-        <div id="reelsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Dynamic Reels will load here -->
-        </div>
-    </main>
+<!-- Reels Grid Section -->
+<section class="section">
+  <div class="section-inner">
+    <div class="work-grid" id="reelsGrid">
+      <!-- JavaScript will load live reels here -->
+      <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-light);">
+        Loading amazing reels...
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 mt-20">
-        <p>&copy; 2026 JR Digital Studio, Mehsana, Gujarat. All rights reserved.</p>
-    </footer>
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:16px;display:inline-flex">
+          <img src="jr.png" alt="JR Digital Studio Logo" class="logo-img">
+          <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
+        </a>
+        <p>Your creative digital partner.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="packages.html">Packages</a>
+        <a href="our-work.html">Our Work</a>
+        <a href="reels.html">Reels</a> <!-- ADDED HERE TOO -->
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:+918320146648">📞 8320146648</a>
+        <a href="mailto:jrdigitalstudio8@gmail.com">✉️ Gmail</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 JR Digital Studio. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
 
-    <!-- Script to Load Reels from Storage / JSON -->
- <!-- Script to Load LIVE Reels from GitHub Server -->
-    <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            const reelsGrid = document.getElementById("reelsGrid");
+<script src="script.js"></script>
+
+<!-- REELS LIVE FETCH SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const reelsGrid = document.getElementById("reelsGrid");
+    if (!reelsGrid) return;
+
+    try {
+        const cacheBuster = new Date().getTime();
+        const response = await fetch(`works-data.json?v=${cacheBuster}`);
+        const data = await response.json();
+        const reels = data.reels || [];
+
+        if (reels.length === 0) {
+            reelsGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align:center; padding: 60px 20px;">
+                    <div style="font-size:48px; margin-bottom:16px;">🎬</div>
+                    <h3 style="color:var(--dark); font-family:'Syne',sans-serif;">No reels added yet</h3>
+                    <p style="color:var(--text-light);">Check back soon for awesome video content.</p>
+                </div>`;
+            return;
+        }
+
+        reelsGrid.innerHTML = reels.map(reel => {
+            let finalUrl = reel.embedUrl;
             
-            try {
-                // Cache hatane ke liye time lagaya hai taaki hamesha fresh data mile
-                const cacheBuster = new Date().getTime();
-                const response = await fetch('works-data.json?v=' + cacheBuster);
-                const data = await response.json();
-                
-                // GitHub ki live file se reels uthayega
-                const savedReels = data.reels || [];
-
-                if (savedReels.length === 0) {
-                    reelsGrid.innerHTML = `
-                        <div class="col-span-full text-center py-12 text-slate-500">
-                            <p>No reels added yet. Check back soon!</p>
-                        </div>
-                    `;
-                    return;
+            // 🚀 MAGIC FIX: Instagram Normal Link to Embed Link Converter
+            if (finalUrl.includes('instagram.com') && !finalUrl.includes('embed')) {
+                finalUrl = finalUrl.split('?')[0]; // Remove extra tracking code (?igsh=...)
+                if (!finalUrl.endsWith('/')) {
+                    finalUrl += '/';
                 }
-
-                reelsGrid.innerHTML = savedReels.map(reel => `
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex flex-col">
-                        <div class="reel-container">
-                            <iframe src="${reel.embedUrl}" class="w-full h-full border-0" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-4 flex-1 flex flex-col justify-between">
-                            <h3 class="font-semibold text-sm text-slate-200 line-clamp-2">${reel.title}</h3>
-                            <span class="text-xs text-blue-400 mt-2 block">${reel.category || 'Reel'}</span>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (error) {
-                console.error("Error loading reels:", error);
-                reelsGrid.innerHTML = `<p class="col-span-full text-center py-12 text-slate-500">Live data load ho raha hai... kripya refresh karein.</p>`;
+                finalUrl += 'embed/'; // Add embed to bypass connection refusal
             }
-        });
-    </script>
+
+            return `
+                <div class="work-card reveal" style="background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+                    
+                    <div class="reel-iframe-container">
+                        <iframe src="${finalUrl}" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
+                    </div>
+
+                    <div class="work-info" style="padding:20px; flex:1;">
+                        <span class="work-tag">${reel.category || 'Reel'}</span>
+                        <h4 style="margin-top:12px; font-size:16px;">${reel.title}</h4>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        // Re-initialize animations if initReveal exists in script.js
+        if (typeof initReveal === 'function') initReveal();
+
+    } catch (error) {
+        console.error("Error fetching reels:", error);
+        reelsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-light);">Failed to load reels. Please refresh the page.</p>`;
+    }
+});
+</script>
 </body>
 </html>
