@@ -1,32 +1,113 @@
 {
   "works": [
     {
-      "title": "Cab Service",
+      "id": 1,
+      "title": "Restaurant Brand Identity",
+      "category": "branding",
+      "categoryLabel": "Branding",
+      "emoji": "🍽️",
+      "description": "Complete brand identity design",
+      "caption": "Professional brand identity for a restaurant chain. Logo, colors, menu design sab kuch ek hi package mein.",
+      "keywords": [
+        "branding",
+        "logo",
+        "restaurant",
+        "identity"
+      ],
+      "seoTitle": "Restaurant Branding - JR Digital Studio",
+      "seoDesc": "Complete restaurant brand identity design",
+      "date": "2024-12-01",
+      "image": ""
+    },
+    {
+      "id": 2,
+      "title": "E-Commerce Website",
+      "category": "web",
+      "categoryLabel": "Web Design",
+      "emoji": "🛒",
+      "description": "Full e-commerce with custom UI",
+      "caption": "Fully functional e-commerce website with beautiful UI, product pages aur checkout system.",
+      "keywords": [
+        "website",
+        "ecommerce",
+        "webdesign",
+        "shopping"
+      ],
+      "seoTitle": "E-Commerce Website Design",
+      "seoDesc": "Custom e-commerce website development",
+      "date": "2024-11-15"
+    },
+    {
+      "id": 3,
+      "title": "Social Media Campaign",
       "category": "social",
       "categoryLabel": "Social Media",
-      "emoji": "🚗",
-      "description": "EV Taxi Ad Creative",
-      "caption": "LamiRa EV Express – Chennai ↔ Trichy\nCreated a professional promotional social media creative for LamiRa EV Express, an eco-friendly EV taxi service connecting Chennai and Trichy. The design highlights the ₹3/km pricing, no extra charges, flexible boarding and drop-off options, and key service benefits such as safety, comfort, reliability, and eco-friendly travel.\nThe creative was designed to communicate the offer clearly, build trust, and encourage customers to book their ride. The project included visual design, marketing-focused messaging, offer presentation, and a strong call-to-action for customer enquiries and bookings.",
+      "emoji": "📱",
+      "description": "30-day social media campaign",
+      "caption": "30 din ka social media campaign jisme 90+ posts, reels aur stories shamil hain.",
       "keywords": [
-        "EV taxi",
-        "electric taxi",
-        "social media post design",
-        "ad creative",
-        "taxi advertising",
-        "travel advertising",
-        "Chennai to Trichy",
-        "Trichy to Chennai",
-        "digital marketing",
-        "social media marketing",
-        "promotional design",
-        "transportation marketing",
-        "creative design"
+        "socialmedia",
+        "instagram",
+        "campaign",
+        "marketing"
       ],
-      "seoTitle": "Professional EV taxi ad creative designed by JR Digital Studio for LamiRa EV Express, promoting Chennai-Trichy travel with clear offers and strong branding.",
-      "seoDesc": "Professional EV taxi ad creative designed by JR Digital Studio for LamiRa EV Express, promoting Chennai-Trichy travel with clear offers and strong branding.",
-      "date": "2026-07-29",
-      "image": "images/work-1785310183608-1000630386.jpg",
-      "id": 1785310186419
+      "seoTitle": "Social Media Campaign",
+      "seoDesc": "30-day social media marketing campaign",
+      "date": "2024-11-01"
+    },
+    {
+      "id": 4,
+      "title": "Corporate Logo Design",
+      "category": "branding",
+      "categoryLabel": "Branding",
+      "emoji": "✏️",
+      "description": "Minimalist logo for tech startup",
+      "caption": "Clean aur minimal logo design for a tech company. Multiple concepts diye aur final version SVG format mein deliver kiya.",
+      "keywords": [
+        "logo",
+        "logodesign",
+        "branding",
+        "startup"
+      ],
+      "seoTitle": "Corporate Logo Design",
+      "seoDesc": "Professional logo design for tech startup",
+      "date": "2024-10-20"
+    },
+    {
+      "id": 5,
+      "title": "YouTube Channel Art",
+      "category": "social",
+      "categoryLabel": "Social Media",
+      "emoji": "🎬",
+      "description": "YouTube branding complete kit",
+      "caption": "Complete YouTube channel branding - banner, thumbnails, intro template aur logo.",
+      "keywords": [
+        "youtube",
+        "thumbnail",
+        "channelart",
+        "content"
+      ],
+      "seoTitle": "YouTube Branding Kit",
+      "seoDesc": "Complete YouTube channel art and branding",
+      "date": "2024-10-10"
+    },
+    {
+      "id": 6,
+      "title": "Real Estate Website",
+      "category": "web",
+      "categoryLabel": "Web Design",
+      "emoji": "🏠",
+      "description": "Modern real estate listing site",
+      "caption": "Modern real estate website with property listings, search filters aur contact forms.",
+      "keywords": [
+        "realestate",
+        "website",
+        "property",
+        "webdesign"
+      ],
+      "seoTitle": "Real Estate Website Design",
+      "seoDesc": "Modern property listing website development",
+      "date": "2024-09-25"
     }
   ],
   "packages": [
@@ -35,51 +116,62 @@
       "name": "Starter",
       "price": "5500",
       "duration": "per month",
-      "featured": true,
+      "featured": false,
       "features": [
-        "Ideal for Startups",
-        "• 12 Posts Per Month",
-        "• 2 Reels Per Month",
-        "• Social Media Management",
-        "• Meta Ads Running",
-        "• Page Setup",
-        "• Caption + Hashtag Strategy",
-        "• Instagram & Facebook Management"
+        "5 Social Media Posts",
+        "1 Logo Design",
+        "Basic SEO Setup",
+        "WhatsApp Support",
+        "1 Revision Round"
       ]
     },
     {
       "id": 2,
       "name": "Professional",
-      "price": "7000",
+      "price": "9,999",
       "duration": "per month",
       "featured": true,
       "features": [
-        "Perfect for Growing Businesses",
-        "• 15 Posts Per Month",
-        "• 3 Reels Per Month",
-        "• Social Media Management",
-        "• Meta Ads Running",
-        "• Page Setup",
-        "• Caption + Hashtag Strategy",
-        "• Instagram & Facebook Management"
+        "15 Social Media Posts",
+        "Complete Brand Identity",
+        "Full SEO Optimization",
+        "Website Design (5 Pages)",
+        "Priority Support 24/7",
+        "3 Revision Rounds",
+        "Monthly Report"
       ]
     },
     {
       "id": 3,
       "name": "Enterprise",
-      "price": "10000",
+      "price": "19,999",
       "duration": "per month",
       "featured": false,
       "features": [
-        "For Established Businesses",
-        "• 20 Posts Per Month",
-        "• 4 Reels Per Month",
-        "• Social Media Management",
-        "• Meta Ads Running",
-        "• Page Setup",
-        "• Caption + Hashtag Strategy",
-        "• Instagram & Facebook Management"
+        "Unlimited Social Posts",
+        "Full Branding Suite",
+        "Advanced SEO + Ads",
+        "Custom Website",
+        "Dedicated Manager",
+        "Unlimited Revisions",
+        "Weekly Reports"
       ]
+    }
+  ],
+  "reels": [
+    {
+      "id": 1785395144413,
+      "title": "Lamira EV",
+      "embedUrl": "https://www.instagram.com/reel/DbF-X0nT_ox/?igsh=dXdzcTdpN3ZsMnho",
+      "category": "Reel",
+      "date": "2026-07-30"
+    },
+    {
+      "id": 1785393638285,
+      "title": "Lamira EV",
+      "embedUrl": "https://www.instagram.com/reel/DbF-X0nT_ox/?igsh=dXdzcTdpN3ZsMnho",
+      "category": "Reel",
+      "date": "2026-07-30"
     }
   ]
 }
