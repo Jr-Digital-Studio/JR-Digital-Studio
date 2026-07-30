@@ -107,6 +107,10 @@
       <a href="#" data-section="works" onclick="showSection('works');loadWorksTable();closeSidebar();return false">
         <span>🖼️</span> Our Work (Portfolio)
       </a>
+      <!-- REELS TAB ADDED HERE -->
+      <a href="#" data-section="reels" onclick="showSection('reels');loadReelsTable();closeSidebar();return false">
+        <span>🎬</span> Manage Reels
+      </a>
       <a href="#" data-section="packages" onclick="showSection('packages');loadPackagesTable();closeSidebar();return false">
         <span>📦</span> Packages & Pricing
       </a>
@@ -192,6 +196,22 @@
           <thead><tr><th>Icon</th><th>Title / Caption / Keywords</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
           <tbody id="worksTableBody"><tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">Loading...</td></tr></tbody>
         </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MANAGE REELS (NEW SECTION) ===== -->
+    <div id="reels" class="admin-section">
+      <div class="admin-card">
+        <div class="admin-card-title">
+          🎬 Manage Reels & Short Videos
+          <button class="admin-btn admin-btn-primary" onclick="openAddReelModal()">➕ Naya Reel Add Karo</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead><tr><th>Thumbnail / Embed</th><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="reelsTableBody"><tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">Loading...</td></tr></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -416,6 +436,33 @@
     <div class="modal-actions">
       <button class="admin-btn" style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)" onclick="closeModal('pkgModal')">Cancel</button>
       <button class="admin-btn admin-btn-primary" onclick="savePackage()">💾 Save Karo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REEL MODAL (NEW) ===== -->
+<div class="modal-overlay" id="reelModal">
+  <div class="modal">
+    <div class="modal-title" id="reelModalTitle">➕ Naya Reel Add Karo</div>
+    <div class="admin-form" id="reelForm">
+      <input type="hidden" id="reelIndex">
+      <div class="form-group">
+        <label>Reel Title / Description *</label>
+        <input type="text" id="reelTitle" placeholder="e.g., Client Brand Promotion Reel">
+      </div>
+      <div class="form-group">
+        <label>Instagram Embed / Video URL *</label>
+        <input type="url" id="reelUrl" placeholder="https://www.instagram.com/reel/.../embed">
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:4px">Instagram ya YouTube short ka embed/share link dalein</div>
+      </div>
+      <div class="form-group">
+        <label>Category / Tag</label>
+        <input type="text" id="reelCategory" placeholder="e.g., Promotion, Editing, Client Work">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="admin-btn" style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)" onclick="closeModal('reelModal')">Cancel</button>
+      <button class="admin-btn admin-btn-primary" onclick="saveReelData()">💾 Save Karo</button>
     </div>
   </div>
 </div>
