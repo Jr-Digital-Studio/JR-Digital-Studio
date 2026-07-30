@@ -67,32 +67,44 @@
     </footer>
 
     <!-- Script to Load Reels from Storage / JSON -->
+ <!-- Script to Load LIVE Reels from GitHub Server -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
             const reelsGrid = document.getElementById("reelsGrid");
-            // LocalStorage se reels fetch karna (Admin panel se connected)
-            const savedReels = JSON.parse(localStorage.getItem("jr_reels_data")) || [];
+            
+            try {
+                // Cache hatane ke liye time lagaya hai taaki hamesha fresh data mile
+                const cacheBuster = new Date().getTime();
+                const response = await fetch('works-data.json?v=' + cacheBuster);
+                const data = await response.json();
+                
+                // GitHub ki live file se reels uthayega
+                const savedReels = data.reels || [];
 
-            if (savedReels.length === 0) {
-                reelsGrid.innerHTML = `
-                    <div class="col-span-full text-center py-12 text-slate-500">
-                        <p>No reels added yet. Check back soon!</p>
+                if (savedReels.length === 0) {
+                    reelsGrid.innerHTML = `
+                        <div class="col-span-full text-center py-12 text-slate-500">
+                            <p>No reels added yet. Check back soon!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                reelsGrid.innerHTML = savedReels.map(reel => `
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex flex-col">
+                        <div class="reel-container">
+                            <iframe src="${reel.embedUrl}" class="w-full h-full border-0" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-4 flex-1 flex flex-col justify-between">
+                            <h3 class="font-semibold text-sm text-slate-200 line-clamp-2">${reel.title}</h3>
+                            <span class="text-xs text-blue-400 mt-2 block">${reel.category || 'Reel'}</span>
+                        </div>
                     </div>
-                `;
-                return;
+                `).join('');
+            } catch (error) {
+                console.error("Error loading reels:", error);
+                reelsGrid.innerHTML = `<p class="col-span-full text-center py-12 text-slate-500">Live data load ho raha hai... kripya refresh karein.</p>`;
             }
-
-            reelsGrid.innerHTML = savedReels.map(reel => `
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex flex-col">
-                    <div class="reel-container">
-                        <iframe src="${reel.embedUrl}" class="w-full h-full border-0" allowfullscreen></iframe>
-                    </div>
-                    <div class="p-4 flex-1 flex flex-col justify-between">
-                        <h3 class="font-semibold text-sm text-slate-200 line-clamp-2">${reel.title}</h3>
-                        <span class="text-xs text-blue-400 mt-2 block">${reel.category || 'Reel'}</span>
-                    </div>
-                </div>
-            `).join('');
         });
     </script>
 </body>
