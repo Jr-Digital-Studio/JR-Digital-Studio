@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Reels & Video Portfolio | JR Digital Studio</title>
+    <meta name="description" content="Watch the latest Instagram reels, promotional video edits, and creative short-form content by JR Digital Studio, Mehsana, Gujarat.">
+    
+    <!-- Open Graph SEO -->
+    <meta property="og:title" content="Our Reels & Video Portfolio | JR Digital Studio">
+    <meta property="og:description" content="Explore professional video content, reels, and digital marketing creatives by JR Digital Studio.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jrdigitalstudios.com/reels.html">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .reel-container {
+            position: relative;
+            width: 100%;
+            padding-top: 177.78%; /* 9:16 Aspect Ratio */
+            background: #000;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .reel-container iframe, 
+        .reel-container video,
+        .reel-container div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen font-sans">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold tracking-wider text-blue-500">JR DIGITAL STUDIO</a>
+            <nav class="space-x-6 text-sm font-medium">
+                <a href="index.html" class="hover:text-blue-400 transition">Home</a>
+                <a href="work.html" class="hover:text-blue-400 transition">Portfolio</a>
+                <a href="reels.html" class="text-blue-400 border-b-2 border-blue-500 pb-1">Our Reels</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">Our Creative Reels & Shorts</h1>
+            <p class="text-slate-400">Catch up with our latest short-form video edits, promotional reels, and brand highlights.</p>
+        </div>
+
+        <!-- Reels Grid Container -->
+        <div id="reelsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Dynamic Reels will load here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500 mt-20">
+        <p>&copy; 2026 JR Digital Studio, Mehsana, Gujarat. All rights reserved.</p>
+    </footer>
+
+    <!-- Script to Load Reels from Storage / JSON -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const reelsGrid = document.getElementById("reelsGrid");
+            // LocalStorage se reels fetch karna (Admin panel se connected)
+            const savedReels = JSON.parse(localStorage.getItem("jr_reels_data")) || [];
+
+            if (savedReels.length === 0) {
+                reelsGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-500">
+                        <p>No reels added yet. Check back soon!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            reelsGrid.innerHTML = savedReels.map(reel => `
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg flex flex-col">
+                    <div class="reel-container">
+                        <iframe src="${reel.embedUrl}" class="w-full h-full border-0" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between">
+                        <h3 class="font-semibold text-sm text-slate-200 line-clamp-2">${reel.title}</h3>
+                        <span class="text-xs text-blue-400 mt-2 block">${reel.category || 'Reel'}</span>
+                    </div>
+                </div>
+            `).join('');
+        });
+    </script>
+</body>
+</html>
