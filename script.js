@@ -78,7 +78,6 @@ async function loadWorks() {
   if (!grid) return;
 
   try {
-    // Cache buster add kiya hai taaki hamesha naya data load ho, purana nahi
     const cacheBuster = new Date().getTime();
     const res = await fetch(`works-data.json?v=${cacheBuster}`);
     const data = await res.json();
@@ -88,7 +87,6 @@ async function loadWorks() {
     initFilters(works);
   } catch (e) {
     console.error("Live fetch failed:", e);
-    // Fallback: Agar live server fail ho jaye toh local memory ya sample works dikhayega
     const stored = localStorage.getItem('jr_works');
     let works;
     if (stored) {
@@ -112,7 +110,7 @@ function getSampleWorks() {
   ];
 }
 
-// Render Works (IMAGES BINA KATE DIKHANE KE LIYE OBJECT-FIT CONTAIN ADD KIYA)
+// Render Works
 function renderWorks(works, grid) {
   if (!grid) return;
   grid.innerHTML = '';
@@ -164,7 +162,44 @@ function initFilters(works) {
   });
 }
 
-// Load Packages from JSON (LIVE GITHUB SERVER SE)
+// Reels & Shorts - Load from JSON (Alag se handle karne ke liye)
+async function loadReels() {
+  const reelsGrid = document.querySelector('.reels-grid');
+  if (!reelsGrid) return;
+
+  try {
+    const cacheBuster = new Date().getTime();
+    const res = await fetch(`works-data.json?v=${cacheBuster}`);
+    const data = await res.json();
+    const reels = data.reels || [];
+    
+    renderReels(reels, reelsGrid);
+  } catch (e) {
+    console.error("Reels fetch failed:", e);
+  }
+}
+
+function renderReels(reels, grid) {
+  if (!grid) return;
+  grid.innerHTML = '';
+  reels.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'reel-card reveal';
+    card.innerHTML = `
+      <div class="reel-info" style="padding:20px; background:white; border-radius:var(--radius-lg); box-shadow:var(--shadow);">
+        <h4 style="margin-bottom:10px; font-size:16px;">${r.title}</h4>
+        <p style="font-size:13px; color:var(--text-light); margin-bottom:15px;">📅 ${r.date}</p>
+        <a href="${r.embedUrl}" target="_blank" class="pkg-btn" style="display:inline-block; background:var(--primary); color:white; padding:8px 16px; border-radius:8px; text-decoration:none; font-weight:700; font-size:13px;">
+          Watch on Instagram →
+        </a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  initReveal();
+}
+
+// Load Packages from JSON
 async function loadPackages() {
   const grid = document.querySelector('.packages-grid');
 
@@ -177,7 +212,6 @@ async function loadPackages() {
     if (grid) renderPackages(packages, grid);
     renderCompareTable(packages);
   } catch (e) {
-    // fallback
     const stored = localStorage.getItem('jr_packages');
     if (stored) {
       const packages = JSON.parse(stored);
@@ -209,12 +243,11 @@ function renderPackages(packages, grid) {
   });
 }
 
-// Build comparison table dynamically from packages data
+// Build comparison table dynamically
 function renderCompareTable(packages) {
   const wrap = document.getElementById('compareTableWrap');
   if (!wrap || !packages || packages.length === 0) return;
 
-  // Collect all unique features across all packages
   const allFeatures = [];
   packages.forEach(pkg => {
     (pkg.features || []).forEach(f => {
@@ -222,7 +255,6 @@ function renderCompareTable(packages) {
     });
   });
 
-  // Build header
   let headCols = packages.map((pkg, i) => {
     const isFeatured = pkg.featured;
     return `<th style="padding:16px 20px;text-align:center;color:white;font-family:'Raleway',sans-serif;font-size:14px;font-weight:900;${isFeatured ? 'background:var(--primary-dark)' : ''}">
@@ -230,7 +262,6 @@ function renderCompareTable(packages) {
     </th>`;
   }).join('');
 
-  // Build feature rows
   let featureRows = allFeatures.map(feature => {
     let cols = packages.map((pkg, i) => {
       const has = (pkg.features || []).includes(feature);
@@ -245,14 +276,12 @@ function renderCompareTable(packages) {
     </tr>`;
   }).join('');
 
-  // Price row
   let priceRow = packages.map((pkg, i) => {
     return `<td style="padding:18px 20px;text-align:center;font-family:'Raleway',sans-serif;font-weight:900;font-size:20px;color:var(--primary);${pkg.featured ? 'background:rgba(0,87,255,0.03)' : ''}">
       ₹${pkg.price}<span style="font-size:12px;font-weight:600;color:var(--text-light)">/${pkg.duration.replace('per ','')}</span>
     </td>`;
   }).join('');
 
-  // Get Started row
   let btnRow = packages.map(pkg => {
     return `<td style="padding:14px 20px;text-align:center;${pkg.featured ? 'background:rgba(0,87,255,0.03)' : ''}">
       <a href="https://wa.me/918320146648?text=Hi!%20I'm%20interested%20in%20the%20${encodeURIComponent(pkg.name)}%20Package"
@@ -327,10 +356,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initNavbarScroll();
   loadWorks();
+  loadReels();     // Reels alag se load hongi
   loadPackages();
   initContactForm();
 
-  // Animate counters when visible
   const statsEl = document.querySelector('.hero-stats');
   if (statsEl) {
     const obs = new IntersectionObserver((entries) => {
