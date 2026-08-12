@@ -95,6 +95,7 @@
 <script src="script.js"></script>
 
 <!-- INSIGHTS LIVE FETCH SCRIPT -->
+<!-- INSIGHTS LIVE FETCH SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
     const insightsGrid = document.getElementById("insightsGrid");
@@ -116,24 +117,50 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        insightsGrid.innerHTML = blogs.map(blog => `
+        insightsGrid.innerHTML = blogs.map(blog => {
+            // REELS WALI SAME MAGIC TRICK (Auto Embed)
+            let embedHtml = '';
+            if (blog.instagramUrl) {
+                let finalUrl = blog.instagramUrl;
+                if (finalUrl.includes('instagram.com') && !finalUrl.includes('embed')) {
+                    finalUrl = finalUrl.split('?')[0]; // Extra text hataya
+                    if (!finalUrl.endsWith('/')) {
+                        finalUrl += '/';
+                    }
+                    finalUrl += 'embed/'; // Embed jod diya
+                }
+                
+                // Iframe Container
+                embedHtml = `
+                <div style="width: 100%; height: 350px; background: #f8fafc; border-radius: 12px; overflow: hidden; margin-bottom: 16px; border: 1px solid #e2e8f0;">
+                    <iframe src="${finalUrl}" style="width: 100%; height: 100%; border: none;" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
+                </div>
+                `;
+            }
+
+            return `
             <div class="work-card reveal" style="background:#fff; border-radius:16px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.05); display:flex; flex-direction:column; justify-content:space-between;">
                 <div>
                     <span class="work-tag">📅 ${blog.date}</span>
                     <h3 style="margin-top:12px; margin-bottom:8px; font-size:18px; color:var(--dark);">${blog.title}</h3>
-                    <h4 style="font-size:14px; color:var(--primary); margin-bottom:12px;">${blog.headline || ''}</h4>
+                    <h4 style="font-size:14px; color:var(--primary); margin-bottom:16px;">${blog.headline || ''}</h4>
+                    
+                    <!-- YAHAN AAPKI INSTAGRAM POST DIKHEGI -->
+                    ${embedHtml}
+
                     <p style="font-size:13px; color:var(--text-light); line-height:1.6; margin-bottom:16px;">${blog.description}</p>
                     <div style="font-size:11px; color:var(--gray); margin-bottom:16px;">
                         <strong>Keywords:</strong> ${blog.keywords}
                     </div>
                 </div>
                 ${blog.instagramUrl ? `
-                    <a href="${blog.instagramUrl}" target="_blank" class="btn-secondary" style="text-align:center; padding:10px; font-size:13px;">
-                        📸 View Post on Instagram →
+                    <a href="${blog.instagramUrl}" target="_blank" class="btn-secondary" style="text-align:center; padding:10px; font-size:13px; display:block;">
+                        📸 Open in Instagram App →
                     </a>
                 ` : ''}
             </div>
-        `).join('');
+            `;
+        }).join('');
 
         if (typeof initReveal === 'function') initReveal();
 
