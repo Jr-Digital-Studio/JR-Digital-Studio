@@ -154,5 +154,16 @@
       "category": "Instagram Reels, Ad Creative, Client Portfolio, Digital Marketing, Video Production,  Client Work, Portfolio, Video Editing, Motion Graphics, Social Media Marketing, Meta Ads, Instagram Reels, Digital Marketing Agency, Creative Agency, JR Digital Studio, JR Digital Studio",
       "date": "2026-07-30"
     }
+  ],
+  "blogs": [
+    {
+      "id": 1,
+      "title": "Digital Marketing Tips for 2026",
+      "headline": "Grow your business with proven strategies",
+      "description": "Discover how social media marketing and Meta ads can scale your brand online.",
+      "keywords": "digital marketing, social media, meta ads, mehsana",
+      "instagramUrl": "https://www.instagram.com/p/your-post-link/",
+      "date": "2026-08-12"
+    }
   ]
 }
