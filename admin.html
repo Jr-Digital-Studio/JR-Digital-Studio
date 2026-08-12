@@ -107,9 +107,13 @@
       <a href="#" data-section="works" onclick="showSection('works');loadWorksTable();closeSidebar();return false">
         <span>🖼️</span> Our Work (Portfolio)
       </a>
-      <!-- REELS TAB ADDED HERE -->
+      <!-- REELS TAB -->
       <a href="#" data-section="reels" onclick="showSection('reels');loadReelsTable();closeSidebar();return false">
         <span>🎬</span> Manage Reels
+      </a>
+      <!-- INSIGHTS TAB (NEW) -->
+      <a href="#" data-section="insights" onclick="showSection('insights');loadInsightsTable();closeSidebar();return false">
+        <span>💡</span> Manage Insights
       </a>
       <a href="#" data-section="packages" onclick="showSection('packages');loadPackagesTable();closeSidebar();return false">
         <span>📦</span> Packages & Pricing
@@ -200,7 +204,7 @@
       </div>
     </div>
 
-    <!-- ===== MANAGE REELS (NEW SECTION) ===== -->
+    <!-- ===== MANAGE REELS ===== -->
     <div id="reels" class="admin-section">
       <div class="admin-card">
         <div class="admin-card-title">
@@ -211,6 +215,22 @@
           <table class="admin-table">
             <thead><tr><th>Thumbnail / Embed</th><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
             <tbody id="reelsTableBody"><tr><td colspan="5" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MANAGE INSIGHTS (NEW) ===== -->
+    <div id="insights" class="admin-section">
+      <div class="admin-card">
+        <div class="admin-card-title">
+          💡 Manage Insights & Blogs
+          <button class="admin-btn admin-btn-primary" onclick="openAddInsightModal()">➕ Naya Insight Add Karo</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead><tr><th>Title</th><th>Keywords</th><th>Date</th><th>Actions</th></tr></thead>
+            <tbody id="insightsTableBody"><tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">Loading...</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -299,7 +319,7 @@
     <!-- ===== SETTINGS ===== -->
     <div id="settings" class="admin-section">
 
-      <!-- GITHUB TOKEN SETUP UI (Step 3 ADDED HERE) -->
+      <!-- GITHUB TOKEN SETUP UI -->
       <div class="admin-card" style="border: 1px solid rgba(0,194,255,0.3); margin-bottom: 20px;">
         <div class="admin-card-title" style="color:#00C2FF">⚙️ GitHub Token Setup (Multi-Device)</div>
         <p style="color:rgba(255,255,255,0.45);font-size:13px;margin-bottom:14px">Agar aap kisi naye device (Mobile/PC) se login kar rahe hain, toh apna GitHub Token yahan save karein taaki data aur photos automatic upload ho saken.</p>
@@ -310,7 +330,6 @@
         </div>
         <p id="tokenStatusMsg" style="margin-top: 12px; font-size: 13px; font-weight: bold;"></p>
       </div>
-      <!-- END OF GITHUB TOKEN SETUP UI -->
 
       <div class="admin-card">
         <div class="admin-card-title">⚙️ Studio Information</div>
@@ -370,7 +389,6 @@
         </div>
       </div>
 
-      <!-- NEW PROJECT IMAGE UPLOAD FIELD -->
       <div class="form-group" style="margin-bottom: 15px;">
         <label style="display:block; margin-bottom: 5px; font-weight: 600; color: #fff;">PROJECT IMAGE (UPLOAD) *</label>
         <input type="file" id="workImageFile" accept="image/*" style="width: 100%; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); color: #fff;">
@@ -440,7 +458,7 @@
   </div>
 </div>
 
-<!-- ===== REEL MODAL (NEW) ===== -->
+<!-- ===== REEL MODAL ===== -->
 <div class="modal-overlay" id="reelModal">
   <div class="modal">
     <div class="modal-title" id="reelModalTitle">➕ Naya Reel Add Karo</div>
@@ -463,6 +481,40 @@
     <div class="modal-actions">
       <button class="admin-btn" style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)" onclick="closeModal('reelModal')">Cancel</button>
       <button class="admin-btn admin-btn-primary" onclick="saveReelData()">💾 Save Karo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INSIGHT MODAL (NEW) ===== -->
+<div class="modal-overlay" id="insightModal">
+  <div class="modal">
+    <div class="modal-title" id="insightModalTitle">➕ Naya Insight Add Karo</div>
+    <div class="admin-form" id="insightForm">
+      <input type="hidden" id="insightId">
+      <div class="form-group">
+        <label>Title (H1) *</label>
+        <input type="text" id="insightTitle" placeholder="e.g., Digital Marketing Tips 2026">
+      </div>
+      <div class="form-group">
+        <label>Headline (Sub-title)</label>
+        <input type="text" id="insightHeadline" placeholder="Grow your business...">
+      </div>
+      <div class="form-group">
+        <label>Description / Content *</label>
+        <textarea id="insightDesc" placeholder="Write details here..." style="min-height:90px"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Keywords (SEO) *</label>
+        <input type="text" id="insightKeywords" placeholder="marketing, seo, meta ads">
+      </div>
+      <div class="form-group">
+        <label>Instagram Post URL</label>
+        <input type="url" id="insightUrl" placeholder="https://www.instagram.com/p/...">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="admin-btn" style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)" onclick="closeModal('insightModal')">Cancel</button>
+      <button class="admin-btn admin-btn-primary" onclick="saveInsightData()">💾 Save Karo</button>
     </div>
   </div>
 </div>
@@ -544,7 +596,7 @@ ${insta ? `<!-- Instagram: ${insta} -->` : ''}
   showAdminToast('✅ Meta tags ready! Copy karo aur HTML mein paste karo.');
 }
 
-// ===== GITHUB TOKEN SETUP SCRIPT (NEW) =====
+// ===== GITHUB TOKEN SETUP SCRIPT =====
 document.addEventListener('DOMContentLoaded', () => {
   const statusMsg = document.getElementById('tokenStatusMsg');
   if(statusMsg) {
@@ -566,7 +618,7 @@ function saveTokenFromUI() {
     const statusMsg = document.getElementById('tokenStatusMsg');
     statusMsg.textContent = '✅ Token successfully saved! Ab aap upload kar sakte hain.';
     statusMsg.style.color = '#00C853';
-    document.getElementById('ghTokenInputUI').value = ''; // Security ke liye input clear kar diya
+    document.getElementById('ghTokenInputUI').value = ''; 
     
     if (typeof showAdminToast === 'function') {
       showAdminToast('✅ Token saved successfully!');
