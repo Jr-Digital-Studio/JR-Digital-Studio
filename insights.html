@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJWTW6DXVD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WJWTW6DXVD');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights & Updates | JR Digital Studio</title>
+    <meta name="description" content="Explore the latest digital marketing tips, social media strategies, and creative updates from JR Digital Studio.">
+    <meta name="keywords" content="digital marketing insights, social media tips, meta ads, jr digital studio updates">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="jr.png" alt="JR Digital Studio Logo" class="logo-img">
+      <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="packages.html">Packages</a></li>
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="reels.html">Reels</a></li>
+      <li><a href="insights.html" class="active">Insights</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="nav-cta">Get Quote</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- Page Header -->
+<section class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> <span>Insights</span></div>
+  <div class="section-tag">Blog & Updates</div>
+  <h1>Our Latest <span style="background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Insights</span></h1>
+  <p>Read our expert marketing tips, social media updates, and creative thoughts.</p>
+</section>
+
+<!-- Insights Grid Section -->
+<section class="section">
+  <div class="section-inner">
+    <div class="work-grid" id="insightsGrid">
+      <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-light);">
+        Loading insights...
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:16px;display:inline-flex">
+          <img src="jr.png" alt="JR Digital Studio Logo" class="logo-img">
+          <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
+        </a>
+        <p>Your creative digital partner.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="packages.html">Packages</a>
+        <a href="our-work.html">Our Work</a>
+        <a href="reels.html">Reels</a>
+        <a href="insights.html">Insights</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:+918320146648">📞 8320146648</a>
+        <a href="mailto:jrdigitalstudio8@gmail.com">✉️ Gmail</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 JR Digital Studio. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+<!-- INSIGHTS LIVE FETCH SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const insightsGrid = document.getElementById("insightsGrid");
+    if (!insightsGrid) return;
+
+    try {
+        const cacheBuster = new Date().getTime();
+        const response = await fetch(`works-data.json?v=${cacheBuster}`);
+        const data = await response.json();
+        const blogs = data.blogs || [];
+
+        if (blogs.length === 0) {
+            insightsGrid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align:center; padding: 60px 20px;">
+                    <div style="font-size:48px; margin-bottom:16px;">💡</div>
+                    <h3 style="color:var(--dark); font-family:'Syne',sans-serif;">No insights added yet</h3>
+                    <p style="color:var(--text-light);">Check back soon for marketing tips and updates.</p>
+                </div>`;
+            return;
+        }
+
+        insightsGrid.innerHTML = blogs.map(blog => `
+            <div class="work-card reveal" style="background:#fff; border-radius:16px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.05); display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <span class="work-tag">📅 ${blog.date}</span>
+                    <h3 style="margin-top:12px; margin-bottom:8px; font-size:18px; color:var(--dark);">${blog.title}</h3>
+                    <h4 style="font-size:14px; color:var(--primary); margin-bottom:12px;">${blog.headline || ''}</h4>
+                    <p style="font-size:13px; color:var(--text-light); line-height:1.6; margin-bottom:16px;">${blog.description}</p>
+                    <div style="font-size:11px; color:var(--gray); margin-bottom:16px;">
+                        <strong>Keywords:</strong> ${blog.keywords}
+                    </div>
+                </div>
+                ${blog.instagramUrl ? `
+                    <a href="${blog.instagramUrl}" target="_blank" class="btn-secondary" style="text-align:center; padding:10px; font-size:13px;">
+                        📸 View Post on Instagram →
+                    </a>
+                ` : ''}
+            </div>
+        `).join('');
+
+        if (typeof initReveal === 'function') initReveal();
+
+    } catch (error) {
+        console.error("Error fetching insights:", error);
+        insightsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:var(--text-light);">Failed to load insights. Please refresh the page.</p>`;
+    }
+});
+</script>
+</body>
+</html>
