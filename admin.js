@@ -7,7 +7,6 @@ const ADMIN_PASS = 'Jiya@2026';
 const GH_USER = "Jr-Digital-Studio"; 
 const GH_REPO = "JR-Digital-Studio"; 
 
-// Yeh function aapke browser ke LocalStorage se token uthayega taaki GitHub kabhi block na kare
 function getGhToken() {
   return localStorage.getItem('jr_gh_token') || "";
 }
@@ -46,12 +45,18 @@ function getPackages() {
 }
 function savePackages(packages) { localStorage.setItem('jr_packages', JSON.stringify(packages)); }
 
-// NEW: Reels Data Logic
 function getReels() {
   try { return JSON.parse(localStorage.getItem('jr_reels_data')) || []; }
   catch { return []; }
 }
 function saveReels(reels) { localStorage.setItem('jr_reels_data', JSON.stringify(reels)); }
+
+// NEW: Insights Data Logic
+function getInsights() {
+  try { return JSON.parse(localStorage.getItem('jr_blogs_data')) || []; }
+  catch { return []; }
+}
+function saveInsights(blogs) { localStorage.setItem('jr_blogs_data', JSON.stringify(blogs)); }
 
 function getSeoSettings() {
   try { return JSON.parse(localStorage.getItem('jr_seo')) || {}; }
@@ -82,7 +87,8 @@ function showSection(id) {
       dashboard: 'Dashboard', 
       works: 'Manage Our Work', 
       packages: 'Manage Packages', 
-      reels: 'Manage Reels & Shorts', // Added Reels Title
+      reels: 'Manage Reels & Shorts',
+      insights: 'Manage Insights & Blogs', // Added Insights
       seo: 'SEO Settings', 
       settings: 'Settings' 
   };
@@ -231,8 +237,9 @@ async function saveWork() {
 
     // Sync all data to GitHub
     const packages = getPackages();
-    const reels = getReels(); // Include reels so they aren't lost
-    const fullJsonData = JSON.stringify({ works, packages, reels }, null, 2);
+    const reels = getReels(); 
+    const blogs = getInsights();
+    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
     
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
     await githubApiRequest('contents/works-data.json', 'PUT', {
@@ -261,7 +268,7 @@ async function deleteWork(id) {
   showAdminToast('🗑️ Work delete ho gaya (Note: GitHub json mein tab update hoga jab naya work add karenge)');
 }
 
-// ===== REELS MANAGEMENT (NEW) =====
+// ===== REELS MANAGEMENT =====
 function loadReelsTable() {
   const reels = getReels();
   const tbody = document.getElementById('reelsTableBody');
@@ -318,13 +325,13 @@ async function saveReelData() {
       date: new Date().toISOString().split('T')[0]
     };
 
-    reels.unshift(newReel); // Naya reel sabse upar
+    reels.unshift(newReel); 
     saveReels(reels);
 
-    // Sync to GitHub JSON
     const works = getWorks();
     const packages = getPackages();
-    const fullJsonData = JSON.stringify({ works, packages, reels }, null, 2);
+    const blogs = getInsights();
+    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
 
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
     await githubApiRequest('contents/works-data.json', 'PUT', {
@@ -354,7 +361,8 @@ async function deleteReel(id) {
 
     const works = getWorks();
     const packages = getPackages();
-    const fullJsonData = JSON.stringify({ works, packages, reels }, null, 2);
+    const blogs = getInsights();
+    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
 
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
     await githubApiRequest('contents/works-data.json', 'PUT', {
@@ -366,6 +374,150 @@ async function deleteReel(id) {
 
     loadReelsTable();
     showAdminToast('🗑️ Reel delete ho gayi aur GitHub par update ho gaya');
+  } catch (error) {
+    console.error(error);
+    showAdminToast("❌ Error: " + error.message, "error");
+  }
+}
+
+// ===== INSIGHTS / BLOGS MANAGEMENT (NEW) =====
+let editingInsightId = null;
+
+function loadInsightsTable() {
+  const blogs = getInsights();
+  const tbody = document.getElementById('insightsTableBody');
+  
+  if (blogs.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.3);padding:20px">No insights added yet.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = blogs.map(b => `
+    <tr>
+      <td>
+        <strong>${b.title}</strong><br>
+        <a href="${b.instagramUrl || '#'}" target="_blank" style="font-size:11px;color:#4D8EFF;text-decoration:none;">🔗 Instagram Link</a>
+      </td>
+      <td><span style="font-size:12px; color:rgba(255,255,255,0.5)">${b.keywords || 'N/A'}</span></td>
+      <td style="color:rgba(255,255,255,0.4);font-size:12px">${b.date||'N/A'}</td>
+      <td>
+        <button class="admin-btn admin-btn-primary" onclick="editInsight(${b.id})" style="margin-right:6px">✏️ Edit</button>
+        <button class="admin-btn admin-btn-danger" onclick="deleteInsight(${b.id})">🗑️ Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function openAddInsightModal() {
+  editingInsightId = null;
+  document.getElementById('insightModalTitle').textContent = '➕ Naya Insight Add Karo';
+  document.getElementById('insightId').value = '';
+  document.getElementById('insightTitle').value = '';
+  document.getElementById('insightHeadline').value = '';
+  document.getElementById('insightDesc').value = '';
+  document.getElementById('insightKeywords').value = '';
+  document.getElementById('insightUrl').value = '';
+  openModal('insightModal');
+}
+
+function editInsight(id) {
+  const b = getInsights().find(x => x.id === id);
+  if (!b) return;
+  editingInsightId = id;
+  document.getElementById('insightModalTitle').textContent = '✏️ Insight Edit Karo';
+  document.getElementById('insightId').value = b.id;
+  document.getElementById('insightTitle').value = b.title;
+  document.getElementById('insightHeadline').value = b.headline || '';
+  document.getElementById('insightDesc').value = b.description || '';
+  document.getElementById('insightKeywords').value = b.keywords || '';
+  document.getElementById('insightUrl').value = b.instagramUrl || '';
+  openModal('insightModal');
+}
+
+async function saveInsightData() {
+  const title = document.getElementById('insightTitle').value.trim();
+  const description = document.getElementById('insightDesc').value.trim();
+  const keywords = document.getElementById('insightKeywords').value.trim();
+  const instagramUrl = document.getElementById('insightUrl').value.trim();
+
+  if (!title || !description || !keywords) {
+    showAdminToast('❌ Title, Description aur Keywords zaroori hain!', 'error');
+    return;
+  }
+
+  showAdminToast("⏳ GitHub par Insight sync ho raha hai...", "success");
+
+  try {
+    const blogs = getInsights();
+    
+    const blogData = {
+      title,
+      headline: document.getElementById('insightHeadline').value.trim(),
+      description,
+      keywords,
+      instagramUrl,
+      date: new Date().toISOString().split('T')[0]
+    };
+
+    if (editingInsightId) {
+      const idx = blogs.findIndex(b => b.id === editingInsightId);
+      if (idx !== -1) {
+        blogData.id = editingInsightId; 
+        blogs[idx] = blogData;
+      }
+    } else {
+      blogData.id = Date.now();
+      blogs.unshift(blogData); 
+    }
+    
+    saveInsights(blogs);
+
+    const works = getWorks();
+    const packages = getPackages();
+    const reels = getReels();
+    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
+
+    const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
+    await githubApiRequest('contents/works-data.json', 'PUT', {
+      message: 'Updated Insights via Admin Panel',
+      content: btoa(unescape(encodeURIComponent(fullJsonData))),
+      sha: fileInfo.sha,
+      branch: 'main'
+    });
+
+    closeModal('insightModal');
+    loadInsightsTable();
+    showAdminToast('✅ Insight successfully live ho gaya!');
+
+  } catch (error) {
+    console.error(error);
+    showAdminToast("❌ Error: " + error.message, "error");
+  }
+}
+
+async function deleteInsight(id) {
+  if (!confirm('Yeh Insight website se delete karna chahte ho?')) return;
+  showAdminToast("⏳ GitHub par sync ho raha hai...", "success");
+
+  try {
+    const blogs = getInsights().filter(b => b.id !== id);
+    saveInsights(blogs);
+
+    const works = getWorks();
+    const packages = getPackages();
+    const reels = getReels();
+    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
+
+    const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
+    await githubApiRequest('contents/works-data.json', 'PUT', {
+      message: 'Deleted Insight via Admin Panel',
+      content: btoa(unescape(encodeURIComponent(fullJsonData))),
+      sha: fileInfo.sha,
+      branch: 'main'
+    });
+
+    loadInsightsTable();
+    showAdminToast('🗑️ Insight delete ho gaya aur GitHub par update ho gaya');
   } catch (error) {
     console.error(error);
     showAdminToast("❌ Error: " + error.message, "error");
@@ -540,8 +692,9 @@ function resetData() {
   localStorage.removeItem('jr_works');
   localStorage.removeItem('jr_packages');
   localStorage.removeItem('jr_reels_data');
+  localStorage.removeItem('jr_blogs_data');
   localStorage.removeItem('jr_seo');
-  loadDashboard(); loadWorksTable(); loadPackagesTable(); loadReelsTable(); loadSeoSettings();
+  loadDashboard(); loadWorksTable(); loadPackagesTable(); loadReelsTable(); loadInsightsTable(); loadSeoSettings();
   showAdminToast('✅ Data reset ho gaya');
 }
 
@@ -549,7 +702,8 @@ function exportLiveJson() {
   const fullData = {
       works: getWorks(),
       packages: getPackages(),
-      reels: getReels() // Reels data ab download JSON me aayega
+      reels: getReels(),
+      blogs: getInsights() // JSON Export me bhi blogs add kar diye
   };
 
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullData, null, 2));
