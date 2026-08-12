@@ -96,6 +96,7 @@
 
 <!-- INSIGHTS LIVE FETCH SCRIPT -->
 <!-- INSIGHTS LIVE FETCH SCRIPT -->
+<!-- INSIGHTS LIVE FETCH SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
     const insightsGrid = document.getElementById("insightsGrid");
@@ -118,21 +119,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         insightsGrid.innerHTML = blogs.map(blog => {
-            // REELS WALI SAME MAGIC TRICK (Auto Embed)
+            
             let embedHtml = '';
             if (blog.instagramUrl) {
                 let finalUrl = blog.instagramUrl;
                 if (finalUrl.includes('instagram.com') && !finalUrl.includes('embed')) {
-                    finalUrl = finalUrl.split('?')[0]; // Extra text hataya
+                    finalUrl = finalUrl.split('?')[0]; 
                     if (!finalUrl.endsWith('/')) {
                         finalUrl += '/';
                     }
-                    finalUrl += 'embed/'; // Embed jod diya
+                    finalUrl += 'embed/'; 
                 }
                 
-                // Iframe Container
+                // Height 580px kar di hai taaki Portrait (4:5) post poori dikhe!
                 embedHtml = `
-                <div style="width: 100%; height: 350px; background: #f8fafc; border-radius: 12px; overflow: hidden; margin-bottom: 16px; border: 1px solid #e2e8f0;">
+                <div style="width: 100%; height: 580px; background: #fff; border-radius: 12px; overflow: hidden; margin-bottom: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
                     <iframe src="${finalUrl}" style="width: 100%; height: 100%; border: none;" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
                 </div>
                 `;
@@ -145,17 +146,23 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <h3 style="margin-top:12px; margin-bottom:8px; font-size:18px; color:var(--dark);">${blog.title}</h3>
                     <h4 style="font-size:14px; color:var(--primary); margin-bottom:16px;">${blog.headline || ''}</h4>
                     
-                    <!-- YAHAN AAPKI INSTAGRAM POST DIKHEGI -->
+                    <!-- INSTAGRAM POST (PORTRAIT READY) -->
                     ${embedHtml}
 
-                    <p style="font-size:13px; color:var(--text-light); line-height:1.6; margin-bottom:16px;">${blog.description}</p>
-                    <div style="font-size:11px; color:var(--gray); margin-bottom:16px;">
-                        <strong>Keywords:</strong> ${blog.keywords}
+                    <!-- SCROLLABLE TEXT BOX -->
+                    <div style="background: rgba(0,87,255,0.03); border: 1px solid rgba(0,87,255,0.08); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                        <div style="font-size:13px; color:var(--text-light); line-height:1.7; margin-bottom:12px; max-height: 90px; overflow-y: auto; padding-right: 5px;">
+                            ${blog.description}
+                        </div>
+                        <div style="font-size:11px; color:var(--primary-light); border-top: 1px dashed rgba(0,87,255,0.15); padding-top: 10px; line-height: 1.5; max-height: 50px; overflow-y: auto;">
+                            <strong>SEO Keywords:</strong> ${blog.keywords}
+                        </div>
                     </div>
                 </div>
+                
                 ${blog.instagramUrl ? `
                     <a href="${blog.instagramUrl}" target="_blank" class="btn-secondary" style="text-align:center; padding:10px; font-size:13px; display:block;">
-                        📸 Open in Instagram App →
+                        📸 View Full Post on Instagram →
                     </a>
                 ` : ''}
             </div>
