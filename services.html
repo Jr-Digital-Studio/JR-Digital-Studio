@@ -4,96 +4,6 @@
   <!-- Website Favicon / Google Search Logo -->
 <link rel="icon" type="image/png" href="jr.png">
 <link rel="apple-touch-icon" href="jr.png">
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "JR Digital Studio",
-  "image": "https://yourwebsite.com/logo.png",
-  "@id": "https://yourwebsite.com",
-  "url": "https://yourwebsite.com",
-  "telephone": "+918320146648",
-  "email": "jrdigitalstudio8@gmail.com",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Mehsana",
-    "addressRegion": "Gujarat",
-    "addressCountry": "IN"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 23.5880,
-    "longitude": 72.3693
-  },
-  "areaServed": [
-    {
-      "@type": "Country",
-      "name": "India"
-    },
-    {
-      "@type": "AdministrativeArea",
-      "name": "Global"
-    }
-  ],
-  "priceRange": "₹₹",
-  "knowsAbout": [
-    "Digital Marketing",
-    "Social Media Marketing",
-    "Meta Ads",
-    "Google Ads",
-    "Brochure Design",
-    "Reels Editing",
-    "Video Editing",
-    "Graphic Design",
-    "Content Creation",
-    "Web Design"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Digital Marketing and Creative Services",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Digital Marketing & Social Media Marketing"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Meta Ads & Google Ads Management"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Graphic Design & Brochure Design"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Video Editing & Instagram Reels Production"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Content Creation & Brand Strategy"
-        }
-      }
-    ]
-  },
-  "sameAs": [
-    "https://www.instagram.com/jr_digital_studio_"
-  ]
-}
-</script>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJWTW6DXVD"></script>
 <script>
@@ -104,102 +14,167 @@
   gtag('config', 'G-WJWTW6DXVD');
 </script>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premium Digital Services | JR Digital Studio Mehsana, Gujarat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Premium Digital Services | JR Digital Studio Mehsana</title>
   <meta name="description" content="Explore JR Digital Studio's premium services: High-end Website Design, Custom Logo Branding, Social Media Marketing, Local SEO, and 3D Graphic Design in Mehsana.">
   <meta name="keywords" content="premium web design Mehsana, logo design Gujarat, social media marketing agency, top SEO services, 3D graphic design, digital marketing Gujarat">
   <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
   <style>
-  /* Base Reset & Variables for New 3D Elements */
-  :root {
-      --glass-bg: rgba(255, 255, 255, 0.7);
-      --glass-border: rgba(255, 255, 255, 0.5);
-      --shadow-3d: 0 30px 60px rgba(0, 87, 255, 0.15), 0 0 0 1px inset rgba(255, 255, 255, 0.8);
-      --float-anim: float-card 6s ease-in-out infinite;
+  /* ======================================================== */
+  /* PREMIUM 3D ANIMATED LAYOUT & MOBILE FIXES                */
+  /* ======================================================== */
+  
+  html, body {
+      overflow-x: hidden; /* Prevents screen cutoff */
+      width: 100%;
   }
 
-  @media(max-width:768px){
-      .section-inner [style*="grid-template-columns:1fr 1fr"]{display:block!important; margin-bottom: 60px !important;}
-      .section-inner [style*="grid-template-columns"]{display:block!important}
-      .section-inner [style*="grid-template-columns"] > div{margin-bottom:30px!important}
-      /* On mobile, stack text above the 3D visual */
-      .reverse-mobile { display: flex; flex-direction: column-reverse; }
+  .service-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: clamp(30px, 6vw, 80px);
+      margin-bottom: clamp(60px, 12vw, 120px);
+      width: 100%;
+  }
+  
+  .service-row.reverse {
+      flex-direction: row-reverse;
   }
 
-  /* 3D Glassmorphism Card Style */
+  .service-content {
+      flex: 1;
+      min-width: 300px;
+      z-index: 2;
+  }
+
+  .service-visual {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+  }
+
+  /* Animated Glowing Blobs Behind Cards */
+  .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      z-index: 0;
+      opacity: 0.5;
+      animation: rotateBlob 10s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  }
+  .blob-primary {
+      width: 200px; height: 200px;
+      background: var(--primary);
+      top: 0; right: 20px;
+  }
+  .blob-accent {
+      width: 180px; height: 180px;
+      background: var(--accent);
+      bottom: 0; left: 20px;
+      animation-delay: 2s;
+  }
+  @keyframes rotateBlob {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.2) translate(20px, -20px); }
+  }
+
+  /* 3D Glassmorphism Container */
   .premium-3d-card {
       position: relative;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: var(--radius-lg);
-      padding: 60px;
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 1/1;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 30px 60px rgba(0, 87, 255, 0.1), inset 0 0 0 2px rgba(255, 255, 255, 0.6);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 90px;
-      box-shadow: var(--shadow-3d);
-      border: 1px solid var(--glass-border);
-      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1;
       transform-style: preserve-3d;
-      perspective: 1000px;
+      transform: perspective(1000px) rotateY(-8deg) rotateX(8deg);
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
+  }
+  
+  .service-row.reverse .premium-3d-card {
+      transform: perspective(1000px) rotateY(8deg) rotateX(8deg);
   }
 
   /* Hover Magnet Effect */
   .service-row:hover .premium-3d-card {
-      transform: translateY(-15px) rotateX(5deg) rotateY(-5deg);
-      box-shadow: 0 40px 80px rgba(0, 87, 255, 0.2), 0 0 0 1px inset rgba(255, 255, 255, 1);
-  }
-  .service-row:hover .premium-3d-card.reverse-tilt {
-      transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+      transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(-15px);
+      box-shadow: 0 40px 80px rgba(0, 87, 255, 0.2), inset 0 0 0 2px rgba(255, 255, 255, 0.9);
   }
 
-  /* Glowing Orb Behind Card */
-  .premium-3d-card::before {
-      content: '';
+  /* Center Main Emoji */
+  .main-icon {
+      font-size: clamp(60px, 12vw, 100px);
+      filter: drop-shadow(0 20px 20px rgba(0, 87, 255, 0.3));
+      animation: float 4s ease-in-out infinite;
+      transform: translateZ(30px); /* Pops out of the card */
+  }
+
+  /* Floating Mini-Badges */
+  .floating-pill {
       position: absolute;
-      width: 150px;
-      height: 150px;
-      background: var(--primary);
-      filter: blur(60px);
-      opacity: 0.15;
-      z-index: -1;
-      transition: all 0.5s ease;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary);
+      box-shadow: 0 15px 35px rgba(0, 87, 255, 0.15);
+      transform: translateZ(60px); /* Pops out more than icon */
+      font-family: var(--font-body);
+      white-space: nowrap;
   }
-  .service-row:hover .premium-3d-card::before {
-      opacity: 0.3;
-      transform: scale(1.2);
-  }
+  .pill-1 { top: 15%; left: -10px; animation: float 5s ease-in-out infinite; border-bottom: 2px solid var(--accent); }
+  .pill-2 { bottom: 15%; right: -10px; animation: float 6s ease-in-out infinite reverse; border-bottom: 2px solid var(--primary); }
 
   /* Scroll Reveal Animation */
   .reveal-smooth {
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+      transform: translateY(50px);
+      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .reveal-smooth.visible {
       opacity: 1;
       transform: translateY(0);
   }
 
-  .service-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      margin-bottom: 120px;
-  }
-  
-  /* Icon Animation */
-  .animated-icon {
-      display: inline-block;
-      animation: var(--float-anim);
-  }
-  @keyframes float-card {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
+  /* Mobile Perfection Setup */
+  @media (max-width: 768px) {
+      .service-row, .service-row.reverse { 
+          flex-direction: column; 
+          text-align: center; 
+          gap: 40px;
+      }
+      .service-content ul {
+          text-align: left; /* Keep checkmarks aligned nicely */
+          display: inline-block;
+      }
+      .premium-3d-card {
+          transform: perspective(1000px) rotateY(0deg) rotateX(0deg); /* Reset 3D tilt for mobile focus */
+          max-width: 320px;
+      }
+      .floating-pill {
+          padding: 8px 16px;
+          font-size: 11px;
+      }
+      .pill-1 { left: 5%; }
+      .pill-2 { right: 5%; }
+      .blob-primary { top: -20px; right: 0; }
+      .blob-accent { bottom: -20px; left: 0; }
   }
   </style>
 </head>
@@ -230,16 +205,16 @@
   <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> <span>Services</span></div>
   <div class="section-tag">Premium Digital Solutions</div>
   <h1>Our <span style="background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Services</span></h1>
-  <p>Everything your Mehsana business needs to dominate the digital space.</p>
+  <p>Everything your business needs to dominate the digital space with style.</p>
 </section>
 
 <!-- ALL SERVICES -->
-<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);">
+<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, #f9fbff 100%); overflow-x: hidden;">
   <div class="section-inner">
 
     <!-- Web Design -->
     <div class="service-row reveal-smooth">
-      <div>
+      <div class="service-content">
         <div class="section-tag">Service 01</div>
         <h2 class="section-title">High-Performance<br>Website <span>Development</span></h2>
         <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">We build beautiful, fast, and fully responsive websites tailored for Gujarat's growing businesses. Optimized for conversions, search engines, and modern visual standards.</p>
@@ -248,21 +223,32 @@
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> SEO-Optimized Structure & Speed</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Business Websites, Portfolios, E-Commerce</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> WhatsApp & Contact Integration</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Fast Loading & Secure Architecture</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20a%20website%20designed" target="_blank" class="btn-primary">Get Web Design Quote</a>
       </div>
-      <div class="premium-3d-card reverse-tilt">
-        <span class="animated-icon">🌐</span>
+      <div class="service-visual">
+        <div class="blob blob-primary"></div>
+        <div class="blob blob-accent"></div>
+        <div class="premium-3d-card">
+          <div class="floating-pill pill-1">🚀 99/100 Speed</div>
+          <div class="main-icon">🌐</div>
+          <div class="floating-pill pill-2">📱 Mobile Ready</div>
+        </div>
       </div>
     </div>
 
     <!-- Branding -->
-    <div class="service-row reverse-mobile reveal-smooth">
-      <div class="premium-3d-card" style="background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,248,255,0.7));">
-        <span class="animated-icon" style="animation-delay: 1s;">✏️</span>
+    <div class="service-row reverse reveal-smooth">
+      <div class="service-visual">
+        <div class="blob blob-accent"></div>
+        <div class="blob blob-primary"></div>
+        <div class="premium-3d-card" style="background: rgba(255, 255, 255, 0.6);">
+          <div class="floating-pill pill-1" style="color: var(--dark)">✨ Premium Look</div>
+          <div class="main-icon" style="animation-delay: 1s;">✏️</div>
+          <div class="floating-pill pill-2" style="color: var(--dark)">🎯 Custom Logo</div>
+        </div>
       </div>
-      <div>
+      <div class="service-content">
         <div class="section-tag">Service 02</div>
         <h2 class="section-title">Premium Logo &<br><span>Brand Identity</span></h2>
         <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">Your brand is your first impression. We create memorable logos and complete brand identities that tell your story and connect with your audience emotionally.</p>
@@ -270,8 +256,7 @@
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Custom Logo Design (3 Premium Concepts)</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Color Palette & Typography Guidelines</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Professional Business Card Design</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Comprehensive Brand Guidelines Document</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> All Master File Formats (PNG, SVG, AI, PDF)</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> All Master File Formats (PNG, SVG, AI)</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20logo%20and%20branding%20design" target="_blank" class="btn-primary">Get Branding Quote</a>
       </div>
@@ -279,39 +264,49 @@
 
     <!-- Social Media -->
     <div class="service-row reveal-smooth">
-      <div>
+      <div class="service-content">
         <div class="section-tag">Service 03</div>
         <h2 class="section-title">Engaging Social Media<br><span>Marketing</span></h2>
         <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">We manage your social media presence end-to-end — from dynamic content creation and scheduling to audience engagement and targeted growth strategies.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Strategic Instagram & Facebook Management</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Instagram & Facebook Management</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Custom Post, Carousel & Story Design</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> High-Impact Reels & Short Video Content</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Targeted Hashtag Strategy & Organic Growth</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Comprehensive Monthly Analytics Report</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Targeted Hashtag Strategy & Growth</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20social%20media%20management" target="_blank" class="btn-primary">Get Social Media Quote</a>
       </div>
-      <div class="premium-3d-card reverse-tilt">
-        <span class="animated-icon" style="animation-delay: 2s;">📱</span>
+      <div class="service-visual">
+        <div class="blob blob-primary"></div>
+        <div class="blob blob-accent"></div>
+        <div class="premium-3d-card">
+          <div class="floating-pill pill-1">❤️ Engagement</div>
+          <div class="main-icon" style="animation-delay: 2s;">📱</div>
+          <div class="floating-pill pill-2">📈 Growth</div>
+        </div>
       </div>
     </div>
 
     <!-- SEO & Digital Marketing -->
-    <div class="service-row reverse-mobile reveal-smooth">
-      <div class="premium-3d-card" style="background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,248,255,0.7));">
-        <span class="animated-icon" style="animation-delay: 0.5s;">📈</span>
+    <div class="service-row reverse reveal-smooth">
+      <div class="service-visual">
+        <div class="blob blob-accent"></div>
+        <div class="blob blob-primary"></div>
+        <div class="premium-3d-card" style="background: rgba(255, 255, 255, 0.6);">
+          <div class="floating-pill pill-1" style="color: var(--dark)">🏆 Rank #1</div>
+          <div class="main-icon" style="animation-delay: 0.5s;">📈</div>
+          <div class="floating-pill pill-2" style="color: var(--dark)">📍 Local SEO</div>
+        </div>
       </div>
-      <div>
+      <div class="service-content">
         <div class="section-tag">Service 04</div>
         <h2 class="section-title">Local SEO &<br><span>Digital Ads Agency</span></h2>
-        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">Rank higher on Google and dominate the local Mehsana market. Our SEO strategies are tailored to your business and backed by proven techniques for long-term ROI.</p>
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">Rank higher on Google and dominate the local market. Our SEO strategies are tailored to your business and backed by proven techniques for long-term ROI.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Technical On-Page & Off-Page SEO</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Deep Keyword Research & Content Strategy</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Google My Business (Local SEO) Optimization</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> High-Converting Google & Meta Ads Management</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Monthly SEO Performance & Ranking Report</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Deep Keyword Research Strategy</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Google My Business Optimization</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> High-Converting Meta Ads Management</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20SEO%20services" target="_blank" class="btn-primary">Get SEO Quote</a>
       </div>
@@ -319,21 +314,26 @@
 
     <!-- Graphic Design -->
     <div class="service-row reveal-smooth" style="margin-bottom: 40px;">
-      <div>
+      <div class="service-content">
         <div class="section-tag">Service 05</div>
         <h2 class="section-title">Modern Graphic Design &<br><span>Print Media</span></h2>
-        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">From elegant visiting cards to 3D architectural visual elements — we design premium print and digital materials that leave a lasting professional impression.</p>
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">From elegant visiting cards to modern visual elements — we design premium print and digital materials that leave a lasting professional impression.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> High-Resolution Posters, Banners & Flyers</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> High-Resolution Posters & Flyers</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Premium Business Cards & Letterheads</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Professional Corporate Brochures & Catalogs</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Eye-Catching YouTube Thumbnails & Channel Art</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Professional Corporate Brochures</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Print-Ready Source Files Provided</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20graphic%20design%20services" target="_blank" class="btn-primary">Get Design Quote</a>
       </div>
-      <div class="premium-3d-card reverse-tilt">
-        <span class="animated-icon" style="animation-delay: 1.5s;">🎨</span>
+      <div class="service-visual">
+        <div class="blob blob-primary"></div>
+        <div class="blob blob-accent"></div>
+        <div class="premium-3d-card">
+          <div class="floating-pill pill-1">🖨️ Print Ready</div>
+          <div class="main-icon" style="animation-delay: 1.5s;">🎨</div>
+          <div class="floating-pill pill-2">🌟 Creative</div>
+        </div>
       </div>
     </div>
 
