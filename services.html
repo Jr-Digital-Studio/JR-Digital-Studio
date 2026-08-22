@@ -105,14 +105,102 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Services | JR Digital Studio - Web Design, Branding, SEO & More</title>
-  <meta name="description" content="Explore JR Digital Studio's full range of services: Website Design, Logo & Branding, Social Media Marketing, SEO, Graphic Design and Video Creation.">
-  <meta name="keywords" content="web design services, logo design, social media marketing, SEO, graphic design, digital marketing Gujarat">
+  <title>Premium Digital Services | JR Digital Studio Mehsana, Gujarat</title>
+  <meta name="description" content="Explore JR Digital Studio's premium services: High-end Website Design, Custom Logo Branding, Social Media Marketing, Local SEO, and 3D Graphic Design in Mehsana.">
+  <meta name="keywords" content="premium web design Mehsana, logo design Gujarat, social media marketing agency, top SEO services, 3D graphic design, digital marketing Gujarat">
   <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-  @media(max-width:768px){.section-inner [style*="grid-template-columns:1fr 1fr"]{display:block!important}.section-inner [style*="grid-template-columns"]{display:block!important}.section-inner [style*="grid-template-columns"] > div{margin-bottom:24px!important}}
+  /* Base Reset & Variables for New 3D Elements */
+  :root {
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --shadow-3d: 0 30px 60px rgba(0, 87, 255, 0.15), 0 0 0 1px inset rgba(255, 255, 255, 0.8);
+      --float-anim: float-card 6s ease-in-out infinite;
+  }
+
+  @media(max-width:768px){
+      .section-inner [style*="grid-template-columns:1fr 1fr"]{display:block!important; margin-bottom: 60px !important;}
+      .section-inner [style*="grid-template-columns"]{display:block!important}
+      .section-inner [style*="grid-template-columns"] > div{margin-bottom:30px!important}
+      /* On mobile, stack text above the 3D visual */
+      .reverse-mobile { display: flex; flex-direction: column-reverse; }
+  }
+
+  /* 3D Glassmorphism Card Style */
+  .premium-3d-card {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 90px;
+      box-shadow: var(--shadow-3d);
+      border: 1px solid var(--glass-border);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+  }
+
+  /* Hover Magnet Effect */
+  .service-row:hover .premium-3d-card {
+      transform: translateY(-15px) rotateX(5deg) rotateY(-5deg);
+      box-shadow: 0 40px 80px rgba(0, 87, 255, 0.2), 0 0 0 1px inset rgba(255, 255, 255, 1);
+  }
+  .service-row:hover .premium-3d-card.reverse-tilt {
+      transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+  }
+
+  /* Glowing Orb Behind Card */
+  .premium-3d-card::before {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: var(--primary);
+      filter: blur(60px);
+      opacity: 0.15;
+      z-index: -1;
+      transition: all 0.5s ease;
+  }
+  .service-row:hover .premium-3d-card::before {
+      opacity: 0.3;
+      transform: scale(1.2);
+  }
+
+  /* Scroll Reveal Animation */
+  .reveal-smooth {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+  }
+  .reveal-smooth.visible {
+      opacity: 1;
+      transform: translateY(0);
+  }
+
+  .service-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-bottom: 120px;
+  }
+  
+  /* Icon Animation */
+  .animated-icon {
+      display: inline-block;
+      animation: var(--float-anim);
+  }
+  @keyframes float-card {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+  }
   </style>
 </head>
 <body>
@@ -125,7 +213,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
       <li><a href="packages.html">Packages</a></li>
       <li><a href="our-work.html">Our Work</a></li>
       <li><a href="reels.html">Reels</a></li>
@@ -140,103 +228,113 @@
 <!-- PAGE HERO -->
 <section class="page-hero">
   <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> <span>Services</span></div>
-  <div class="section-tag">What We Offer</div>
+  <div class="section-tag">Premium Digital Solutions</div>
   <h1>Our <span style="background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Services</span></h1>
-  <p>Everything your business needs to dominate the digital space</p>
+  <p>Everything your Mehsana business needs to dominate the digital space.</p>
 </section>
 
 <!-- ALL SERVICES -->
-<section class="section">
+<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);">
   <div class="section-inner">
 
     <!-- Web Design -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:80px" class="reveal">
+    <div class="service-row reveal-smooth">
       <div>
         <div class="section-tag">Service 01</div>
-        <h2 class="section-title">Website Design &<br><span>Development</span></h2>
-        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">We build beautiful, fast, and fully responsive websites that not only look great but are optimized for conversions and search engines. Every website we create is custom-designed to reflect your brand identity.</p>
+        <h2 class="section-title">High-Performance<br>Website <span>Development</span></h2>
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">We build beautiful, fast, and fully responsive websites tailored for Gujarat's growing businesses. Optimized for conversions, search engines, and modern visual standards.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Fully Responsive (Mobile/Tablet/Desktop)</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> SEO-Optimized Structure & Speed</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Business Websites, Portfolios, E-Commerce</li>
           <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> WhatsApp & Contact Integration</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Fast Loading & Secure</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Fast Loading & Secure Architecture</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20a%20website%20designed" target="_blank" class="btn-primary">Get Web Design Quote</a>
       </div>
-      <div style="background:var(--off-white);border-radius:var(--radius-lg);padding:48px;text-align:center;font-size:80px">🌐</div>
+      <div class="premium-3d-card reverse-tilt">
+        <span class="animated-icon">🌐</span>
+      </div>
     </div>
 
     <!-- Branding -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:80px" class="reveal">
-      <div style="background:linear-gradient(135deg,rgba(0,87,255,0.06),rgba(0,194,255,0.06));border-radius:var(--radius-lg);padding:48px;text-align:center;font-size:80px">✏️</div>
+    <div class="service-row reverse-mobile reveal-smooth">
+      <div class="premium-3d-card" style="background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,248,255,0.7));">
+        <span class="animated-icon" style="animation-delay: 1s;">✏️</span>
+      </div>
       <div>
         <div class="section-tag">Service 02</div>
-        <h2 class="section-title">Logo & <span>Brand Identity</span></h2>
+        <h2 class="section-title">Premium Logo &<br><span>Brand Identity</span></h2>
         <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">Your brand is your first impression. We create memorable logos and complete brand identities that tell your story and connect with your audience emotionally.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Custom Logo Design (3 Concepts)</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Color Palette & Typography</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Business Card Design</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Brand Guidelines Document</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> All File Formats (PNG, SVG, AI, PDF)</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Custom Logo Design (3 Premium Concepts)</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Color Palette & Typography Guidelines</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Professional Business Card Design</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Comprehensive Brand Guidelines Document</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> All Master File Formats (PNG, SVG, AI, PDF)</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20logo%20and%20branding%20design" target="_blank" class="btn-primary">Get Branding Quote</a>
       </div>
     </div>
 
     <!-- Social Media -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:80px" class="reveal">
+    <div class="service-row reveal-smooth">
       <div>
         <div class="section-tag">Service 03</div>
-        <h2 class="section-title">Social Media <span>Marketing</span></h2>
-        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">We manage your social media presence end-to-end — from content creation to scheduling, engagement, and growth strategy across Instagram, Facebook, and more.</p>
+        <h2 class="section-title">Engaging Social Media<br><span>Marketing</span></h2>
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">We manage your social media presence end-to-end — from dynamic content creation and scheduling to audience engagement and targeted growth strategies.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Instagram & Facebook Management</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Custom Post & Story Design</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Reels & Short Video Content</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Hashtag Strategy & Growth</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Monthly Analytics Report</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Strategic Instagram & Facebook Management</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Custom Post, Carousel & Story Design</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> High-Impact Reels & Short Video Content</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Targeted Hashtag Strategy & Organic Growth</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Comprehensive Monthly Analytics Report</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20social%20media%20management" target="_blank" class="btn-primary">Get Social Media Quote</a>
       </div>
-      <div style="background:var(--off-white);border-radius:var(--radius-lg);padding:48px;text-align:center;font-size:80px">📱</div>
+      <div class="premium-3d-card reverse-tilt">
+        <span class="animated-icon" style="animation-delay: 2s;">📱</span>
+      </div>
     </div>
 
     <!-- SEO & Digital Marketing -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:80px" class="reveal">
-      <div style="background:linear-gradient(135deg,rgba(0,87,255,0.06),rgba(0,194,255,0.06));border-radius:var(--radius-lg);padding:48px;text-align:center;font-size:80px">📈</div>
+    <div class="service-row reverse-mobile reveal-smooth">
+      <div class="premium-3d-card" style="background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,248,255,0.7));">
+        <span class="animated-icon" style="animation-delay: 0.5s;">📈</span>
+      </div>
       <div>
         <div class="section-tag">Service 04</div>
-        <h2 class="section-title">SEO & <span>Digital Marketing</span></h2>
-        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">Rank higher on Google and get more organic traffic. Our SEO strategies are tailored to your business and backed by proven techniques that deliver long-term results.</p>
+        <h2 class="section-title">Local SEO &<br><span>Digital Ads Agency</span></h2>
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">Rank higher on Google and dominate the local Mehsana market. Our SEO strategies are tailored to your business and backed by proven techniques for long-term ROI.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> On-Page & Off-Page SEO</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Keyword Research & Content Strategy</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Google My Business Optimization</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Google & Meta Ads Management</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Monthly SEO Performance Report</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Technical On-Page & Off-Page SEO</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Deep Keyword Research & Content Strategy</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Google My Business (Local SEO) Optimization</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> High-Converting Google & Meta Ads Management</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Monthly SEO Performance & Ranking Report</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20SEO%20services" target="_blank" class="btn-primary">Get SEO Quote</a>
       </div>
     </div>
 
     <!-- Graphic Design -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center" class="reveal">
+    <div class="service-row reveal-smooth" style="margin-bottom: 40px;">
       <div>
         <div class="section-tag">Service 05</div>
-        <h2 class="section-title">Graphic Design & <span>Print Media</span></h2>
-        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">From visiting cards to large banners and everything in between — we design print and digital materials that leave a lasting impression.</p>
+        <h2 class="section-title">Modern Graphic Design &<br><span>Print Media</span></h2>
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">From elegant visiting cards to 3D architectural visual elements — we design premium print and digital materials that leave a lasting professional impression.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px">
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Posters, Banners, Flyers</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Business Cards & Letterheads</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Brochures & Catalogs</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> YouTube Thumbnails & Channel Art</li>
-          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Print-Ready High Resolution Files</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> High-Resolution Posters, Banners & Flyers</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Premium Business Cards & Letterheads</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Professional Corporate Brochures & Catalogs</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Eye-Catching YouTube Thumbnails & Channel Art</li>
+          <li style="display:flex;align-items:center;gap:10px;color:var(--text)"><span style="color:var(--primary);font-weight:800">✓</span> Print-Ready Source Files Provided</li>
         </ul>
         <a href="https://wa.me/918320146648?text=Hi!%20I%20need%20graphic%20design%20services" target="_blank" class="btn-primary">Get Design Quote</a>
       </div>
-      <div style="background:var(--off-white);border-radius:var(--radius-lg);padding:48px;text-align:center;font-size:80px">🎨</div>
+      <div class="premium-3d-card reverse-tilt">
+        <span class="animated-icon" style="animation-delay: 1.5s;">🎨</span>
+      </div>
     </div>
 
   </div>
@@ -245,12 +343,23 @@
 <!-- CTA -->
 <section class="section" style="background:linear-gradient(135deg,var(--primary),var(--primary-dark))">
   <div class="section-inner text-center">
-    <h2 style="font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:white;margin-bottom:16px">Not Sure Which Service You Need?</h2>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(28px, 4vw, 40px);font-weight:800;color:white;margin-bottom:16px">Not Sure Which Service You Need?</h2>
     <p style="color:rgba(255,255,255,0.8);margin-bottom:32px;font-size:16px">Talk to us! We'll suggest the best solution for your business goals and budget.</p>
     <a href="https://wa.me/918320146648?text=Hi!%20I%20want%20to%20discuss%20which%20services%20I%20need" target="_blank" 
-       style="background:white;color:var(--primary);padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px">
+       style="background:white;color:var(--primary);padding:14px 36px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px; display:inline-block; transition:transform 0.3s;"
+       onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
       💬 Chat With Us Free
     </a>
+  </div>
+</section>
+
+<!-- SEO Content Section -->
+<section class="seo-section" style="background: var(--dark); padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+  <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+    <h3 style="font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 12px; font-family: 'Syne', sans-serif;">Mehsana's Leading Digital Growth Partner</h3>
+    <p style="font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 0;">
+      JR Digital Studio is dedicated to elevating brands through strategic <strong>SEO optimization</strong>, engaging social media campaigns, and responsive website development. Whether you need a local SEO boost in Gujarat or a complete brand overhaul with modern graphic design, our comprehensive service packages ensure your digital presence is both beautiful and highly effective.
+    </p>
   </div>
 </section>
 
@@ -295,7 +404,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 JR Digital Studio. All rights reserved.</span>
+      <span>© 2026 JR Digital Studio. All rights reserved.</span>
       <span>Made with ❤️ by <a href="#">JR Digital Studio</a></span>
     </div>
   </div>
@@ -303,9 +412,31 @@
 
 <a href="https://wa.me/918320146648?text=Hi!%20I%20want%20to%20know%20more%20about%20JR%20Digital%20Studio%20services"
    class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-  <svg style="width:26px;height:26px" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  💬
 </a>
 
 <script src="script.js"></script>
+
+<!-- JS for Scroll Reveal Animations -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const reveals = document.querySelectorAll(".reveal-smooth");
+    
+    const revealOnScroll = () => {
+        const windowHeight = window.innerHeight;
+        const elementVisible = 100;
+        
+        reveals.forEach((reveal) => {
+            const elementTop = reveal.getBoundingClientRect().top;
+            if (elementTop < windowHeight - elementVisible) {
+                reveal.classList.add("visible");
+            }
+        });
+    };
+    
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll(); // Trigger once on load
+});
+</script>
 </body>
 </html>
