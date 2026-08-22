@@ -144,7 +144,7 @@
     /* Hero Badges Layout Fix */
     .hero-badges-wrapper {
         display: flex;
-        flex-wrap: wrap; /* Allows wrapping on small screens */
+        flex-wrap: wrap;
         align-items: center;
         gap: 12px;
         margin-bottom: 20px;
@@ -162,7 +162,7 @@
         gap: 6px;
     }
     
-    /* Bulletproof Premium Ticker */
+    /* Bulletproof Premium Ticker (Seamless Zero Gap Loop) */
     .news-ticker-container {
         margin: 25px 0;
         width: 100%;
@@ -174,7 +174,7 @@
         padding: 6px 15px;
         box-shadow: 0 6px 15px rgba(0,0,0,0.04);
         border: 1px solid rgba(0,87,255,0.1);
-        box-sizing: border-box; /* Ensures padding doesn't increase width */
+        box-sizing: border-box;
     }
     .ticker-tag {
         background: var(--primary, #0057ff);
@@ -187,24 +187,31 @@
         white-space: nowrap;
         margin-right: 15px;
         text-transform: uppercase;
-        flex-shrink: 0; /* Prevents the update button from squishing */
+        flex-shrink: 0;
+        z-index: 2;
     }
     .ticker-text-wrapper {
         overflow: hidden;
         flex: 1;
-        min-width: 0; /* CRITICAL FIX: Stops the ticker from pushing layout out of bounds */
+        min-width: 0;
+        display: flex;
     }
     .ticker-text {
-        display: inline-block;
+        display: flex;
         white-space: nowrap;
-        animation: scroll-left 15s linear infinite; /* UPDATED: Fast speed (15s) */
+        /* Speed yahan set ki hai (30s) ekdum perfect reading speed */
+        animation: scroll-left 30s linear infinite; 
+    }
+    .ticker-text span {
+        flex-shrink: 0;
         font-size: 14px;
         color: var(--text-light, #555);
-        font-weight: 500;
+        font-weight: 600;
     }
     @keyframes scroll-left {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
+        0% { transform: translateX(0); }
+        /* 50% shift hote hi loop reset hoga (Koi blank space nahi) */
+        100% { transform: translateX(-50%); } 
     }
 
     /* Mobile Responsiveness for Ticker & Badges */
@@ -218,7 +225,7 @@
             padding: 4px 10px;
             margin-right: 10px;
         }
-        .ticker-text {
+        .ticker-text span {
             font-size: 13px;
         }
         .local-badge-new {
@@ -275,7 +282,6 @@
   <div class="hero-inner">
     <div class="hero-content">
       
-      <!-- FIXED: Badges Wrapper for Perfect Mobile Alignment -->
       <div class="hero-badges-wrapper">
         <div class="local-badge-new">
           <span style="font-size:15px;">📍</span> Scaling Businesses in Gujarat
@@ -289,12 +295,14 @@
       <h1>We Create <span>Digital Experiences</span> That Inspire</h1>
       <p>JR Digital Studio crafts stunning websites, powerful brands, and impactful digital marketing campaigns that help your business grow and stand out.</p>
       
-      <!-- FIXED: Bulletproof Premium Moving Interactive Ticker (Back-to-Back Text) -->
+      <!-- FIXED: Seamless Zero-Gap Ticker -->
       <div class="news-ticker-container">
         <div class="ticker-tag">Update</div>
         <div class="ticker-text-wrapper">
           <div class="ticker-text">
-            🚀 Driving 10x ROI with advanced SEO in Mehsana &nbsp;&nbsp;•&nbsp;&nbsp; ⚡ Websites optimized for 99/100 speed &nbsp;&nbsp;•&nbsp;&nbsp; 🔥 Launching high-conversion Meta Ads for top brands &nbsp;&nbsp;&nbsp;&nbsp;⭐&nbsp;&nbsp;&nbsp;&nbsp; 🚀 Driving 10x ROI with advanced SEO in Mehsana &nbsp;&nbsp;•&nbsp;&nbsp; ⚡ Websites optimized for 99/100 speed &nbsp;&nbsp;•&nbsp;&nbsp; 🔥 Launching high-conversion Meta Ads for top brands &nbsp;&nbsp;&nbsp;&nbsp;⭐&nbsp;&nbsp;&nbsp;&nbsp; 🚀 Driving 10x ROI with advanced SEO in Mehsana &nbsp;&nbsp;•&nbsp;&nbsp; ⚡ Websites optimized for 99/100 speed &nbsp;&nbsp;•&nbsp;&nbsp; 🔥 Launching high-conversion Meta Ads for top brands
+            <!-- Yeh Dono <span> ek dam same hone zaroori hain seamless loop ke liye -->
+            <span>🚀 Driving 10x ROI with advanced SEO in Mehsana &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; ⚡ Websites optimized for 99/100 speed &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🔥 Launching high-conversion Meta Ads for top brands &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; </span>
+            <span>🚀 Driving 10x ROI with advanced SEO in Mehsana &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; ⚡ Websites optimized for 99/100 speed &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🔥 Launching high-conversion Meta Ads for top brands &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; </span>
           </div>
         </div>
       </div>
@@ -388,7 +396,6 @@
         <p>Posters, banners, flyers, business cards, and all marketing materials designed to make an impact.</p>
       </div>
       <div class="service-card reveal">
-        <div class="service-card reveal">
         <div class="service-icon">📈</div>
         <h3>SEO & Digital Marketing</h3>
         <p>Rank higher on Google, reach more customers, and grow your business with our proven SEO strategies.</p>
