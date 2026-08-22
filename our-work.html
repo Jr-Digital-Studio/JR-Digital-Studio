@@ -110,6 +110,84 @@
   <meta name="keywords" content="JR Digital Studio portfolio, web design work, branding projects, social media samples, graphic design portfolio">
   <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="style.css">
+  
+  <!-- CSS for Lightbox and Filter Animations -->
+  <style>
+    /* Styling for the popup lightbox */
+    .lightbox-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 22, 40, 0.95); /* Dark background */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    .lightbox-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .lightbox-overlay.active .lightbox-content {
+      transform: scale(1);
+    }
+    .lightbox-img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .lightbox-close:hover {
+      color: var(--primary);
+    }
+    /* Ensures cursor looks clickable on portfolio images */
+    .work-img img {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .work-img img:hover {
+      transform: scale(1.03);
+    }
+
+    /* Animation class for filtering */
+    .work-card {
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    .work-card.hide {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+        .lightbox-close {
+            top: -40px;
+            right: 0;
+        }
+    }
+  </style>
 </head>
 <body>
 
@@ -123,7 +201,7 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="packages.html">Packages</a></li>
-      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="our-work.html" class="active">Our Work</a></li>
       <li><a href="reels.html">Reels</a></li>
       <li><a href="insights.html">Insights</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -154,7 +232,7 @@
 
     <!-- WORK GRID -->
     <div class="work-grid" id="portfolioGrid">
-      <!-- Loaded by script.js from localStorage / works-data.json -->
+      <!-- Data is usually loaded by script.js. If you have static cards here, the filter JS will work on them too. -->
     </div>
 
     <!-- Empty State -->
@@ -211,7 +289,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 JR Digital Studio. All rights reserved.</span>
+      <span>© 2026 JR Digital Studio. All rights reserved.</span>
     </div>
   </div>
 </footer>
@@ -219,6 +297,90 @@
 <a href="https://wa.me/918320146648?text=Hi!%20I%20want%20to%20discuss%20a%20project" 
    class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬</a>
 
+<!-- Empty Lightbox Container -->
+<div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-content">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img src="" alt="Portfolio Image" class="lightbox-img" id="lightboxImg">
+    </div>
+</div>
+
 <script src="script.js"></script>
+
+<!-- JAVASCRIPT FOR FILTERS & LIGHTBOX -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- 1. LIGHTBOX LOGIC ---
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    // Attach click events to all images inside .work-grid
+    // We use event delegation since script.js might load cards dynamically
+    document.querySelector('.work-grid').addEventListener('click', function(e) {
+        if (e.target.tagName === 'IMG') {
+            const imgSrc = e.target.getAttribute('src');
+            lightboxImg.setAttribute('src', imgSrc);
+            lightbox.classList.add('active');
+        }
+    });
+
+    // Close lightbox on button click
+    lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+    });
+
+    // Close lightbox when clicking outside the image
+    lightbox.addEventListener('click', (e) => {
+        if (e.target !== lightboxImg) {
+            lightbox.classList.remove('active');
+        }
+    });
+
+
+    // --- 2. FILTER LOGIC ---
+    // Note: If your cards are loaded from script.js dynamically, 
+    // you might need to run this filter logic AFTER script.js finishes rendering.
+    // Assuming cards have a data attribute or class that matches the filter categories.
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+            const allCards = document.querySelectorAll('.work-card');
+            let visibleCount = 0;
+
+            allCards.forEach(card => {
+                // IMPORTANT: Your script.js needs to add data-category to the .work-card HTML for this to work perfectly.
+                // Example: <div class="work-card" data-category="social">...</div>
+                // If it doesn't, this code will just show all cards as a fallback.
+                const category = card.getAttribute('data-category') || 'all'; 
+
+                if (filterValue === 'all' || category.includes(filterValue)) {
+                    card.classList.remove('hide');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hide');
+                }
+            });
+
+            // Show empty state if no cards match
+            const emptyState = document.getElementById('emptyState');
+            if (visibleCount === 0 && allCards.length > 0) {
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+
 </body>
 </html>
