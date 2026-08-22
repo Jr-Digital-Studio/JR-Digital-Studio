@@ -117,7 +117,7 @@
   <link rel="canonical" href="https://jrdigitalstudio.com/">
   <link rel="stylesheet" href="style.css">
   
-  <!-- Add interactive CSS directly here (Mobile Friendly & Fixed Layout) -->
+  <!-- CSS for Interactive Elements & 100% Mobile Responsive Fix -->
   <style>
     /* Float animation for hero badges */
     @keyframes float {
@@ -140,22 +140,44 @@
         transform: translateY(-8px);
         box-shadow: 0 15px 30px rgba(0, 87, 255, 0.1);
     }
+
+    /* Hero Badges Layout Fix */
+    .hero-badges-wrapper {
+        display: flex;
+        flex-wrap: wrap; /* Allows wrapping on small screens */
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    .local-badge-new {
+        padding: 6px 14px;
+        background: rgba(0,87,255,0.08);
+        color: var(--primary, #0057ff);
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid rgba(0,87,255,0.15);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
     
-    /* Premium Ticker Animation */
+    /* Bulletproof Premium Ticker */
     .news-ticker-container {
         margin: 25px 0;
+        width: 100%;
         max-width: 100%;
         display: flex;
         align-items: center;
         background: #ffffff;
         border-radius: 50px;
-        padding: 6px 6px 6px 15px;
+        padding: 6px 15px;
         box-shadow: 0 6px 15px rgba(0,0,0,0.04);
         border: 1px solid rgba(0,87,255,0.1);
-        overflow: hidden;
+        box-sizing: border-box; /* Ensures padding doesn't increase width */
     }
     .ticker-tag {
-        background: var(--primary);
+        background: var(--primary, #0057ff);
         color: #fff;
         padding: 5px 12px;
         border-radius: 50px;
@@ -165,33 +187,44 @@
         white-space: nowrap;
         margin-right: 15px;
         text-transform: uppercase;
-        z-index: 2;
+        flex-shrink: 0; /* Prevents the update button from squishing */
     }
     .ticker-text-wrapper {
         overflow: hidden;
-        flex-grow: 1;
-        position: relative;
+        flex: 1;
+        min-width: 0; /* CRITICAL FIX: Stops the ticker from pushing layout out of bounds */
     }
     .ticker-text {
         display: inline-block;
         white-space: nowrap;
         animation: scroll-left 25s linear infinite;
         font-size: 14px;
-        color: var(--text-light);
+        color: var(--text-light, #555);
         font-weight: 500;
     }
     @keyframes scroll-left {
         0% { transform: translateX(100%); }
         100% { transform: translateX(-100%); }
     }
-    
-    /* Badge Wrapper for Alignment */
-    .hero-badges-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 20px;
+
+    /* Mobile Responsiveness for Ticker & Badges */
+    @media (max-width: 768px) {
+        .news-ticker-container {
+            padding: 5px 10px;
+            margin: 20px 0;
+        }
+        .ticker-tag {
+            font-size: 10px;
+            padding: 4px 10px;
+            margin-right: 10px;
+        }
+        .ticker-text {
+            font-size: 13px;
+        }
+        .local-badge-new {
+            font-size: 12px;
+            padding: 5px 12px;
+        }
     }
   </style>
 
@@ -242,9 +275,9 @@
   <div class="hero-inner">
     <div class="hero-content">
       
-      <!-- FIXED: Badges Wrapper for Perfect Alignment -->
+      <!-- FIXED: Badges Wrapper for Perfect Mobile Alignment -->
       <div class="hero-badges-wrapper">
-        <div class="local-badge" style="padding: 6px 14px; background: rgba(0,87,255,0.08); color: var(--primary); border-radius: 50px; font-size: 13px; font-weight: 600; border: 1px solid rgba(0,87,255,0.15); display: flex; align-items: center; gap: 6px;">
+        <div class="local-badge-new">
           <span style="font-size:15px;">📍</span> Scaling Businesses in Gujarat
         </div>
         <div class="hero-badge" style="margin-bottom: 0;">
@@ -256,7 +289,7 @@
       <h1>We Create <span>Digital Experiences</span> That Inspire</h1>
       <p>JR Digital Studio crafts stunning websites, powerful brands, and impactful digital marketing campaigns that help your business grow and stand out.</p>
       
-      <!-- FIXED: Premium Moving Interactive Ticker -->
+      <!-- FIXED: Bulletproof Premium Moving Interactive Ticker -->
       <div class="news-ticker-container">
         <div class="ticker-tag">Update</div>
         <div class="ticker-text-wrapper">
