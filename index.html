@@ -108,21 +108,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JR Digital Studio | Creative Digital Agency - Web Design, Branding & SEO</title>
   <meta name="description" content="JR Digital Studio is a creative digital agency offering web design, branding, social media marketing, logo design and SEO services. Contact us at 8320146648.">
-  <meta name="keywords" content="JR Digital Studio, digital agency, web design, branding, logo design, social media, SEO, digital marketing">
+  <meta name="keywords" content="JR Digital Studio, digital agency, web design, branding, logo design, social media, SEO, digital marketing, digital marketing agency Mehsana, SEO expert Gujarat">
   <meta name="author" content="JR Digital Studio">
   <meta property="og:title" content="JR Digital Studio | Creative Digital Agency">
-  <meta property="og:description" content="Transforming businesses with stunning digital experiences. Web Design, Branding & Digital Marketing.">
+  <meta property="og:description" content="Transforming businesses with stunning digital experiences. Web Design, Branding & Digital Marketing in Mehsana, Gujarat.">
   <meta property="og:type" content="website">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://jrdigitalstudio.com/">
   <link rel="stylesheet" href="style.css">
+  
+  <!-- Add interactive CSS directly here -->
+  <style>
+    /* Float animation for hero badges */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    .floating-badge {
+        animation: float 4s ease-in-out infinite;
+    }
+    .fb-2 {
+        animation-delay: 1.5s;
+    }
+    
+    /* Interactive Hover for Cards */
+    .service-card, .why-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card:hover, .why-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 87, 255, 0.1);
+    }
+    
+    /* Ticker Animation */
+    .ticker-wrap {
+        width: 100%;
+        overflow: hidden;
+        background-color: rgba(0, 87, 255, 0.03);
+        border: 1px solid rgba(0, 87, 255, 0.1);
+        border-radius: 8px;
+        padding: 8px 0;
+        margin: 20px 0;
+    }
+    .ticker {
+        display: inline-block;
+        white-space: nowrap;
+        padding-left: 100%;
+        animation: ticker 25s linear infinite;
+        font-size: 14px;
+        color: var(--text-light);
+        font-weight: 500;
+    }
+    @keyframes ticker {
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-100%, 0, 0); }
+    }
+  </style>
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "JR Digital Studio",
-    "description": "Creative digital agency offering web design, branding, social media and SEO services",
+    "description": "Creative digital agency offering web design, branding, social media and SEO services in Mehsana, Gujarat.",
     "telephone": "+918320146648",
     "email": "jrdigitalstudio8@gmail.com",
     "url": "https://jrdigitalstudio.com"
@@ -166,12 +216,27 @@
 <section class="hero" aria-label="Hero section">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-badge">
+      
+      <!-- NEW: Local SEO Trust Badge -->
+      <div class="local-badge" style="display:inline-block; padding: 6px 15px; background: rgba(0,87,255,0.08); color: var(--primary); border-radius: 50px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid rgba(0,87,255,0.15);">
+        📍 Proudly Scaling Businesses in Mehsana & Gujarat
+      </div>
+
+      <div class="hero-badge" style="margin-bottom: 20px;">
         <span class="dot"></span>
         Available for New Projects
       </div>
+      
       <h1>We Create <span>Digital Experiences</span> That Inspire</h1>
       <p>JR Digital Studio crafts stunning websites, powerful brands, and impactful digital marketing campaigns that help your business grow and stand out.</p>
+      
+      <!-- NEW: Moving Interactive Ticker -->
+      <div class="ticker-wrap">
+        <div class="ticker">
+          🔥 Currently launching high-conversion Meta Ads for top local brands &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; ⚡ Average client website speed optimized for 99/100 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🚀 Driving 10x ROI with advanced SEO strategies in Gujarat
+        </div>
+      </div>
+
       <div class="hero-btns">
         <a href="contact.html" class="btn-primary">
           🚀 Start Your Project
@@ -195,6 +260,7 @@
         </div>
       </div>
     </div>
+    
     <div class="hero-visual">
       <div class="floating-badge fb-1">
         ⭐ 5.0 Client Rating
@@ -380,6 +446,17 @@
     </div>
   </div>
 </section>
+
+<!-- NEW: Core SEO Content Section -->
+<section class="seo-section" style="background: var(--off-white); padding: 40px 20px; border-top: 1px solid rgba(0,0,0,0.05);">
+  <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
+    <h3 style="font-size: 18px; color: var(--dark); margin-bottom: 15px; font-family: 'Syne', sans-serif;">Mehsana's Premier Digital Marketing & Design Agency</h3>
+    <p style="font-size: 14px; color: var(--text-light); line-height: 1.7; margin-bottom: 0;">
+      At JR Digital Studio, we specialize in providing end-to-end digital solutions tailored for growing businesses. Our core expertise includes result-driven <strong>SEO optimization</strong>, high-converting <strong>Meta ads management</strong>, and custom <strong>website development</strong>. From crafting a compelling professional brand identity with modern graphic design to executing 30-day social media content strategies, we ensure your brand stands out in the competitive landscape of Mehsana, Gujarat, and beyond.
+    </p>
+  </div>
+</section>
+
 </main>
 
 <!-- FOOTER -->
@@ -427,7 +504,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 JR Digital Studio. All rights reserved.</span>
+      <span>© 2026 JR Digital Studio. All rights reserved.</span>
       <span>Made with ❤️ by <a href="#">JR Digital Studio</a></span>
     </div>
   </div>
