@@ -117,12 +117,12 @@
   <link rel="canonical" href="https://jrdigitalstudio.com/">
   <link rel="stylesheet" href="style.css">
   
-  <!-- Add interactive CSS directly here -->
+  <!-- Add interactive CSS directly here (Mobile Friendly & Fixed Layout) -->
   <style>
     /* Float animation for hero badges */
     @keyframes float {
         0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+        50% { transform: translateY(-8px); }
         100% { transform: translateY(0px); }
     }
     .floating-badge {
@@ -141,28 +141,57 @@
         box-shadow: 0 15px 30px rgba(0, 87, 255, 0.1);
     }
     
-    /* Ticker Animation */
-    .ticker-wrap {
-        width: 100%;
+    /* Premium Ticker Animation */
+    .news-ticker-container {
+        margin: 25px 0;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        background: #ffffff;
+        border-radius: 50px;
+        padding: 6px 6px 6px 15px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.04);
+        border: 1px solid rgba(0,87,255,0.1);
         overflow: hidden;
-        background-color: rgba(0, 87, 255, 0.03);
-        border: 1px solid rgba(0, 87, 255, 0.1);
-        border-radius: 8px;
-        padding: 8px 0;
-        margin: 20px 0;
     }
-    .ticker {
+    .ticker-tag {
+        background: var(--primary);
+        color: #fff;
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        margin-right: 15px;
+        text-transform: uppercase;
+        z-index: 2;
+    }
+    .ticker-text-wrapper {
+        overflow: hidden;
+        flex-grow: 1;
+        position: relative;
+    }
+    .ticker-text {
         display: inline-block;
         white-space: nowrap;
-        padding-left: 100%;
-        animation: ticker 25s linear infinite;
+        animation: scroll-left 25s linear infinite;
         font-size: 14px;
         color: var(--text-light);
         font-weight: 500;
     }
-    @keyframes ticker {
-        0% { transform: translate3d(0, 0, 0); }
-        100% { transform: translate3d(-100%, 0, 0); }
+    @keyframes scroll-left {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+    
+    /* Badge Wrapper for Alignment */
+    .hero-badges-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
     }
   </style>
 
@@ -182,7 +211,6 @@
 <body>
 
 <!-- NAVBAR -->
-<!-- NAVBAR -->
 <nav class="navbar" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo" aria-label="JR Digital Studio Home">
@@ -197,11 +225,8 @@
       <li><a href="services.html" role="menuitem">Services</a></li>
       <li><a href="packages.html" role="menuitem">Packages</a></li>
       <li><a href="our-work.html" role="menuitem">Our Work</a></li>
-      
-      <!-- 👇 YAHAN REELS ADD HO GAYA HAI 👇 -->
       <li><a href="reels.html" role="menuitem">Reels</a></li>
       <li><a href="insights.html">Insights</a></li>
-      
       <li><a href="contact.html" role="menuitem">Contact</a></li>
       <li><a href="contact.html" class="nav-cta" role="menuitem">Get Quote</a></li>
     </ul>
@@ -217,23 +242,27 @@
   <div class="hero-inner">
     <div class="hero-content">
       
-      <!-- NEW: Local SEO Trust Badge -->
-      <div class="local-badge" style="display:inline-block; padding: 6px 15px; background: rgba(0,87,255,0.08); color: var(--primary); border-radius: 50px; font-size: 13px; font-weight: 600; margin-bottom: 20px; border: 1px solid rgba(0,87,255,0.15);">
-        📍 Proudly Scaling Businesses in Mehsana & Gujarat
-      </div>
-
-      <div class="hero-badge" style="margin-bottom: 20px;">
-        <span class="dot"></span>
-        Available for New Projects
+      <!-- FIXED: Badges Wrapper for Perfect Alignment -->
+      <div class="hero-badges-wrapper">
+        <div class="local-badge" style="padding: 6px 14px; background: rgba(0,87,255,0.08); color: var(--primary); border-radius: 50px; font-size: 13px; font-weight: 600; border: 1px solid rgba(0,87,255,0.15); display: flex; align-items: center; gap: 6px;">
+          <span style="font-size:15px;">📍</span> Scaling Businesses in Gujarat
+        </div>
+        <div class="hero-badge" style="margin-bottom: 0;">
+          <span class="dot"></span>
+          Available for New Projects
+        </div>
       </div>
       
       <h1>We Create <span>Digital Experiences</span> That Inspire</h1>
       <p>JR Digital Studio crafts stunning websites, powerful brands, and impactful digital marketing campaigns that help your business grow and stand out.</p>
       
-      <!-- NEW: Moving Interactive Ticker -->
-      <div class="ticker-wrap">
-        <div class="ticker">
-          🔥 Currently launching high-conversion Meta Ads for top local brands &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; ⚡ Average client website speed optimized for 99/100 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 🚀 Driving 10x ROI with advanced SEO strategies in Gujarat
+      <!-- FIXED: Premium Moving Interactive Ticker -->
+      <div class="news-ticker-container">
+        <div class="ticker-tag">Update</div>
+        <div class="ticker-text-wrapper">
+          <div class="ticker-text">
+            🚀 Driving 10x ROI with advanced SEO in Mehsana &nbsp;&nbsp;•&nbsp;&nbsp; ⚡ Websites optimized for 99/100 speed &nbsp;&nbsp;•&nbsp;&nbsp; 🔥 Launching high-conversion Meta Ads for top brands
+          </div>
         </div>
       </div>
 
@@ -447,7 +476,7 @@
   </div>
 </section>
 
-<!-- NEW: Core SEO Content Section -->
+<!-- SEO Content Section -->
 <section class="seo-section" style="background: var(--off-white); padding: 40px 20px; border-top: 1px solid rgba(0,0,0,0.05);">
   <div style="max-width: 1000px; margin: 0 auto; text-align: center;">
     <h3 style="font-size: 18px; color: var(--dark); margin-bottom: 15px; font-family: 'Syne', sans-serif;">Mehsana's Premier Digital Marketing & Design Agency</h3>
@@ -498,7 +527,6 @@
       <div class="footer-col">
         <h5>Contact</h5>
         <a href="tel:+918320146648">📞 8320146648</a>
-        <a href="tel:+918799170861">📞 8799170861</a>
         <a href="mailto:jrdigitalstudio8@gmail.com">✉️ Gmail</a>
         <a href="https://wa.me/918320146648" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
       </div>
