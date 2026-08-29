@@ -371,7 +371,7 @@ function initContactForm() {
     const formData = new FormData(form);
     
     // Web3Forms API Logic (Replace YOUR_ACCESS_KEY later if needed, but it works directly via Fetch)
-    formData.append("access_key", "YOUR_WEB3FORMS_ACCESS_KEY"); 
+    formData.append("access_key", "d080bcad-29d3-49c3-b8fb-c7e42b563e74"); 
 
     try {
       // NOTE: You must register on web3forms.com with jrdigitalstudio8@gmail.com and replace "YOUR_WEB3FORMS_ACCESS_KEY" above.
