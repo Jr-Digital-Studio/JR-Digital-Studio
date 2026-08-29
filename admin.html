@@ -107,11 +107,9 @@
       <a href="#" data-section="works" onclick="showSection('works');loadWorksTable();closeSidebar();return false">
         <span>🖼️</span> Our Work (Portfolio)
       </a>
-      <!-- REELS TAB -->
       <a href="#" data-section="reels" onclick="showSection('reels');loadReelsTable();closeSidebar();return false">
         <span>🎬</span> Manage Reels
       </a>
-      <!-- INSIGHTS TAB (NEW) -->
       <a href="#" data-section="insights" onclick="showSection('insights');loadInsightsTable();closeSidebar();return false">
         <span>💡</span> Manage Insights
       </a>
@@ -393,6 +391,12 @@
         <label style="display:block; margin-bottom: 5px; font-weight: 600; color: #fff;">PROJECT IMAGE (UPLOAD) *</label>
         <input type="file" id="workImageFile" accept="image/*" style="width: 100%; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); color: #fff;">
       </div>
+      
+      <!-- NAYA SEO FIELD: Image Alt Text -->
+      <div class="form-group">
+        <label>Image Alt Text (SEO) *</label>
+        <input type="text" id="workAltText" placeholder="e.g. Premium Restaurant Logo Design in Mehsana">
+      </div>
 
       <div class="form-group">
         <label>Short Description</label>
@@ -477,6 +481,23 @@
         <label>Category / Tag</label>
         <input type="text" id="reelCategory" placeholder="e.g., Promotion, Editing, Client Work">
       </div>
+      
+      <!-- NAYE SEO FIELDS -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="form-group">
+          <label>SEO Title (50-60 Chars)</label>
+          <input type="text" id="reelSeoTitle" placeholder="Reel Title - JR Digital Studio">
+        </div>
+        <div class="form-group">
+          <label>Custom URL Slug</label>
+          <input type="text" id="reelSlug" placeholder="e.g., client-brand-promotion">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>SEO Meta Description (150-160 Chars)</label>
+        <input type="text" id="reelSeoDesc" placeholder="Brief explanation of the reel for search engines...">
+      </div>
+
     </div>
     <div class="modal-actions">
       <button class="admin-btn" style="background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)" onclick="closeModal('reelModal')">Cancel</button>
@@ -503,10 +524,27 @@
         <label>Description / Content *</label>
         <textarea id="insightDesc" placeholder="Write details here..." style="min-height:90px"></textarea>
       </div>
+      
+      <!-- NAYE SEO FIELDS -->
       <div class="form-group">
-        <label>Keywords (SEO) *</label>
-        <input type="text" id="insightKeywords" placeholder="marketing, seo, meta ads">
+        <label>Custom URL Slug (Clean Link)</label>
+        <input type="text" id="insightSlug" placeholder="e.g., digital-marketing-tips-2026">
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="form-group">
+          <label>SEO Title (50-60 Chars)</label>
+          <input type="text" id="insightSeoTitle" placeholder="Catchy Title for Google Search">
+        </div>
+        <div class="form-group">
+          <label>Keywords (SEO) *</label>
+          <input type="text" id="insightKeywords" placeholder="marketing, seo, meta ads">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>SEO Meta Description (150-160 Chars)</label>
+        <input type="text" id="insightSeoDesc" placeholder="Summary that makes people click on Google...">
+      </div>
+
       <div class="form-group">
         <label>Instagram Post URL</label>
         <input type="url" id="insightUrl" placeholder="https://www.instagram.com/p/...">
