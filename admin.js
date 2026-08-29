@@ -51,7 +51,6 @@ function getReels() {
 }
 function saveReels(reels) { localStorage.setItem('jr_reels_data', JSON.stringify(reels)); }
 
-// NEW: Insights Data Logic
 function getInsights() {
   try { return JSON.parse(localStorage.getItem('jr_blogs_data')) || []; }
   catch { return []; }
@@ -66,7 +65,7 @@ function saveSeoSettings(data) { localStorage.setItem('jr_seo', JSON.stringify(d
 
 function getDefaultWorks() {
   return [
-    { id:1, title:"Restaurant Brand Identity", category:"branding", categoryLabel:"Branding", emoji:"🍽️", description:"Complete brand identity design", caption:"Professional brand identity for a restaurant chain.", keywords:["branding","logo","restaurant"], seoTitle:"Restaurant Branding", seoDesc:"Complete restaurant brand identity design", date:"2024-12-01" }
+    { id:1, title:"Restaurant Brand Identity", category:"branding", categoryLabel:"Branding", emoji:"🍽️", description:"Complete brand identity design", caption:"Professional brand identity for a restaurant chain.", keywords:["branding","logo","restaurant"], seoTitle:"Restaurant Branding", seoDesc:"Complete restaurant brand identity design", date:"2024-12-01", imageAltText: "Restaurant Branding Design" }
   ];
 }
 
@@ -88,7 +87,7 @@ function showSection(id) {
       works: 'Manage Our Work', 
       packages: 'Manage Packages', 
       reels: 'Manage Reels & Shorts',
-      insights: 'Manage Insights & Blogs', // Added Insights
+      insights: 'Manage Insights & Blogs',
       seo: 'SEO Settings', 
       settings: 'Settings' 
   };
@@ -149,6 +148,8 @@ function openAddWorkModal() {
   document.getElementById('workTitle').value = '';
   document.getElementById('workCategory').value = '';
   document.getElementById('workEmoji').value = '';
+  document.getElementById('workImageFile').value = ''; // Reset file input
+  document.getElementById('workAltText').value = ''; // Naya SEO field
   document.getElementById('workDesc').value = '';
   document.getElementById('workCaption').value = '';
   document.getElementById('workKeywordsInput').value = '';
@@ -167,6 +168,7 @@ function editWork(id) {
   document.getElementById('workTitle').value = w.title;
   document.getElementById('workCategory').value = w.category;
   document.getElementById('workEmoji').value = w.emoji||'';
+  document.getElementById('workAltText').value = w.imageAltText||''; // Naya SEO field
   document.getElementById('workDesc').value = w.description||'';
   document.getElementById('workCaption').value = w.caption||'';
   document.getElementById('workKeywordsInput').value = (w.keywords||[]).join(', ');
@@ -196,6 +198,9 @@ async function saveWork() {
     let seoDesc = document.getElementById('workSeoDesc').value.trim();
     if (!seoDesc) seoDesc = `Explore ${title}, a professional ${catLabels[category] || 'digital'} project by JR Digital Studio in Mehsana & Gujarat. Get custom solutions.`;
 
+    // Fetching the new SEO field
+    let imageAltText = document.getElementById('workAltText').value.trim() || title;
+
     let imagePath = "";
     const imageFileElem = document.getElementById('workImageFile');
     if (imageFileElem && imageFileElem.files && imageFileElem.files[0]) {
@@ -221,7 +226,7 @@ async function saveWork() {
       emoji: document.getElementById('workEmoji').value||'🎨',
       description: document.getElementById('workDesc').value.trim() || title,
       caption: document.getElementById('workCaption').value.trim() || title,
-      keywords, seoTitle, seoDesc,
+      keywords, seoTitle, seoDesc, imageAltText, // Added imageAltText here
       date: document.getElementById('workDate').value || new Date().toISOString().split('T')[0],
       image: imagePath
     };
@@ -300,6 +305,9 @@ function openAddReelModal() {
   document.getElementById('reelTitle').value = '';
   document.getElementById('reelUrl').value = '';
   document.getElementById('reelCategory').value = '';
+  document.getElementById('reelSeoTitle').value = ''; // Naya SEO field
+  document.getElementById('reelSlug').value = ''; // Naya SEO field
+  document.getElementById('reelSeoDesc').value = ''; // Naya SEO field
   openModal('reelModal');
 }
 
@@ -307,6 +315,11 @@ async function saveReelData() {
   const title = document.getElementById('reelTitle').value.trim();
   const embedUrl = document.getElementById('reelUrl').value.trim();
   const category = document.getElementById('reelCategory').value.trim() || 'Reel';
+  
+  // SEO Fields
+  const seoTitle = document.getElementById('reelSeoTitle').value.trim() || title;
+  const customSlug = document.getElementById('reelSlug').value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const seoDesc = document.getElementById('reelSeoDesc').value.trim() || `Watch ${title} by JR Digital Studio.`;
 
   if (!title || !embedUrl) {
     showAdminToast('❌ Title aur URL zaroori hain', 'error');
@@ -322,6 +335,7 @@ async function saveReelData() {
       title,
       embedUrl,
       category,
+      seoTitle, customSlug, seoDesc, // Saving SEO data
       date: new Date().toISOString().split('T')[0]
     };
 
@@ -417,6 +431,11 @@ function openAddInsightModal() {
   document.getElementById('insightDesc').value = '';
   document.getElementById('insightKeywords').value = '';
   document.getElementById('insightUrl').value = '';
+  
+  // Reset Naye SEO Fields
+  document.getElementById('insightSlug').value = '';
+  document.getElementById('insightSeoTitle').value = '';
+  document.getElementById('insightSeoDesc').value = '';
   openModal('insightModal');
 }
 
@@ -431,6 +450,11 @@ function editInsight(id) {
   document.getElementById('insightDesc').value = b.description || '';
   document.getElementById('insightKeywords').value = b.keywords || '';
   document.getElementById('insightUrl').value = b.instagramUrl || '';
+  
+  // Load Naye SEO Fields
+  document.getElementById('insightSlug').value = b.customSlug || '';
+  document.getElementById('insightSeoTitle').value = b.seoTitle || '';
+  document.getElementById('insightSeoDesc').value = b.seoDesc || '';
   openModal('insightModal');
 }
 
@@ -439,6 +463,11 @@ async function saveInsightData() {
   const description = document.getElementById('insightDesc').value.trim();
   const keywords = document.getElementById('insightKeywords').value.trim();
   const instagramUrl = document.getElementById('insightUrl').value.trim();
+  
+  // Extracting Naye SEO Fields
+  const customSlug = document.getElementById('insightSlug').value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const seoTitle = document.getElementById('insightSeoTitle').value.trim() || title;
+  const seoDesc = document.getElementById('insightSeoDesc').value.trim() || description.substring(0, 150);
 
   if (!title || !description || !keywords) {
     showAdminToast('❌ Title, Description aur Keywords zaroori hain!', 'error');
@@ -456,6 +485,7 @@ async function saveInsightData() {
       description,
       keywords,
       instagramUrl,
+      customSlug, seoTitle, seoDesc, // Saving SEO fields
       date: new Date().toISOString().split('T')[0]
     };
 
@@ -703,7 +733,7 @@ function exportLiveJson() {
       works: getWorks(),
       packages: getPackages(),
       reels: getReels(),
-      blogs: getInsights() // JSON Export me bhi blogs add kar diye
+      blogs: getInsights() 
   };
 
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullData, null, 2));
