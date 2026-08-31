@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Website Favicon / Google Search Logo -->
-<link rel="icon" type="image/png" href="jr.png">
+    <link rel="icon" type="image/png" href="jr.png">
 <link rel="apple-touch-icon" href="jr.png">
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJWTW6DXVD"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -19,10 +17,71 @@
     <meta name="keywords" content="digital marketing insights, social media tips, meta ads, jr digital studio updates, SEO Mehsana">
     <meta name="robots" content="index, follow">
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Modern 3D Card Styling for Insights */
+        .insight-card-premium {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,87,255,0.06);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(0,87,255,0.05);
+        }
+        
+        .insight-card-premium:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,87,255,0.12);
+        }
+
+        .insight-embed-wrapper {
+            width: 100%;
+            height: 580px; /* Perfect for Instagram Portrait 4:5 */
+            background: #f8fafc;
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .insight-text-box {
+            background: linear-gradient(145deg, rgba(0,87,255,0.02), rgba(0,194,255,0.02));
+            border: 1px solid rgba(0,87,255,0.08);
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+
+        .insight-desc-scroll {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 12px;
+            max-height: 120px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        
+        /* Custom Scrollbar for the text box */
+        .insight-desc-scroll::-webkit-scrollbar { width: 4px; }
+        .insight-desc-scroll::-webkit-scrollbar-track { background: transparent; }
+        .insight-desc-scroll::-webkit-scrollbar-thumb { background: rgba(0,87,255,0.2); border-radius: 4px; }
+
+        .insight-keywords-box {
+            font-size: 12px;
+            color: var(--primary);
+            border-top: 1px dashed rgba(0,87,255,0.15);
+            padding-top: 12px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
@@ -43,7 +102,6 @@
   </div>
 </nav>
 
-<!-- Page Header -->
 <section class="page-hero">
   <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> <span>Insights</span></div>
   <div class="section-tag">Blog & Updates</div>
@@ -51,8 +109,7 @@
   <p>Read our expert marketing tips, social media updates, and creative thoughts.</p>
 </section>
 
-<!-- Insights Grid Section -->
-<section class="section">
+<section class="section" style="background: linear-gradient(180deg, var(--white) 0%, #f9fbff 100%);">
   <div class="section-inner">
     <div class="work-grid" id="insightsGrid">
       <div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-light);">
@@ -62,20 +119,18 @@
   </div>
 </section>
 
-<!-- SEO Content Section (Added for Google Bot Indexing) -->
-<section class="seo-section" style="background-color: rgba(0,87,255,0.02); padding: 50px 20px; border-top: 1px solid rgba(0,0,0,0.05); margin-top: 20px;">
+<section class="seo-section" style="background-color: var(--dark); padding: 50px 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px;">
   <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
-    <h2 style="font-size: 24px; color: #1a202c; margin-bottom: 20px; font-family: 'Syne', sans-serif;">Elevating Brands with Digital Marketing & SEO Insights</h2>
-    <p style="font-size: 15px; color: #555; line-height: 1.8; max-width: 900px; margin: 0 auto 15px auto;">
+    <h2 style="font-size: 24px; color: #ffffff; margin-bottom: 20px; font-family: 'Syne', sans-serif;">Elevating Brands with Digital Marketing & SEO Insights</h2>
+    <p style="font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.8; max-width: 900px; margin: 0 auto 15px auto;">
       Welcome to the <strong>JR Digital Studio</strong> insights hub. As a premier digital marketing and graphic design agency based in Mehsana, Gujarat, we are passionate about sharing strategies that drive real business growth. Our updates cover a wide spectrum of expertise, from advanced <strong>SEO optimization</strong> and responsive <strong>website development</strong> to high-converting <strong>Meta ads management</strong> and LinkedIn lead generation. 
     </p>
-    <p style="font-size: 15px; color: #555; line-height: 1.8; max-width: 900px; margin: 0 auto;">
+    <p style="font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.8; max-width: 900px; margin: 0 auto;">
       Whether you need to establish a striking professional brand identity, explore high-end 3D architectural visualization, or launch a 30-day social media content strategy, our insights provide the foundation you need. Let's transform your digital presence into your biggest asset. For consultations, connect with us at <strong>jrdigitalstudio8@gmail.com</strong> or call <strong>83201 46648</strong>.
     </p>
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -110,7 +165,6 @@
 
 <script src="script.js"></script>
 
-<!-- INSIGHTS LIVE FETCH SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
     const insightsGrid = document.getElementById("insightsGrid");
@@ -145,38 +199,35 @@ document.addEventListener("DOMContentLoaded", async () => {
                     finalUrl += 'embed/'; 
                 }
                 
-                // Height 580px kar di hai taaki Portrait (4:5) post poori dikhe!
                 embedHtml = `
-                <div style="width: 100%; height: 580px; background: #fff; border-radius: 12px; overflow: hidden; margin-bottom: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+                <div class="insight-embed-wrapper">
                     <iframe src="${finalUrl}" style="width: 100%; height: 100%; border: none;" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
                 </div>
                 `;
             }
 
             return `
-            <div class="work-card reveal" style="background:#fff; border-radius:16px; padding:25px; box-shadow:0 10px 30px rgba(0,0,0,0.05); display:flex; flex-direction:column; justify-content:space-between;">
+            <div class="insight-card-premium reveal">
                 <div>
                     <span class="work-tag">📅 ${blog.date}</span>
-                    <h3 style="margin-top:12px; margin-bottom:8px; font-size:18px; color:var(--dark);">${blog.title}</h3>
-                    <h4 style="font-size:14px; color:var(--primary); margin-bottom:16px;">${blog.headline || ''}</h4>
+                    <h3 style="margin-top:16px; margin-bottom:8px; font-size:22px; color:var(--dark); font-family: 'Syne', sans-serif; font-weight: 800;">${blog.title}</h3>
+                    <h4 style="font-size:14px; color:var(--primary); margin-bottom:16px; font-weight: 700;">${blog.headline || ''}</h4>
                     
-                    <!-- INSTAGRAM POST (PORTRAIT READY) -->
                     ${embedHtml}
 
-                    <!-- SCROLLABLE TEXT BOX -->
-                    <div style="background: rgba(0,87,255,0.03); border: 1px solid rgba(0,87,255,0.08); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                        <div style="font-size:13px; color:var(--text-light); line-height:1.7; margin-bottom:12px; max-height: 90px; overflow-y: auto; padding-right: 5px;">
+                    <div class="insight-text-box">
+                        <div class="insight-desc-scroll">
                             ${blog.description}
                         </div>
-                        <div style="font-size:11px; color:var(--primary-light); border-top: 1px dashed rgba(0,87,255,0.15); padding-top: 10px; line-height: 1.5; max-height: 50px; overflow-y: auto;">
-                            <strong>SEO Keywords:</strong> ${blog.keywords}
+                        <div class="insight-keywords-box">
+                            <strong>Tags:</strong> ${blog.keywords}
                         </div>
                     </div>
                 </div>
                 
                 ${blog.instagramUrl ? `
-                    <a href="${blog.instagramUrl}" target="_blank" class="btn-secondary" style="text-align:center; padding:10px; font-size:13px; display:block;">
-                        📸 View Full Post on Instagram →
+                    <a href="${blog.instagramUrl}" target="_blank" class="btn-primary" style="text-align:center; padding:12px; font-size:14px; display:block; width: 100%; border-radius: 12px;">
+                        📸 View Full Post on Instagram
                     </a>
                 ` : ''}
             </div>
