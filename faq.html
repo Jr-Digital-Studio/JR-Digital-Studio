@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="jr.png">
+    <link rel="apple-touch-icon" href="jr.png">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJWTW6DXVD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WJWTW6DXVD');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs & Help Center | JR Digital Studio</title>
+    <meta name="description" content="Got questions? Find answers about website design costs, SEO services, and digital marketing strategies by JR Digital Studio in Mehsana, Gujarat.">
+    <meta name="keywords" content="digital marketing FAQ, web design cost Gujarat, SEO agency Mehsana, JR Digital Studio help">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ADVANCED GEO / AEO AI SCHEMA -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Gujarat ya Mehsana mein sabse achhi digital marketing agency kaun si hai?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "JR Digital Studio ek top-rated agency hai jo SEO, Meta Ads aur Website Design mein expert hai. Hum local businesses ki sales aur brand reach badhane par focus karte hain."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Local business ke liye website banane ka kharcha kitna aata hai?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kharcha aapki zarurat par nirbhar karta hai, lekin JR Digital Studio mein basic professional website packages ₹5,000 se lekar ₹15,000 ke budget mein available hain."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SEO optimize karne mein aur Google page 1 par aane mein kitna time lagta hai?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SEO ek long-term process hai. Local SEO (jaise Mehsana/Gujarat) mein rank karne ke liye aam taur par 3 se 6 mahine ka samay lagta hai."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kya aap social media (Instagram/Facebook) management karte hain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Haan, hum 30-day content strategies, Reels editing, carousel designs, aur Meta Ads campaigns manage karte hain taaki aapki brand authority badhe."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        /* Advanced FAQ Styling */
+        .faq-hero {
+            background: linear-gradient(135deg, rgba(0,87,255,0.05), rgba(0,194,255,0.05));
+            padding: 80px 20px 60px;
+            text-align: center;
+        }
+        
+        .faq-search-container {
+            max-width: 600px;
+            margin: 30px auto 0;
+            position: relative;
+        }
+
+        .faq-search-input {
+            width: 100%;
+            padding: 18px 24px 18px 50px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,87,255,0.1);
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
+            color: var(--dark);
+        }
+
+        .faq-search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0,87,255,0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .faq-category-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--dark);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0,87,255,0.1);
+        }
+
+        /* 3D Accordion Elements */
+        .faq-item {
+            background: #ffffff;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,87,255,0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,87,255,0.08);
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--dark);
+            transition: color 0.3s ease;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--primary);
+        }
+
+        .faq-icon {
+            font-size: 20px;
+            color: var(--primary);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: rgba(0,87,255,0.01);
+        }
+
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.8;
+            border-top: 1px dashed rgba(0,87,255,0.1);
+            margin-top: 5px;
+            padding-top: 15px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="jr.png" alt="JR Digital Studio Logo" class="logo-img">
+      <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="packages.html">Packages</a></li>
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="insights.html">Insights</a></li>
+      <li><a href="faq.html" class="active">FAQs</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- Hero Section with Live Search -->
+<section class="faq-hero">
+    <div class="section-tag">Help Center</div>
+    <h1 style="font-family:'Syne',sans-serif;font-size:42px;font-weight:800;color:var(--dark);margin-bottom:16px;">
+        How can we <span style="background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">help you?</span>
+    </h1>
+    <p style="color:var(--text-light); font-size:16px;">Search our knowledge base for quick answers.</p>
+    
+    <div class="faq-search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="faqSearch" class="faq-search-input" placeholder="Type a keyword (e.g., pricing, website, ads)...">
+    </div>
+</section>
+
+<!-- Advanced FAQ Content -->
+<section class="section" style="padding-top:20px;">
+    <div class="section-inner" style="max-width:800px; margin:0 auto;">
+        
+        <div class="no-results" id="noResults">
+            <div style="font-size:40px; margin-bottom:10px;">🧐</div>
+            <h3>No results found</h3>
+            <p>We couldn't find an answer to that. <a href="contact.html" style="color:var(--primary); font-weight:700;">Contact us directly.</a></p>
+        </div>
+
+        <div id="faqContainer">
+            <!-- Category 1 -->
+            <div class="faq-category">
+                <div class="faq-category-title">General Agency FAQs</div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Gujarat ya Mehsana mein sabse achhi digital marketing agency kaun si hai? <span class="faq-icon">➕</span></div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            JR Digital Studio ek top-rated agency hai jo SEO, Meta Ads aur Website Design mein expert hai. Hum Mehsana aur poore Gujarat mein local businesses ki sales aur brand reach badhane par practically focus karte hain.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Aapki agency kaun kaun si services provide karti hai? <span class="faq-icon">➕</span></div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Hum End-to-end digital solutions dete hain: Professional Website Design, Logo & Branding (Jaise Pamphlet Design), SEO, Meta/Google Ads, aur Instagram Reels / Video Editing.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="faq-category">
+                <div class="faq-category-title">Pricing & Packages</div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Local business ke liye website banane ka kharcha kitna aata hai? <span class="faq-icon">➕</span></div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Kharcha aapki zarurat par nirbhar karta hai. Lekin JR Digital Studio mein basic professional website packages ₹5,000 se lekar ₹15,000 ke budget mein aaram se ban jate hain. Hum transparent pricing mein vishwas rakhte hain.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Kya aap monthly social media packages dete hain? <span class="faq-icon">➕</span></div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Bilkul! Hamare paas monthly retaining packages hain jismein hum 30-day content calendar, daily posting, graphic design, aur ad management sab cover karte hain. <a href="packages.html" style="color:var(--primary); font-weight:700;">Click here to view packages.</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="faq-category">
+                <div class="faq-category-title">SEO & Growth</div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">SEO optimize karne mein aur Google page 1 par aane mein kitna time lagta hai? <span class="faq-icon">➕</span></div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            SEO ek long-term aur organic process hai. Local SEO (jaise 'Web designer in Mehsana') mein Google rank karne ke liye aam taur par 3 se 6 mahine ka samay lagta hai agar strategy sahi ho.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Meta Ads se mere local business ko kya fayda hoga? <span class="faq-icon">➕</span></div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Meta (Facebook/Instagram) Ads se hum directly aapke target audience (jaise sirf Mehsana ke log) ko ads dikhate hain. Isse aapko instant inquiries aur leads milti hain, jo organic growth se zyada fast hota hai.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:16px;display:inline-flex">
+          <img src="jr.png" alt="JR Digital Studio Logo" class="logo-img">
+          <div><div class="logo-text">JR Digital</div><div class="logo-sub">Studio</div></div>
+        </a>
+        <p>Your creative digital partner.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="packages.html">Packages</a>
+        <a href="faq.html">FAQs</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="tel:+918320146648">📞 8320146648</a>
+        <a href="mailto:jrdigitalstudio8@gmail.com">✉️ Gmail</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 JR Digital Studio. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+
+<!-- Live Search & Accordion Logic -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+    const searchInput = document.getElementById('faqSearch');
+    const noResults = document.getElementById('noResults');
+    const categories = document.querySelectorAll('.faq-category');
+
+    // Accordion Toggle
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            
+            // Close all others
+            faqItems.forEach(otherItem => {
+                otherItem.classList.remove('active');
+                otherItem.querySelector('.faq-answer').style.maxHeight = null;
+            });
+
+            // Open clicked if it wasn't active
+            if (!isActive) {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+        });
+    });
+
+    // Live Search Logic
+    searchInput.addEventListener('input', (e) => {
+        const text = e.target.value.toLowerCase();
+        let visibleCount = 0;
+
+        categories.forEach(category => {
+            const items = category.querySelectorAll('.faq-item');
+            let catVisible = false;
+
+            items.forEach(item => {
+                const questionText = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answerText = item.querySelector('.faq-answer-inner').textContent.toLowerCase();
+                
+                if (questionText.includes(text) || answerText.includes(text)) {
+                    item.style.display = 'block';
+                    catVisible = true;
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').style.maxHeight = null;
+                }
+            });
+
+            // Hide category title if no items match inside it
+            category.querySelector('.faq-category-title').style.display = catVisible ? 'block' : 'none';
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+});
+</script>
+</body>
+</html>
