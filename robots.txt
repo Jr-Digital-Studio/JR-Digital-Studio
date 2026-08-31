@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Private Admin files ko Google index na kare
+Disallow: /admin.html
+Disallow: /admin.js
+Disallow: /works-data.json
+
+# Sitemap Location
+Sitemap: https://www.jrdigitalstudios.com/sitemap.xml
