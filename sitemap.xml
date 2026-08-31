@@ -4,7 +4,7 @@
   <!-- Home Page -->
   <url>
     <loc>https://www.jrdigitalstudios.com/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -12,7 +12,7 @@
   <!-- Services Page -->
   <url>
     <loc>https://www.jrdigitalstudios.com/services.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -20,7 +20,7 @@
   <!-- Packages Page -->
   <url>
     <loc>https://www.jrdigitalstudios.com/packages.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -28,7 +28,7 @@
   <!-- Our Work Page -->
   <url>
     <loc>https://www.jrdigitalstudios.com/our-work.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -36,7 +36,7 @@
   <!-- Reels Page -->
   <url>
     <loc>https://www.jrdigitalstudios.com/reels.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -44,15 +44,23 @@
   <!-- Insights Page -->
   <url>
     <loc>https://www.jrdigitalstudios.com/insights.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- FAQs / Help Center Page -->
+  <url>
+    <loc>https://www.jrdigitalstudios.com/faq.html</loc>
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Contact Page -->
   <url>
     <loc>https://www.jrdigitalstudios.com/contact.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
