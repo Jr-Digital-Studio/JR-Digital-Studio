@@ -1,7 +1,10 @@
 User-agent: *
 Allow: /
 
-# Private Admin files ko Google index na kare
+# AI Content Signals
+Content-Signal: ai-train=allow, search=allow, ai-input=allow
+
+# Private Admin files
 Disallow: /admin.html
 Disallow: /admin.js
 Disallow: /works-data.json
