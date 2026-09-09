@@ -1,0 +1,13 @@
+name: Automated SEO Ping
+on:
+  push:
+    branches:
+      - main
+jobs:
+  ping-search-engines:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Google Sitemap
+        run: curl "https://www.google.com/ping?sitemap=https://www.jrdigitalstudios.com/sitemap.xml"
+      - name: Ping Bing Sitemap
+        run: curl "https://www.bing.com/ping?sitemap=https://www.jrdigitalstudios.com/sitemap.xml"
