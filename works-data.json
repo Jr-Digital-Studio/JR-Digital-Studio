@@ -1,7 +1,7 @@
 {
   "works": [
     {
-      "title": "Cab Service",
+      "title": "Lamira EV Cab Service",
       "category": "social",
       "categoryLabel": "Social Media",
       "emoji": "🚗",
@@ -26,7 +26,8 @@
       "seoDesc": "Professional EV taxi ad creative designed by JR Digital Studio for LamiRa EV Express, promoting Chennai-Trichy travel with clear offers and strong branding.",
       "date": "2026-07-29",
       "image": "images/work-1785403135745-1000630386.jpg",
-      "id": 1785310186419
+      "id": 1785310186419,
+      "imageAltText": "Lamira EV Cab Service"
     },
     {
       "title": "KTPL 2.0",
