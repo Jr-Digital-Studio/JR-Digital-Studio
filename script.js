@@ -81,7 +81,14 @@ async function loadWorks() {
     const cacheBuster = new Date().getTime();
     const res = await fetch(`works-data.json?v=${cacheBuster}`);
     const data = await res.json();
-    const works = data.works || [];
+    let works = data.works || [];
+    
+    // AUTOMATIC GROUPING LOGIC: Same client wale posts ek sath aayenge
+    works.sort((a, b) => {
+      const nameA = a.clientName || a.title || "";
+      const nameB = b.clientName || b.title || "";
+      return nameA.localeCompare(nameB);
+    });
     
     renderWorks(works, grid);
     initFilters(works);
@@ -94,6 +101,14 @@ async function loadWorks() {
     } else {
       works = getSampleWorks();
     }
+    
+    // Backup/Local data ke liye bhi same sorting
+    works.sort((a, b) => {
+      const nameA = a.clientName || a.title || "";
+      const nameB = b.clientName || b.title || "";
+      return nameA.localeCompare(nameB);
+    });
+
     renderWorks(works, grid);
     initFilters(works);
   }
