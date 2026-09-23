@@ -499,116 +499,75 @@
       "featured": false
     }
   ],
-  "ecommercePackages": [
+"ecommerce1Platform": [
     {
       "name": "1 Platform (Starter)",
       "price": 5500,
       "duration": "per month",
-      "features": [
-        "Any 1 Platform (e.g. Amazon)",
-        "Up to 15 Product Listings",
-        "Basic Image Editing & SEO",
-        "Account Health Monitoring"
-      ],
+      "features": ["Any 1 Platform (e.g. Amazon)", "Up to 15 Product Listings", "Basic Image Editing & SEO", "Account Health Monitoring"],
       "featured": false
     },
     {
       "name": "1 Platform (Growth)",
       "price": 9999,
       "duration": "per month",
-      "features": [
-        "Any 1 Platform (e.g. Amazon)",
-        "Up to 40 Product Listings",
-        "A+ Content (Top 3 Products)",
-        "PPC Ads Campaign Setup"
-      ],
+      "features": ["Any 1 Platform (e.g. Amazon)", "Up to 40 Product Listings", "A+ Content (Top 3 Products)", "PPC Ads Campaign Setup"],
       "featured": true
     },
     {
       "name": "1 Platform (Premium)",
       "price": 15999,
       "duration": "per month",
-      "features": [
-        "Any 1 Platform (e.g. Amazon)",
-        "Up to 100 Product Listings",
-        "Premium Graphics & A+ Content",
-        "Advanced Ads & Strategy"
-      ],
+      "features": ["Any 1 Platform (e.g. Amazon)", "Up to 100 Product Listings", "Premium Graphics & A+ Content", "Advanced Ads & Strategy"],
       "featured": false
-    },
+    }
+  ],
+  "ecommerce2Platforms": [
     {
       "name": "2 Platforms (Starter)",
       "price": 9999,
       "duration": "per month",
-      "features": [
-        "Any 2 Platforms (e.g. Amazon+Flipkart)",
-        "Up to 15 Listings (Per Platform)",
-        "Basic Image Editing & SEO",
-        "Account Health Monitoring"
-      ],
+      "features": ["Any 2 Platforms (e.g. Amazon+Flipkart)", "Up to 15 Listings (Per Platform)", "Basic Image Editing & SEO", "Account Health Monitoring"],
       "featured": false
     },
     {
       "name": "2 Platforms (Growth)",
       "price": 17999,
       "duration": "per month",
-      "features": [
-        "Any 2 Platforms (e.g. Amazon+Flipkart)",
-        "Up to 40 Listings (Per Platform)",
-        "A+ Content (Top 3 Products)",
-        "PPC Ads Campaign Setup"
-      ],
+      "features": ["Any 2 Platforms (e.g. Amazon+Flipkart)", "Up to 40 Listings (Per Platform)", "A+ Content (Top 3 Products)", "PPC Ads Campaign Setup"],
       "featured": true
     },
     {
       "name": "2 Platforms (Premium)",
       "price": 28999,
       "duration": "per month",
-      "features": [
-        "Any 2 Platforms (e.g. Amazon+Flipkart)",
-        "Up to 100 Listings (Per Platform)",
-        "Premium Graphics & A+ Content",
-        "Advanced Ads & Strategy"
-      ],
+      "features": ["Any 2 Platforms (e.g. Amazon+Flipkart)", "Up to 100 Listings (Per Platform)", "Premium Graphics & A+ Content", "Advanced Ads & Strategy"],
       "featured": false
-    },
+    }
+  ],
+  "ecommerce3Platforms": [
     {
       "name": "3 Platforms (Starter)",
       "price": 14999,
       "duration": "per month",
-      "features": [
-        "Amazon + Flipkart + Meesho",
-        "Up to 15 Listings (Per Platform)",
-        "Basic Image Editing & SEO",
-        "Account Health Monitoring"
-      ],
+      "features": ["Amazon + Flipkart + Meesho", "Up to 15 Listings (Per Platform)", "Basic Image Editing & SEO", "Account Health Monitoring"],
       "featured": false
     },
     {
       "name": "3 Platforms (Growth)",
       "price": 25999,
       "duration": "per month",
-      "features": [
-        "Amazon + Flipkart + Meesho",
-        "Up to 40 Listings (Per Platform)",
-        "A+ Content (Top 3 Products)",
-        "PPC Ads Campaign Setup"
-      ],
+      "features": ["Amazon + Flipkart + Meesho", "Up to 40 Listings (Per Platform)", "A+ Content (Top 3 Products)", "PPC Ads Campaign Setup"],
       "featured": true
     },
     {
       "name": "3 Platforms (Premium)",
       "price": 39999,
       "duration": "per month",
-      "features": [
-        "Amazon + Flipkart + Meesho",
-        "Up to 100 Listings (Per Platform)",
-        "Premium Graphics & A+ Content",
-        "Advanced Ads & Strategy"
-      ],
+      "features": ["Amazon + Flipkart + Meesho", "Up to 100 Listings (Per Platform)", "Premium Graphics & A+ Content", "Advanced Ads & Strategy"],
       "featured": false
     }
-  ],
+  ]
   "reels": [
     {
       "id": 1789996065039,
