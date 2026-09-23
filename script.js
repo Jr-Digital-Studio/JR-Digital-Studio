@@ -258,12 +258,14 @@ function renderInsights(blogs, grid) {
 // ===== Load Packages from JSON with Dynamic Country Currency =====
 async function loadPackages() {
   const grid = document.querySelector('.packages-grid');
+  const brochureGrid = document.getElementById('brochureGrid'); // Grab new Brochure Grid
 
   try {
     const cacheBuster = new Date().getTime();
     const res = await fetch(`works-data.json?v=${cacheBuster}`);
     const data = await res.json();
     let packages = data.packages || [];
+    let brochurePackages = data.brochurePackages || []; // Grab new brochure packages array
     
     // 1. IP aur Location detect karna (Free API)
     let userSymbol = '₹';
@@ -326,9 +328,20 @@ async function loadPackages() {
       console.log("Location check failed, showing Default INR");
     }
 
-    // 2. Price Convert aur Update karna
+    // 2. Price Convert aur Update karna - Main Packages
     packages = packages.map(pkg => {
-      // Purane price me se comma hatana aur number me badalna
+      const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
+      let newPrice = Math.round(basePrice * conversionRate);
+      
+      return { 
+        ...pkg, 
+        convertedPrice: newPrice.toLocaleString(), 
+        symbol: userSymbol 
+      };
+    });
+
+    // 3. Price Convert aur Update karna - Brochure Packages
+    brochurePackages = brochurePackages.map(pkg => {
       const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
       let newPrice = Math.round(basePrice * conversionRate);
       
@@ -339,14 +352,17 @@ async function loadPackages() {
       };
     });
     
+    // 4. Render the packages
     if (grid) renderPackages(packages, grid);
+    if (brochureGrid) renderPackages(brochurePackages, brochureGrid); // Render new brochure section
+
     renderCompareTable(packages);
   } catch (e) {
     const stored = localStorage.getItem('jr_packages');
     if (stored) {
-      const packages = JSON.parse(stored);
-      if (grid) renderPackages(packages, grid);
-      renderCompareTable(packages);
+      const packagesData = JSON.parse(stored);
+      if (grid) renderPackages(packagesData, grid);
+      renderCompareTable(packagesData);
     }
   }
 }
