@@ -237,7 +237,7 @@ async function loadInsights() {
 function renderInsights(blogs, grid) {
   if (!grid) return;
   grid.innerHTML = '';
-  blogs.forEach(b => {
+    blogs.forEach(b => {
     const card = document.createElement('div');
     card.className = 'insight-card reveal';
     card.innerHTML = `
@@ -315,7 +315,7 @@ async function loadPackages() {
     eco2 = convertList(eco2);
     eco3 = convertList(eco3);
     
-    // Render the packages
+    // Render the packages safely
     if (grid) renderPackages(packages, grid);
     if (brochureGrid) renderPackages(brochurePackages, brochureGrid); 
     if (eco1Grid) renderPackages(eco1, eco1Grid);
