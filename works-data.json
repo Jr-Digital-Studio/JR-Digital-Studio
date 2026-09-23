@@ -462,6 +462,43 @@
       ]
     }
   ],
+  "brochurePackages": [
+    {
+      "name": "2 Pages Brochure",
+      "price": 700,
+      "duration": "2 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": false
+    },
+    {
+      "name": "4 Pages Brochure",
+      "price": 1200,
+      "duration": "4 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": false
+    },
+    {
+      "name": "6 Pages Brochure",
+      "price": 1500,
+      "duration": "6 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": true
+    },
+    {
+      "name": "8 Pages Brochure",
+      "price": 1900,
+      "duration": "8 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": false
+    },
+    {
+      "name": "10 Pages Brochure",
+      "price": 2200,
+      "duration": "10 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": false
+    }
+  ],
   "reels": [
     {
       "id": 1789996065039,
