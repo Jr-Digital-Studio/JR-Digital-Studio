@@ -79,7 +79,8 @@ async function loadWorks() {
 
   try {
     const cacheBuster = new Date().getTime();
-    const res = await fetch(`works-data.json?v=${cacheBuster}`);
+    // Cache blocker added here
+    const res = await fetch(`works-data.json?v=${cacheBuster}`, { cache: "no-store" });
     const data = await res.json();
     let works = data.works || [];
     
@@ -125,7 +126,7 @@ function getSampleWorks() {
   ];
 }
 
-// Render Works (Added imageAltText for SEO)
+// Render Works 
 function renderWorks(works, grid) {
   if (!grid) return;
   grid.innerHTML = '';
@@ -186,7 +187,7 @@ async function loadReels() {
 
   try {
     const cacheBuster = new Date().getTime();
-    const res = await fetch(`works-data.json?v=${cacheBuster}`);
+    const res = await fetch(`works-data.json?v=${cacheBuster}`, { cache: "no-store" });
     const data = await res.json();
     const reels = data.reels || [];
     
@@ -223,7 +224,7 @@ async function loadInsights() {
 
   try {
     const cacheBuster = new Date().getTime();
-    const res = await fetch(`works-data.json?v=${cacheBuster}`);
+    const res = await fetch(`works-data.json?v=${cacheBuster}`, { cache: "no-store" });
     const data = await res.json();
     const blogs = data.blogs || [];
     
@@ -258,14 +259,15 @@ function renderInsights(blogs, grid) {
 // ===== Load Packages from JSON with Dynamic Country Currency =====
 async function loadPackages() {
   const grid = document.querySelector('.packages-grid');
-  const brochureGrid = document.getElementById('brochureGrid'); // Grab new Brochure Grid
+  const brochureGrid = document.getElementById('brochureGrid');
 
   try {
     const cacheBuster = new Date().getTime();
-    const res = await fetch(`works-data.json?v=${cacheBuster}`);
+    // Cache blocker added here!
+    const res = await fetch(`works-data.json?v=${cacheBuster}`, { cache: "no-store" });
     const data = await res.json();
     let packages = data.packages || [];
-    let brochurePackages = data.brochurePackages || []; // Grab new brochure packages array
+    let brochurePackages = data.brochurePackages || []; 
     
     // 1. IP aur Location detect karna (Free API)
     let userSymbol = '₹';
@@ -276,54 +278,20 @@ async function loadPackages() {
       const locData = await locRes.json();
       const country = locData.country_code;
 
-      // === GLOBAL MINIMUM MARKET STANDARD PRICING (Premium International Rates) ===
-      
-      // 1. North America (USA, Canada)
-      if (['US', 'CA'].includes(country)) { 
-        userSymbol = '$'; conversionRate = 0.0545; 
-      } 
-      // 2. United Kingdom
-      else if (['GB'].includes(country)) { 
-        userSymbol = '£'; conversionRate = 0.0454; 
-      } 
-      // 3. Middle East (UAE, Saudi Arabia, Qatar)
-      else if (['AE'].includes(country)) { 
-        userSymbol = 'AED '; conversionRate = 0.218; 
-      }
-      else if (['SA'].includes(country)) { 
-        userSymbol = 'SAR '; conversionRate = 0.218; 
-      }
-      else if (['QA'].includes(country)) { 
-        userSymbol = 'QAR '; conversionRate = 0.218; 
-      }
-      // 4. Oceania (Australia, New Zealand)
-      else if (['AU'].includes(country)) { 
-        userSymbol = 'A$'; conversionRate = 0.0727; 
-      }
-      else if (['NZ'].includes(country)) { 
-        userSymbol = 'NZ$'; conversionRate = 0.0727; 
-      }
-      // 5. Europe (Eurozone + Switzerland)
-      else if (['DE','FR','IT','ES','NL','IE','BE','AT','PT','FI','GR'].includes(country)) { 
-        userSymbol = '€'; conversionRate = 0.0545; 
-      }
-      else if (['CH'].includes(country)) { 
-        userSymbol = 'CHF '; conversionRate = 0.0545; 
-      }
-      // 6. Asia (Singapore, Japan, Malaysia)
-      else if (['SG'].includes(country)) { 
-        userSymbol = 'S$'; conversionRate = 0.0727; 
-      }
-      else if (['JP'].includes(country)) { 
-        userSymbol = '¥'; conversionRate = 8.18; 
-      }
-      else if (['MY'].includes(country)) { 
-        userSymbol = 'RM '; conversionRate = 0.272; 
-      }
-      // 7. Africa (South Africa)
-      else if (['ZA'].includes(country)) { 
-        userSymbol = 'R '; conversionRate = 0.909; 
-      }
+      // === GLOBAL MINIMUM MARKET STANDARD PRICING ===
+      if (['US', 'CA'].includes(country)) { userSymbol = '$'; conversionRate = 0.0545; } 
+      else if (['GB'].includes(country)) { userSymbol = '£'; conversionRate = 0.0454; } 
+      else if (['AE'].includes(country)) { userSymbol = 'AED '; conversionRate = 0.218; }
+      else if (['SA'].includes(country)) { userSymbol = 'SAR '; conversionRate = 0.218; }
+      else if (['QA'].includes(country)) { userSymbol = 'QAR '; conversionRate = 0.218; }
+      else if (['AU'].includes(country)) { userSymbol = 'A$'; conversionRate = 0.0727; }
+      else if (['NZ'].includes(country)) { userSymbol = 'NZ$'; conversionRate = 0.0727; }
+      else if (['DE','FR','IT','ES','NL','IE','BE','AT','PT','FI','GR'].includes(country)) { userSymbol = '€'; conversionRate = 0.0545; }
+      else if (['CH'].includes(country)) { userSymbol = 'CHF '; conversionRate = 0.0545; }
+      else if (['SG'].includes(country)) { userSymbol = 'S$'; conversionRate = 0.0727; }
+      else if (['JP'].includes(country)) { userSymbol = '¥'; conversionRate = 8.18; }
+      else if (['MY'].includes(country)) { userSymbol = 'RM '; conversionRate = 0.272; }
+      else if (['ZA'].includes(country)) { userSymbol = 'R '; conversionRate = 0.909; }
     } catch(e) {
       console.log("Location check failed, showing Default INR");
     }
@@ -332,29 +300,19 @@ async function loadPackages() {
     packages = packages.map(pkg => {
       const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
       let newPrice = Math.round(basePrice * conversionRate);
-      
-      return { 
-        ...pkg, 
-        convertedPrice: newPrice.toLocaleString(), 
-        symbol: userSymbol 
-      };
+      return { ...pkg, convertedPrice: newPrice.toLocaleString(), symbol: userSymbol };
     });
 
     // 3. Price Convert aur Update karna - Brochure Packages
     brochurePackages = brochurePackages.map(pkg => {
       const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
       let newPrice = Math.round(basePrice * conversionRate);
-      
-      return { 
-        ...pkg, 
-        convertedPrice: newPrice.toLocaleString(), 
-        symbol: userSymbol 
-      };
+      return { ...pkg, convertedPrice: newPrice.toLocaleString(), symbol: userSymbol };
     });
     
     // 4. Render the packages
     if (grid) renderPackages(packages, grid);
-    if (brochureGrid) renderPackages(brochurePackages, brochureGrid); // Render new brochure section
+    if (brochureGrid) renderPackages(brochurePackages, brochureGrid); 
 
     renderCompareTable(packages);
   } catch (e) {
