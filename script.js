@@ -274,21 +274,53 @@ async function loadPackages() {
       const locData = await locRes.json();
       const country = locData.country_code;
 
-      // Alag-alag country ke rates set karein (Aap inhe apne hisaab se change kar sakte hain)
+      // === GLOBAL MINIMUM MARKET STANDARD PRICING (Premium International Rates) ===
+      
+      // 1. North America (USA, Canada)
       if (['US', 'CA'].includes(country)) { 
-        userSymbol = '$'; conversionRate = 0.012; // USD
+        userSymbol = '$'; conversionRate = 0.0545; 
       } 
+      // 2. United Kingdom
       else if (['GB'].includes(country)) { 
-        userSymbol = '£'; conversionRate = 0.0094; // UK Pound
+        userSymbol = '£'; conversionRate = 0.0454; 
       } 
+      // 3. Middle East (UAE, Saudi Arabia, Qatar)
       else if (['AE'].includes(country)) { 
-        userSymbol = 'AED '; conversionRate = 0.044; // Dubai Dirham
-      } 
+        userSymbol = 'AED '; conversionRate = 0.218; 
+      }
+      else if (['SA'].includes(country)) { 
+        userSymbol = 'SAR '; conversionRate = 0.218; 
+      }
+      else if (['QA'].includes(country)) { 
+        userSymbol = 'QAR '; conversionRate = 0.218; 
+      }
+      // 4. Oceania (Australia, New Zealand)
       else if (['AU'].includes(country)) { 
-        userSymbol = 'A$'; conversionRate = 0.018; // Australian Dollar
-      } 
-      else if (['DE','FR','IT','ES','NL'].includes(country)) { 
-        userSymbol = '€'; conversionRate = 0.011; // Euro
+        userSymbol = 'A$'; conversionRate = 0.0727; 
+      }
+      else if (['NZ'].includes(country)) { 
+        userSymbol = 'NZ$'; conversionRate = 0.0727; 
+      }
+      // 5. Europe (Eurozone + Switzerland)
+      else if (['DE','FR','IT','ES','NL','IE','BE','AT','PT','FI','GR'].includes(country)) { 
+        userSymbol = '€'; conversionRate = 0.0545; 
+      }
+      else if (['CH'].includes(country)) { 
+        userSymbol = 'CHF '; conversionRate = 0.0545; 
+      }
+      // 6. Asia (Singapore, Japan, Malaysia)
+      else if (['SG'].includes(country)) { 
+        userSymbol = 'S$'; conversionRate = 0.0727; 
+      }
+      else if (['JP'].includes(country)) { 
+        userSymbol = '¥'; conversionRate = 8.18; 
+      }
+      else if (['MY'].includes(country)) { 
+        userSymbol = 'RM '; conversionRate = 0.272; 
+      }
+      // 7. Africa (South Africa)
+      else if (['ZA'].includes(country)) { 
+        userSymbol = 'R '; conversionRate = 0.909; 
       }
     } catch(e) {
       console.log("Location check failed, showing Default INR");
@@ -427,13 +459,10 @@ function initContactForm() {
     // Collect Data
     const formData = new FormData(form);
     
-    // Web3Forms API Logic (Replace YOUR_ACCESS_KEY later if needed, but it works directly via Fetch)
+    // Web3Forms API Logic
     formData.append("access_key", "d080bcad-29d3-49c3-b8fb-c7e42b563e74"); 
 
     try {
-      // NOTE: You must register on web3forms.com with jrdigitalstudio8@gmail.com and replace "YOUR_WEB3FORMS_ACCESS_KEY" above.
-      // Until you get the key, this simulates success so your website doesn't break.
-      
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formData
