@@ -266,7 +266,6 @@ async function loadPackages() {
 
   try {
     const cacheBuster = new Date().getTime();
-    // Cache blocker added here!
     const res = await fetch(`works-data.json?v=${cacheBuster}`, { cache: "no-store" });
     const data = await res.json();
     let packages = data.packages || [];
@@ -275,7 +274,6 @@ async function loadPackages() {
     let eco2 = data.ecommerce2Platforms || [];
     let eco3 = data.ecommerce3Platforms || [];
     
-    // 1. IP aur Location detect karna (Free API)
     let userSymbol = '₹';
     let conversionRate = 1;
     
@@ -284,7 +282,6 @@ async function loadPackages() {
       const locData = await locRes.json();
       const country = locData.country_code;
 
-      // === GLOBAL MINIMUM MARKET STANDARD PRICING ===
       if (['US', 'CA'].includes(country)) { userSymbol = '$'; conversionRate = 0.0545; } 
       else if (['GB'].includes(country)) { userSymbol = '£'; conversionRate = 0.0454; } 
       else if (['AE'].includes(country)) { userSymbol = 'AED '; conversionRate = 0.218; }
@@ -302,7 +299,6 @@ async function loadPackages() {
       console.log("Location check failed, showing Default INR");
     }
 
-    // Price conversion helper function
     const convertList = (list) => list.map(pkg => {
       const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
       let newPrice = Math.round(basePrice * conversionRate);
@@ -315,7 +311,6 @@ async function loadPackages() {
     eco2 = convertList(eco2);
     eco3 = convertList(eco3);
     
-    // Render the packages safely
     if (grid) renderPackages(packages, grid);
     if (brochureGrid) renderPackages(brochurePackages, brochureGrid); 
     if (eco1Grid) renderPackages(eco1, eco1Grid);
@@ -426,7 +421,7 @@ function renderCompareTable(packages) {
   `;
 }
 
-// Contact Form (LIVE EMAIL SENDING SETUP)
+// Contact Form
 function initContactForm() {
   const form = document.querySelector('#contactForm');
   if (!form) return;
@@ -438,10 +433,7 @@ function initContactForm() {
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    // Collect Data
     const formData = new FormData(form);
-    
-    // Web3Forms API Logic
     formData.append("access_key", "d080bcad-29d3-49c3-b8fb-c7e42b563e74"); 
 
     try {
@@ -456,7 +448,7 @@ function initContactForm() {
         showToast('✅ Message sent! We will contact you soon.', 'success');
         form.reset();
       } else {
-        showToast('✅ Message recorded! (Waiting for API key integration)', 'success');
+        showToast('✅ Message recorded!', 'success');
         form.reset();
       }
     } catch (error) {
