@@ -255,7 +255,7 @@ function renderInsights(blogs, grid) {
   initReveal();
 }
 
-// Load Packages from JSON
+// ===== Load Packages from JSON with Dynamic Country Currency =====
 async function loadPackages() {
   const grid = document.querySelector('.packages-grid');
 
@@ -263,7 +263,49 @@ async function loadPackages() {
     const cacheBuster = new Date().getTime();
     const res = await fetch(`works-data.json?v=${cacheBuster}`);
     const data = await res.json();
-    const packages = data.packages || [];
+    let packages = data.packages || [];
+    
+    // 1. IP aur Location detect karna (Free API)
+    let userSymbol = '₹';
+    let conversionRate = 1;
+    
+    try {
+      const locRes = await fetch('https://ipapi.co/json/');
+      const locData = await locRes.json();
+      const country = locData.country_code;
+
+      // Alag-alag country ke rates set karein (Aap inhe apne hisaab se change kar sakte hain)
+      if (['US', 'CA'].includes(country)) { 
+        userSymbol = '$'; conversionRate = 0.012; // USD
+      } 
+      else if (['GB'].includes(country)) { 
+        userSymbol = '£'; conversionRate = 0.0094; // UK Pound
+      } 
+      else if (['AE'].includes(country)) { 
+        userSymbol = 'AED '; conversionRate = 0.044; // Dubai Dirham
+      } 
+      else if (['AU'].includes(country)) { 
+        userSymbol = 'A$'; conversionRate = 0.018; // Australian Dollar
+      } 
+      else if (['DE','FR','IT','ES','NL'].includes(country)) { 
+        userSymbol = '€'; conversionRate = 0.011; // Euro
+      }
+    } catch(e) {
+      console.log("Location check failed, showing Default INR");
+    }
+
+    // 2. Price Convert aur Update karna
+    packages = packages.map(pkg => {
+      // Purane price me se comma hatana aur number me badalna
+      const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
+      let newPrice = Math.round(basePrice * conversionRate);
+      
+      return { 
+        ...pkg, 
+        convertedPrice: newPrice.toLocaleString(), 
+        symbol: userSymbol 
+      };
+    });
     
     if (grid) renderPackages(packages, grid);
     renderCompareTable(packages);
@@ -286,13 +328,13 @@ function renderPackages(packages, grid) {
     card.innerHTML = `
       ${pkg.featured ? '<span class="featured-badge">⭐ POPULAR</span>' : ''}
       <div class="pkg-name">${pkg.name}</div>
-      <div class="pkg-price"><sup>₹</sup>${pkg.price}</div>
+      <div class="pkg-price"><sup>${pkg.symbol}</sup>${pkg.convertedPrice || pkg.price}</div>
       <div class="pkg-duration">${pkg.duration}</div>
       <div class="pkg-divider"></div>
       <ul class="pkg-features">
         ${pkg.features.map(f => `<li>${f}</li>`).join('')}
       </ul>
-      <a href="https://wa.me/918320146648?text=Hi!%20I'm%20interested%20in%20the%20${encodeURIComponent(pkg.name)}%20Package%20of%20JR%20Digital%20Studio" 
+      <a href="https://wa.me/918320146648?text=Hi!%20I'm%20interested%20in%20the%20${encodeURIComponent(pkg.name)}%20Package" 
          target="_blank" class="pkg-btn">Get Started →</a>
     `;
     grid.appendChild(card);
@@ -333,7 +375,7 @@ function renderCompareTable(packages) {
 
   let priceRow = packages.map((pkg, i) => {
     return `<td style="padding:18px 20px;text-align:center;font-family:'Raleway',sans-serif;font-weight:900;font-size:20px;color:var(--primary);${pkg.featured ? 'background:rgba(0,87,255,0.03)' : ''}">
-      ₹${pkg.price}<span style="font-size:12px;font-weight:600;color:var(--text-light)">/${pkg.duration.replace('per ','')}</span>
+      ${pkg.symbol}${pkg.convertedPrice || pkg.price}<span style="font-size:12px;font-weight:600;color:var(--text-light)">/${pkg.duration.replace('per ','')}</span>
     </td>`;
   }).join('');
 
