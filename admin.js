@@ -45,6 +45,31 @@ function getPackages() {
 }
 function savePackages(packages) { localStorage.setItem('jr_packages', JSON.stringify(packages)); }
 
+// New Package Helpers for Brochure & E-Commerce
+function getBrochurePackages() {
+  try { return JSON.parse(localStorage.getItem('jr_brochure_packages')) || getDefaultBrochurePackages(); }
+  catch { return getDefaultBrochurePackages(); }
+}
+function saveBrochurePackages(pkgs) { localStorage.setItem('jr_brochure_packages', JSON.stringify(pkgs)); }
+
+function getEco1Packages() {
+  try { return JSON.parse(localStorage.getItem('jr_eco1_packages')) || getDefaultEco1(); }
+  catch { return getDefaultEco1(); }
+}
+function saveEco1Packages(pkgs) { localStorage.setItem('jr_eco1_packages', JSON.stringify(pkgs)); }
+
+function getEco2Packages() {
+  try { return JSON.parse(localStorage.getItem('jr_eco2_packages')) || getDefaultEco2(); }
+  catch { return getDefaultEco2(); }
+}
+function saveEco2Packages(pkgs) { localStorage.setItem('jr_eco2_packages', JSON.stringify(pkgs)); }
+
+function getEco3Packages() {
+  try { return JSON.parse(localStorage.getItem('jr_eco3_packages')) || getDefaultEco3(); }
+  catch { return getDefaultEco3(); }
+}
+function saveEco3Packages(pkgs) { localStorage.setItem('jr_eco3_packages', JSON.stringify(pkgs)); }
+
 function getReels() {
   try { return JSON.parse(localStorage.getItem('jr_reels_data')) || []; }
   catch { return []; }
@@ -71,7 +96,31 @@ function getDefaultWorks() {
 
 function getDefaultPackages() {
   return [
-    { id:1, name:"Starter", price:"4,999", duration:"per month", featured:false, features:["5 Social Media Posts","1 Logo Design"] }
+    { id:1, name:"Starter", price:"5500", duration:"per month", featured:true, features:["12 Posts Per Month","2 Reels Per Month","Social Media Management"] }
+  ];
+}
+
+function getDefaultBrochurePackages() {
+  return [
+    { name: "2 Pages Brochure", price: 700, duration: "2 Pages", features: ["Unique & Creative Design", "High Quality Layout"], featured: false }
+  ];
+}
+
+function getDefaultEco1() {
+  return [
+    { name: "1 Platform (Starter)", price: 5500, duration: "per month", features: ["Any 1 Platform (e.g. Amazon)", "Up to 15 Product Listings"], featured: false }
+  ];
+}
+
+function getDefaultEco2() {
+  return [
+    { name: "2 Platforms (Starter)", price: 9999, duration: "per month", features: ["Any 2 Platforms (e.g. Amazon+Flipkart)", "Up to 15 Listings"], featured: false }
+  ];
+}
+
+function getDefaultEco3() {
+  return [
+    { name: "3 Platforms (Starter)", price: 14999, duration: "per month", features: ["Amazon + Flipkart + Meesho", "Up to 15 Listings"], featured: false }
   ];
 }
 
@@ -148,8 +197,8 @@ function openAddWorkModal() {
   document.getElementById('workTitle').value = '';
   document.getElementById('workCategory').value = '';
   document.getElementById('workEmoji').value = '';
-  document.getElementById('workImageFile').value = ''; // Reset file input
-  document.getElementById('workAltText').value = ''; // Naya SEO field
+  document.getElementById('workImageFile').value = ''; 
+  document.getElementById('workAltText').value = ''; 
   document.getElementById('workDesc').value = '';
   document.getElementById('workCaption').value = '';
   document.getElementById('workKeywordsInput').value = '';
@@ -168,7 +217,7 @@ function editWork(id) {
   document.getElementById('workTitle').value = w.title;
   document.getElementById('workCategory').value = w.category;
   document.getElementById('workEmoji').value = w.emoji||'';
-  document.getElementById('workAltText').value = w.imageAltText||''; // Naya SEO field
+  document.getElementById('workAltText').value = w.imageAltText||''; 
   document.getElementById('workDesc').value = w.description||'';
   document.getElementById('workCaption').value = w.caption||'';
   document.getElementById('workKeywordsInput').value = (w.keywords||[]).join(', ');
@@ -198,7 +247,6 @@ async function saveWork() {
     let seoDesc = document.getElementById('workSeoDesc').value.trim();
     if (!seoDesc) seoDesc = `Explore ${title}, a professional ${catLabels[category] || 'digital'} project by JR Digital Studio in Mehsana & Gujarat. Get custom solutions.`;
 
-    // Fetching the new SEO field
     let imageAltText = document.getElementById('workAltText').value.trim() || title;
 
     let imagePath = "";
@@ -226,7 +274,7 @@ async function saveWork() {
       emoji: document.getElementById('workEmoji').value||'🎨',
       description: document.getElementById('workDesc').value.trim() || title,
       caption: document.getElementById('workCaption').value.trim() || title,
-      keywords, seoTitle, seoDesc, imageAltText, // Added imageAltText here
+      keywords, seoTitle, seoDesc, imageAltText, 
       date: document.getElementById('workDate').value || new Date().toISOString().split('T')[0],
       image: imagePath
     };
@@ -240,11 +288,20 @@ async function saveWork() {
     }
     saveWorks(works);
 
-    // Sync all data to GitHub
+    // Sync all sections to GitHub JSON safely
     const packages = getPackages();
+    const brochurePackages = getBrochurePackages();
+    const ecommerce1Platform = getEco1Packages();
+    const ecommerce2Platforms = getEco2Packages();
+    const ecommerce3Platforms = getEco3Packages();
     const reels = getReels(); 
     const blogs = getInsights();
-    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
+    
+    const fullJsonData = JSON.stringify({ 
+      works, packages, brochurePackages, 
+      ecommerce1Platform, ecommerce2Platforms, ecommerce3Platforms, 
+      reels, blogs 
+    }, null, 2);
     
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
     await githubApiRequest('contents/works-data.json', 'PUT', {
@@ -270,7 +327,7 @@ async function deleteWork(id) {
   saveWorks(getWorks().filter(w => w.id !== id));
   loadWorksTable();
   loadDashboard();
-  showAdminToast('🗑️ Work delete ho gaya (Note: GitHub json mein tab update hoga jab naya work add karenge)');
+  showAdminToast('🗑️ Work delete ho gaya');
 }
 
 // ===== REELS MANAGEMENT =====
@@ -305,9 +362,9 @@ function openAddReelModal() {
   document.getElementById('reelTitle').value = '';
   document.getElementById('reelUrl').value = '';
   document.getElementById('reelCategory').value = '';
-  document.getElementById('reelSeoTitle').value = ''; // Naya SEO field
-  document.getElementById('reelSlug').value = ''; // Naya SEO field
-  document.getElementById('reelSeoDesc').value = ''; // Naya SEO field
+  document.getElementById('reelSeoTitle').value = ''; 
+  document.getElementById('reelSlug').value = ''; 
+  document.getElementById('reelSeoDesc').value = ''; 
   openModal('reelModal');
 }
 
@@ -316,7 +373,6 @@ async function saveReelData() {
   const embedUrl = document.getElementById('reelUrl').value.trim();
   const category = document.getElementById('reelCategory').value.trim() || 'Reel';
   
-  // SEO Fields
   const seoTitle = document.getElementById('reelSeoTitle').value.trim() || title;
   const customSlug = document.getElementById('reelSlug').value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   const seoDesc = document.getElementById('reelSeoDesc').value.trim() || `Watch ${title} by JR Digital Studio.`;
@@ -335,7 +391,7 @@ async function saveReelData() {
       title,
       embedUrl,
       category,
-      seoTitle, customSlug, seoDesc, // Saving SEO data
+      seoTitle, customSlug, seoDesc, 
       date: new Date().toISOString().split('T')[0]
     };
 
@@ -344,8 +400,17 @@ async function saveReelData() {
 
     const works = getWorks();
     const packages = getPackages();
+    const brochurePackages = getBrochurePackages();
+    const ecommerce1Platform = getEco1Packages();
+    const ecommerce2Platforms = getEco2Packages();
+    const ecommerce3Platforms = getEco3Packages();
     const blogs = getInsights();
-    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
+    
+    const fullJsonData = JSON.stringify({ 
+      works, packages, brochurePackages, 
+      ecommerce1Platform, ecommerce2Platforms, ecommerce3Platforms, 
+      reels, blogs 
+    }, null, 2);
 
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
     await githubApiRequest('contents/works-data.json', 'PUT', {
@@ -375,8 +440,17 @@ async function deleteReel(id) {
 
     const works = getWorks();
     const packages = getPackages();
+    const brochurePackages = getBrochurePackages();
+    const ecommerce1Platform = getEco1Packages();
+    const ecommerce2Platforms = getEco2Packages();
+    const ecommerce3Platforms = getEco3Packages();
     const blogs = getInsights();
-    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
+    
+    const fullJsonData = JSON.stringify({ 
+      works, packages, brochurePackages, 
+      ecommerce1Platform, ecommerce2Platforms, ecommerce3Platforms, 
+      reels, blogs 
+    }, null, 2);
 
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
     await githubApiRequest('contents/works-data.json', 'PUT', {
@@ -394,7 +468,7 @@ async function deleteReel(id) {
   }
 }
 
-// ===== INSIGHTS / BLOGS MANAGEMENT (NEW) =====
+// ===== INSIGHTS / BLOGS MANAGEMENT =====
 let editingInsightId = null;
 
 function loadInsightsTable() {
@@ -432,7 +506,6 @@ function openAddInsightModal() {
   document.getElementById('insightKeywords').value = '';
   document.getElementById('insightUrl').value = '';
   
-  // Reset Naye SEO Fields
   document.getElementById('insightSlug').value = '';
   document.getElementById('insightSeoTitle').value = '';
   document.getElementById('insightSeoDesc').value = '';
@@ -451,7 +524,6 @@ function editInsight(id) {
   document.getElementById('insightKeywords').value = b.keywords || '';
   document.getElementById('insightUrl').value = b.instagramUrl || '';
   
-  // Load Naye SEO Fields
   document.getElementById('insightSlug').value = b.customSlug || '';
   document.getElementById('insightSeoTitle').value = b.seoTitle || '';
   document.getElementById('insightSeoDesc').value = b.seoDesc || '';
@@ -464,7 +536,6 @@ async function saveInsightData() {
   const keywords = document.getElementById('insightKeywords').value.trim();
   const instagramUrl = document.getElementById('insightUrl').value.trim();
   
-  // Extracting Naye SEO Fields
   const customSlug = document.getElementById('insightSlug').value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   const seoTitle = document.getElementById('insightSeoTitle').value.trim() || title;
   const seoDesc = document.getElementById('insightSeoDesc').value.trim() || description.substring(0, 150);
@@ -485,7 +556,7 @@ async function saveInsightData() {
       description,
       keywords,
       instagramUrl,
-      customSlug, seoTitle, seoDesc, // Saving SEO fields
+      customSlug, seoTitle, seoDesc, 
       date: new Date().toISOString().split('T')[0]
     };
 
@@ -504,8 +575,17 @@ async function saveInsightData() {
 
     const works = getWorks();
     const packages = getPackages();
+    const brochurePackages = getBrochurePackages();
+    const ecommerce1Platform = getEco1Packages();
+    const ecommerce2Platforms = getEco2Packages();
+    const ecommerce3Platforms = getEco3Packages();
     const reels = getReels();
-    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
+    
+    const fullJsonData = JSON.stringify({ 
+      works, packages, brochurePackages, 
+      ecommerce1Platform, ecommerce2Platforms, ecommerce3Platforms, 
+      reels, blogs 
+    }, null, 2);
 
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
     await githubApiRequest('contents/works-data.json', 'PUT', {
@@ -535,8 +615,17 @@ async function deleteInsight(id) {
 
     const works = getWorks();
     const packages = getPackages();
+    const brochurePackages = getBrochurePackages();
+    const ecommerce1Platform = getEco1Packages();
+    const ecommerce2Platforms = getEco2Packages();
+    const ecommerce3Platforms = getEco3Packages();
     const reels = getReels();
-    const fullJsonData = JSON.stringify({ works, packages, reels, blogs }, null, 2);
+    
+    const fullJsonData = JSON.stringify({ 
+      works, packages, brochurePackages, 
+      ecommerce1Platform, ecommerce2Platforms, ecommerce3Platforms, 
+      reels, blogs 
+    }, null, 2);
 
     const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
     await githubApiRequest('contents/works-data.json', 'PUT', {
@@ -559,18 +648,42 @@ let editingPkgId = null;
 
 function loadPackagesTable() {
   const packages = getPackages();
-  document.getElementById('packagesTableBody').innerHTML = packages.map(pkg => `
+  const brochure = getBrochurePackages();
+  const eco1 = getEco1Packages();
+  const eco2 = getEco2Packages();
+  const eco3 = getEco3Packages();
+
+  let html = `<h4 style="color:#00C2FF; margin-bottom:10px;">📱 Social Media Packages</h4>`;
+  html += packages.map(pkg => renderPkgRow(pkg, 'social')).join('');
+
+  html += `<h4 style="color:#00C2FF; margin:20px 0 10px;">📖 Brochure Packages</h4>`;
+  html += brochure.map(pkg => renderPkgRow(pkg, 'brochure')).join('');
+
+  html += `<h4 style="color:#00C2FF; margin:20px 0 10px;">🛍️ 1 Platform E-Commerce</h4>`;
+  html += eco1.map(pkg => renderPkgRow(pkg, 'eco1')).join('');
+
+  html += `<h4 style="color:#00C2FF; margin:20px 0 10px;">🛍️ 2 Platforms E-Commerce</h4>`;
+  html += eco2.map(pkg => renderPkgRow(pkg, 'eco2')).join('');
+
+  html += `<h4 style="color:#00C2FF; margin:20px 0 10px;">🛍️ 3 Platforms E-Commerce</h4>`;
+  html += eco3.map(pkg => renderPkgRow(pkg, 'eco3')).join('');
+
+  document.getElementById('packagesTableBody').innerHTML = html;
+}
+
+function renderPkgRow(pkg, type) {
+  const pkgId = pkg.id || pkg.name;
+  return `
     <tr>
       <td><strong>${pkg.name}</strong>${pkg.featured?' <span class="badge badge-green">⭐ Featured</span>':''}</td>
       <td style="font-family:'Raleway',sans-serif;font-weight:900;color:#00C2FF">₹${pkg.price}</td>
-      <td style="color:rgba(255,255,255,0.45)">${pkg.duration}</td>
-      <td style="color:rgba(255,255,255,0.45)">${pkg.features.length} features</td>
+      <td style="color:rgba(255,255,255,0.45)">${pkg.duration || 'per month'}</td>
+      <td style="color:rgba(255,255,255,0.45)">${(pkg.features||[]).length} features</td>
       <td>
-        <button class="admin-btn admin-btn-primary" onclick="editPackage(${pkg.id})" style="margin-right:6px">✏️ Edit</button>
-        <button class="admin-btn admin-btn-danger" onclick="deletePackage(${pkg.id})">🗑️ Delete</button>
+        <button class="admin-btn admin-btn-primary" onclick="editPackageCustom('${type}', '${pkgId}')" style="margin-right:6px">✏️ Edit</button>
       </td>
     </tr>
-  `).join('');
+  `;
 }
 
 function openAddPackageModal() {
@@ -585,28 +698,44 @@ function openAddPackageModal() {
   openModal('pkgModal');
 }
 
-function editPackage(id) {
-  const pkg = getPackages().find(p => p.id === id);
+function editPackageCustom(type, id) {
+  let list = [];
+  if (type === 'social') list = getPackages();
+  else if (type === 'brochure') list = getBrochurePackages();
+  else if (type === 'eco1') list = getEco1Packages();
+  else if (type === 'eco2') list = getEco2Packages();
+  else if (type === 'eco3') list = getEco3Packages();
+
+  const pkg = list.find(p => (p.id && p.id == id) || p.name === id);
   if (!pkg) return;
+
   editingPkgId = id;
-  document.getElementById('pkgModalTitle').textContent = '✏️ Package Edit Karo';
-  document.getElementById('pkgId').value = pkg.id;
+  window.editingPkgType = type;
+  document.getElementById('pkgModalTitle').textContent = `✏️ Edit Package (${type.toUpperCase()})`;
+  document.getElementById('pkgId').value = id;
   document.getElementById('pkgName').value = pkg.name;
   document.getElementById('pkgPrice').value = pkg.price;
-  document.getElementById('pkgDuration').value = pkg.duration;
-  document.getElementById('pkgFeatured').checked = pkg.featured;
-  document.getElementById('pkgFeaturesInput').value = pkg.features.join('\n');
+  document.getElementById('pkgDuration').value = pkg.duration || 'per month';
+  document.getElementById('pkgFeatured').checked = pkg.featured || false;
+  document.getElementById('pkgFeaturesInput').value = (pkg.features || []).join('\n');
   openModal('pkgModal');
 }
 
-function savePackage() {
+async function savePackage() {
   const name = document.getElementById('pkgName').value.trim();
   const price = document.getElementById('pkgPrice').value.trim();
   if (!name || !price) { showAdminToast('❌ Name aur price zaroori hain', 'error'); return; }
   const features = document.getElementById('pkgFeaturesInput').value.trim().split('\n').map(f=>f.trim()).filter(Boolean);
   if (!features.length) { showAdminToast('❌ Kam se kam ek feature add karo', 'error'); return; }
 
-  const packages = getPackages();
+  const type = window.editingPkgType || 'social';
+  let list = [];
+  if (type === 'social') list = getPackages();
+  else if (type === 'brochure') list = getBrochurePackages();
+  else if (type === 'eco1') list = getEco1Packages();
+  else if (type === 'eco2') list = getEco2Packages();
+  else if (type === 'eco3') list = getEco3Packages();
+
   const pkgData = {
     name, price,
     duration: document.getElementById('pkgDuration').value.trim()||'per month',
@@ -614,27 +743,60 @@ function savePackage() {
     features
   };
 
-  if (editingPkgId) {
-    const idx = packages.findIndex(p => p.id === editingPkgId);
-    if (idx !== -1) packages[idx] = { ...packages[idx], ...pkgData };
+  if (editingPkgId !== null && editingPkgId !== '') {
+    const idx = list.findIndex(p => (p.id && p.id == editingPkgId) || p.name === editingPkgId);
+    if (idx !== -1) {
+      pkgData.id = list[idx].id || Date.now();
+      list[idx] = { ...list[idx], ...pkgData };
+    } else {
+      pkgData.id = Date.now();
+      list.push(pkgData);
+    }
   } else {
     pkgData.id = Date.now();
-    packages.push(pkgData);
+    list.push(pkgData);
   }
 
-  savePackages(packages);
-  closeModal('pkgModal');
-  loadPackagesTable();
-  loadDashboard();
-  showAdminToast('✅ Package save ho gaya!');
-}
+  if (type === 'social') savePackages(list);
+  else if (type === 'brochure') saveBrochurePackages(list);
+  else if (type === 'eco1') saveEco1Packages(list);
+  else if (type === 'eco2') saveEco2Packages(list);
+  else if (type === 'eco3') saveEco3Packages(list);
 
-function deletePackage(id) {
-  if (!confirm('Package delete karna chahte ho?')) return;
-  savePackages(getPackages().filter(p => p.id !== id));
-  loadPackagesTable();
-  loadDashboard();
-  showAdminToast('🗑️ Package delete ho gaya');
+  // Sync to GitHub JSON automatically
+  showAdminToast("⏳ GitHub par Packages sync ho rahe hain...", "success");
+  try {
+    const works = getWorks();
+    const packages = getPackages();
+    const brochurePackages = getBrochurePackages();
+    const ecommerce1Platform = getEco1Packages();
+    const ecommerce2Platforms = getEco2Packages();
+    const ecommerce3Platforms = getEco3Packages();
+    const reels = getReels();
+    const blogs = getInsights();
+
+    const fullJsonData = JSON.stringify({ 
+      works, packages, brochurePackages, 
+      ecommerce1Platform, ecommerce2Platforms, ecommerce3Platforms, 
+      reels, blogs 
+    }, null, 2);
+
+    const fileInfo = await githubApiRequest('contents/works-data.json', 'GET');
+    await githubApiRequest('contents/works-data.json', 'PUT', {
+      message: 'Updated Packages via Admin Panel',
+      content: btoa(unescape(encodeURIComponent(fullJsonData))),
+      sha: fileInfo.sha,
+      branch: 'main'
+    });
+
+    closeModal('pkgModal');
+    loadPackagesTable();
+    loadDashboard();
+    showAdminToast('✅ Package save aur GitHub par live ho gaya!');
+  } catch(err) {
+    console.error(err);
+    showAdminToast('❌ GitHub sync error: ' + err.message, 'error');
+  }
 }
 
 // ===== SEO SETTINGS =====
@@ -721,6 +883,10 @@ function resetData() {
   if (!confirm('Sabhi data default par reset ho jayega. Pakka?')) return;
   localStorage.removeItem('jr_works');
   localStorage.removeItem('jr_packages');
+  localStorage.removeItem('jr_brochure_packages');
+  localStorage.removeItem('jr_eco1_packages');
+  localStorage.removeItem('jr_eco2_packages');
+  localStorage.removeItem('jr_eco3_packages');
   localStorage.removeItem('jr_reels_data');
   localStorage.removeItem('jr_blogs_data');
   localStorage.removeItem('jr_seo');
@@ -732,6 +898,10 @@ function exportLiveJson() {
   const fullData = {
       works: getWorks(),
       packages: getPackages(),
+      brochurePackages: getBrochurePackages(),
+      ecommerce1Platform: getEco1Packages(),
+      ecommerce2Platforms: getEco2Packages(),
+      ecommerce3Platforms: getEco3Packages(),
       reels: getReels(),
       blogs: getInsights() 
   };
