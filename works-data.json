@@ -499,7 +499,7 @@
       "featured": false
     }
   ],
-"ecommerce1Platform": [
+  "ecommerce1Platform": [
     {
       "name": "1 Platform (Starter)",
       "price": 5500,
@@ -567,7 +567,7 @@
       "features": ["Amazon + Flipkart + Meesho", "Up to 100 Listings (Per Platform)", "Premium Graphics & A+ Content", "Advanced Ads & Strategy"],
       "featured": false
     }
-  ]
+  ],
   "reels": [
     {
       "id": 1789996065039,
