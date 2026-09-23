@@ -260,6 +260,7 @@ function renderInsights(blogs, grid) {
 async function loadPackages() {
   const grid = document.querySelector('.packages-grid');
   const brochureGrid = document.getElementById('brochureGrid');
+  const ecommerceGrid = document.getElementById('ecommerceGrid');
 
   try {
     const cacheBuster = new Date().getTime();
@@ -268,6 +269,7 @@ async function loadPackages() {
     const data = await res.json();
     let packages = data.packages || [];
     let brochurePackages = data.brochurePackages || []; 
+    let ecommercePackages = data.ecommercePackages || [];
     
     // 1. IP aur Location detect karna (Free API)
     let userSymbol = '₹';
@@ -309,10 +311,18 @@ async function loadPackages() {
       let newPrice = Math.round(basePrice * conversionRate);
       return { ...pkg, convertedPrice: newPrice.toLocaleString(), symbol: userSymbol };
     });
+
+    // 4. Price Convert aur Update karna - E-Commerce Packages
+    ecommercePackages = ecommercePackages.map(pkg => {
+      const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
+      let newPrice = Math.round(basePrice * conversionRate);
+      return { ...pkg, convertedPrice: newPrice.toLocaleString(), symbol: userSymbol };
+    });
     
-    // 4. Render the packages
+    // 5. Render the packages
     if (grid) renderPackages(packages, grid);
     if (brochureGrid) renderPackages(brochurePackages, brochureGrid); 
+    if (ecommerceGrid) renderPackages(ecommercePackages, ecommerceGrid);
 
     renderCompareTable(packages);
   } catch (e) {
