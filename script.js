@@ -260,7 +260,9 @@ function renderInsights(blogs, grid) {
 async function loadPackages() {
   const grid = document.querySelector('.packages-grid');
   const brochureGrid = document.getElementById('brochureGrid');
-  const ecommerceGrid = document.getElementById('ecommerceGrid');
+  const eco1Grid = document.getElementById('ecommerce1Grid');
+  const eco2Grid = document.getElementById('ecommerce2Grid');
+  const eco3Grid = document.getElementById('ecommerce3Grid');
 
   try {
     const cacheBuster = new Date().getTime();
@@ -269,7 +271,9 @@ async function loadPackages() {
     const data = await res.json();
     let packages = data.packages || [];
     let brochurePackages = data.brochurePackages || []; 
-    let ecommercePackages = data.ecommercePackages || [];
+    let eco1 = data.ecommerce1Platform || [];
+    let eco2 = data.ecommerce2Platforms || [];
+    let eco3 = data.ecommerce3Platforms || [];
     
     // 1. IP aur Location detect karna (Free API)
     let userSymbol = '₹';
@@ -298,31 +302,25 @@ async function loadPackages() {
       console.log("Location check failed, showing Default INR");
     }
 
-    // 2. Price Convert aur Update karna - Main Packages
-    packages = packages.map(pkg => {
+    // Price conversion helper function
+    const convertList = (list) => list.map(pkg => {
       const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
       let newPrice = Math.round(basePrice * conversionRate);
       return { ...pkg, convertedPrice: newPrice.toLocaleString(), symbol: userSymbol };
     });
 
-    // 3. Price Convert aur Update karna - Brochure Packages
-    brochurePackages = brochurePackages.map(pkg => {
-      const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
-      let newPrice = Math.round(basePrice * conversionRate);
-      return { ...pkg, convertedPrice: newPrice.toLocaleString(), symbol: userSymbol };
-    });
-
-    // 4. Price Convert aur Update karna - E-Commerce Packages
-    ecommercePackages = ecommercePackages.map(pkg => {
-      const basePrice = parseInt(pkg.price.toString().replace(/,/g, ''));
-      let newPrice = Math.round(basePrice * conversionRate);
-      return { ...pkg, convertedPrice: newPrice.toLocaleString(), symbol: userSymbol };
-    });
+    packages = convertList(packages);
+    brochurePackages = convertList(brochurePackages);
+    eco1 = convertList(eco1);
+    eco2 = convertList(eco2);
+    eco3 = convertList(eco3);
     
-    // 5. Render the packages
+    // Render the packages
     if (grid) renderPackages(packages, grid);
     if (brochureGrid) renderPackages(brochurePackages, brochureGrid); 
-    if (ecommerceGrid) renderPackages(ecommercePackages, ecommerceGrid);
+    if (eco1Grid) renderPackages(eco1, eco1Grid);
+    if (eco2Grid) renderPackages(eco2, eco2Grid);
+    if (eco3Grid) renderPackages(eco3, eco3Grid);
 
     renderCompareTable(packages);
   } catch (e) {
