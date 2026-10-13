@@ -14,13 +14,14 @@ function getGhToken() {
 // ===== AUTH =====
 function checkAuth() { return sessionStorage.getItem('jr_admin_auth') === 'true'; }
 
-function login() {
+async function login() {
   const u = document.getElementById('adminUser').value;
   const p = document.getElementById('adminPass').value;
   if (u === ADMIN_USER && p === ADMIN_PASS) {
     sessionStorage.setItem('jr_admin_auth', 'true');
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminApp').style.display = 'flex';
+    await syncLiveToLocal(); // LOGIN HOTE HI DATA SYNC KAREGA
     loadDashboard();
   } else {
     showAdminToast('❌ Galat username ya password', 'error');
@@ -30,6 +31,28 @@ function login() {
 function logout() {
   sessionStorage.removeItem('jr_admin_auth');
   location.reload();
+}
+
+// ===== SMART AUTO-SYNC (GITHuB SE DATA LENE KE LIYE) =====
+async function syncLiveToLocal() {
+  try {
+    const cacheBuster = new Date().getTime();
+    const res = await fetch(`works-data.json?v=${cacheBuster}`, { cache: "no-store" });
+    if (!res.ok) return;
+    const data = await res.json();
+    
+    // Website se poora data local panel mein save karega
+    if(data.works && data.works.length) saveWorks(data.works);
+    if(data.packages && data.packages.length) savePackages(data.packages);
+    if(data.brochurePackages && data.brochurePackages.length) saveBrochurePackages(data.brochurePackages);
+    if(data.ecommerce1Platform && data.ecommerce1Platform.length) saveEco1Packages(data.ecommerce1Platform);
+    if(data.ecommerce2Platforms && data.ecommerce2Platforms.length) saveEco2Packages(data.ecommerce2Platforms);
+    if(data.ecommerce3Platforms && data.ecommerce3Platforms.length) saveEco3Packages(data.ecommerce3Platforms);
+    if(data.reels && data.reels.length) saveReels(data.reels);
+    if(data.blogs && data.blogs.length) saveInsights(data.blogs);
+  } catch (e) {
+    console.error("Auto Sync failed", e);
+  }
 }
 
 // ===== DATA FETCHING & SAVING =====
@@ -45,7 +68,6 @@ function getPackages() {
 }
 function savePackages(packages) { localStorage.setItem('jr_packages', JSON.stringify(packages)); }
 
-// New Package Helpers for Brochure & E-Commerce
 function getBrochurePackages() {
   try { return JSON.parse(localStorage.getItem('jr_brochure_packages')) || getDefaultBrochurePackages(); }
   catch { return getDefaultBrochurePackages(); }
@@ -88,41 +110,12 @@ function getSeoSettings() {
 }
 function saveSeoSettings(data) { localStorage.setItem('jr_seo', JSON.stringify(data)); }
 
-function getDefaultWorks() {
-  return [
-    { id:1, title:"Restaurant Brand Identity", category:"branding", categoryLabel:"Branding", emoji:"🍽️", description:"Complete brand identity design", caption:"Professional brand identity for a restaurant chain.", keywords:["branding","logo","restaurant"], seoTitle:"Restaurant Branding", seoDesc:"Complete restaurant brand identity design", date:"2024-12-01", imageAltText: "Restaurant Branding Design" }
-  ];
-}
-
-function getDefaultPackages() {
-  return [
-    { id:1, name:"Starter", price:"5500", duration:"per month", featured:true, features:["12 Posts Per Month","2 Reels Per Month","Social Media Management"] }
-  ];
-}
-
-function getDefaultBrochurePackages() {
-  return [
-    { name: "2 Pages Brochure", price: 700, duration: "2 Pages", features: ["Unique & Creative Design", "High Quality Layout"], featured: false }
-  ];
-}
-
-function getDefaultEco1() {
-  return [
-    { name: "1 Platform (Starter)", price: 5500, duration: "per month", features: ["Any 1 Platform (e.g. Amazon)", "Up to 15 Product Listings"], featured: false }
-  ];
-}
-
-function getDefaultEco2() {
-  return [
-    { name: "2 Platforms (Starter)", price: 9999, duration: "per month", features: ["Any 2 Platforms (e.g. Amazon+Flipkart)", "Up to 15 Listings"], featured: false }
-  ];
-}
-
-function getDefaultEco3() {
-  return [
-    { name: "3 Platforms (Starter)", price: 14999, duration: "per month", features: ["Amazon + Flipkart + Meesho", "Up to 15 Listings"], featured: false }
-  ];
-}
+function getDefaultWorks() { return []; }
+function getDefaultPackages() { return []; }
+function getDefaultBrochurePackages() { return []; }
+function getDefaultEco1() { return []; }
+function getDefaultEco2() { return []; }
+function getDefaultEco3() { return []; }
 
 // ===== NAVIGATION =====
 function showSection(id) {
@@ -314,7 +307,7 @@ async function saveWork() {
     closeModal('workModal');
     loadWorksTable();
     loadDashboard();
-    showAdminToast('✅ Sab kuch aur Auto-SEO successfully live ho gaya!');
+    showAdminToast('✅ Sab kuch successfully live ho gaya!');
 
   } catch (error) {
     console.error(error);
@@ -918,10 +911,13 @@ function exportLiveJson() {
 }
 
 // ===== INIT =====
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (checkAuth()) {
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='flex';
+    
+    // Page load hone par sabse pehle data live fetch karega
+    await syncLiveToLocal();
     loadDashboard();
   }
   document.getElementById('adminPass')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
