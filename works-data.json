@@ -522,18 +522,18 @@
     {
       "id": 1,
       "name": "Starter",
-      "price": "7299",
+      "price": "7,299",
       "duration": "per month",
       "featured": true,
       "features": [
         "Ideal for Startups",
-        "- 12 Social Media Posts",
-        "- 3 Reels per Month",
-        "- Captions & Hashtag Strategy",
-        "- Social Media Page Management",
-        "- Page Optimization & Profile Improvement",
-        "- Basic Meta Ads Management",
-        "- Monthly Performance Report"
+        "• 12 Social Media Posts",
+        "• 3 Reels per Month",
+        "• Captions & Hashtag Strategy",
+        "• Social Media Page Management",
+        "• Page Optimization & Profile Improvement",
+        "• Basic Meta Ads Management",
+        "• Monthly Performance Report"
       ]
     },
     {
@@ -544,13 +544,13 @@
       "featured": true,
       "features": [
         "Perfect for Growing Businesses",
-        "- 16 Social Media Posts",
-        "- 6 Reels per Month",
-        "- Professional Captions & Content Calendar",
-        "- Complete Social Media Management",
-        "- Profile Optimization",
-        "- Meta Ads Campaign Setup, Monitoring & Optimization",
-        "- Monthly Analytics & Strategy Report"
+        "• 16 Social Media Posts",
+        "• 6 Reels per Month",
+        "• Professional Captions & Content Calendar",
+        "• Complete Social Media Management",
+        "• Profile Optimization",
+        "• Meta Ads Campaign Setup, Monitoring & Optimization",
+        "• Monthly Analytics & Strategy Report"
       ]
     },
     {
@@ -561,14 +561,14 @@
       "featured": false,
       "features": [
         "For Established Businesses",
-        "- 20 Social Media Posts",
-        "- 10 Reels per Month",
-        "- Advanced Content Planning & Creative Campaigns",
-        "- Complete Social Media Management",
-        "- Meta Ads Campaign Management & Optimization",
-        "- Multiple Campaign & Creative Testing",
-        "- Detailed Monthly Performance Report",
-        "- Monthly Strategy Consultation"
+        "• 20 Social Media Posts",
+        "• 10 Reels per Month",
+        "• Advanced Content Planning & Creative Campaigns",
+        "• Complete Social Media Management",
+        "• Meta Ads Campaign Management & Optimization",
+        "• Multiple Campaign & Creative Testing",
+        "• Detailed Monthly Performance Report",
+        "• Monthly Strategy Consultation"
       ]
     }
   ],
@@ -582,6 +582,34 @@
         "High Quality Layout"
       ],
       "featured": false
+    },
+    {
+      "name": "4 Pages Brochure",
+      "price": 1200,
+      "duration": "4 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": false
+    },
+    {
+      "name": "6 Pages Brochure",
+      "price": 1500,
+      "duration": "6 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": true
+    },
+    {
+      "name": "8 Pages Brochure",
+      "price": 1900,
+      "duration": "8 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": false
+    },
+    {
+      "name": "10 Pages Brochure",
+      "price": 2200,
+      "duration": "10 Pages",
+      "features": ["Unique & Creative Design", "High Quality Layout", "Fast Delivery", "Unlimited Revisions"],
+      "featured": false
     }
   ],
   "ecommerce1Platform": [
@@ -593,6 +621,20 @@
         "Any 1 Platform (e.g. Amazon)",
         "Up to 15 Product Listings"
       ],
+      "featured": false
+    },
+    {
+      "name": "1 Platform (Growth)",
+      "price": 9999,
+      "duration": "per month",
+      "features": ["Any 1 Platform (e.g. Amazon)", "Up to 40 Product Listings", "A+ Content (Top 3 Products)", "PPC Ads Campaign Setup"],
+      "featured": true
+    },
+    {
+      "name": "1 Platform (Premium)",
+      "price": 15999,
+      "duration": "per month",
+      "features": ["Any 1 Platform (e.g. Amazon)", "Up to 100 Product Listings", "Premium Graphics & A+ Content", "Advanced Ads & Strategy"],
       "featured": false
     }
   ],
@@ -606,6 +648,20 @@
         "Up to 15 Listings"
       ],
       "featured": false
+    },
+    {
+      "name": "2 Platforms (Growth)",
+      "price": 17999,
+      "duration": "per month",
+      "features": ["Any 2 Platforms (e.g. Amazon+Flipkart)", "Up to 40 Listings (Per Platform)", "A+ Content (Top 3 Products)", "PPC Ads Campaign Setup"],
+      "featured": true
+    },
+    {
+      "name": "2 Platforms (Premium)",
+      "price": 28999,
+      "duration": "per month",
+      "features": ["Any 2 Platforms (e.g. Amazon+Flipkart)", "Up to 100 Listings (Per Platform)", "Premium Graphics & A+ Content", "Advanced Ads & Strategy"],
+      "featured": false
     }
   ],
   "ecommerce3Platforms": [
@@ -614,9 +670,23 @@
       "price": 14999,
       "duration": "per month",
       "features": [
-        "Amazon + Flipkart + Meesho",
+        "Amazon + Flipkart + Meesho + Myntra",
         "Up to 15 Listings"
       ],
+      "featured": false
+    },
+    {
+      "name": "3 Platforms (Growth)",
+      "price": 25999,
+      "duration": "per month",
+      "features": ["Amazon + Flipkart + Meesho + Myntra", "Up to 40 Listings (Per Platform)", "A+ Content (Top 3 Products)", "PPC Ads Campaign Setup"],
+      "featured": true
+    },
+    {
+      "name": "3 Platforms (Premium)",
+      "price": 39999,
+      "duration": "per month",
+      "features": ["Amazon + Flipkart + Meesho + Myntra", "Up to 100 Listings (Per Platform)", "Premium Graphics & A+ Content", "Advanced Ads & Strategy"],
       "featured": false
     }
   ],
