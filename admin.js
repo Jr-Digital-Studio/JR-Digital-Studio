@@ -21,6 +21,7 @@ async function login() {
     sessionStorage.setItem('jr_admin_auth', 'true');
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminApp').style.display = 'flex';
+    showAdminToast("⏳ Live data load ho raha hai...", "success");
     await syncLiveToLocal(); // LOGIN HOTE HI DATA SYNC KAREGA
     loadDashboard();
   } else {
@@ -910,14 +911,14 @@ function exportLiveJson() {
   showAdminToast("✅ JSON File Download ho gayi!");
 }
 
-// ===== INIT =====
+// ===== INIT ===== (YE HISSA PEHLE MISSING THA)
 document.addEventListener('DOMContentLoaded', async () => {
   if (checkAuth()) {
     document.getElementById('loginScreen').style.display='none';
     document.getElementById('adminApp').style.display='flex';
     
-    // Page load hone par sabse pehle data live fetch karega
-    await syncLiveToLocal();
+    showAdminToast("⏳ Live data load ho raha hai...", "success");
+    await syncLiveToLocal(); // REFRESH PAR BHI LIVE DATA LEYEGA
     loadDashboard();
   }
   document.getElementById('adminPass')?.addEventListener('keypress',(e)=>{ if(e.key==='Enter') login(); });
