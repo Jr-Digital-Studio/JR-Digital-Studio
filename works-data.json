@@ -556,18 +556,19 @@
     {
       "id": 3,
       "name": "Enterprise",
-      "price": "10000",
+      "price": "17,999",
       "duration": "per month",
       "featured": false,
       "features": [
         "For Established Businesses",
-        "• 20 Posts Per Month",
-        "• 4 Reels Per Month",
-        "• Social Media Management",
-        "• Meta Ads Running",
-        "• Page Setup",
-        "• Caption + Hashtag Strategy",
-        "• Instagram & Facebook Management"
+        "- 20 Social Media Posts",
+        "- 10 Reels per Month",
+        "- Advanced Content Planning & Creative Campaigns",
+        "- Complete Social Media Management",
+        "- Meta Ads Campaign Management & Optimization",
+        "- Multiple Campaign & Creative Testing",
+        "- Detailed Monthly Performance Report",
+        "- Monthly Strategy Consultation"
       ]
     }
   ],
